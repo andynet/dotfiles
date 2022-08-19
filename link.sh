@@ -1,6 +1,5 @@
 #!/bin/bash
-
-mkdir -p ~/trash
+set -euxo pipefail
 
 FILES=(
     bash_aliases            ~/.bash_aliases
@@ -13,14 +12,13 @@ FILES=(
     taskrc                  ~/.taskrc
 )
 
+mkdir -p ~/trash
 for i in $(seq 0 2 14); do
     src=${FILES[${i}]};
     dst=${FILES[$((i+1))]};
-    echo "mv ${dst} ~/trash";
-    echo "ln -s $(realpath ${src}) ${dst}";
+    mv ${dst} ~/trash;
+    ln -s $(realpath ${src}) ${dst};
 done;
 
-mv ~/.gdbinit ~/trash/
-ln -s $(realpath gdbinit) ~/.gdbinit
-
-
+# mkdir -p ~/.config/nvim/autoload
+# curl -Lo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
