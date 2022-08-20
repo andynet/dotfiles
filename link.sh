@@ -24,5 +24,6 @@ for i in $(seq 0 2 14); do
     ln -s $(realpath ${src}) ${dst};
 done;
 
-# mkdir -p ~/.config/nvim/autoload
-# curl -Lo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+rm -rf ~/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
+mkdir -p ~/.config/nvim/autoload
+curl -Lo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
