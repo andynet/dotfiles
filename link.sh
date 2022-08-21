@@ -17,9 +17,9 @@ FILES=(
 )
 
 mkdir -p ~/trash
-for i in $(seq 0 2 ${#FILES[@]}); do
-    src=${FILES[${i}]};
-    dst=${FILES[$((i+1))]};
+for i in $(seq 1 2 ${#FILES[@]}); do
+    src=${FILES[$((i-1))]};
+    dst=${FILES[${i}]};
     if [[ -e ${dst} ]]; then mv ${dst} ~/trash/${src}; fi;
     mkdir -p $(dirname ${dst})
     ln -s $(realpath ${src}) ${dst};
