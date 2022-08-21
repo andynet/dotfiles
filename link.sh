@@ -5,6 +5,7 @@ FILES=(
     bashrc          ~/.bashrc
     condarc         ~/.condarc
     i3_config       ~/.config/i3/config
+    i3blocks.conf   ~/.config/i3/i3blocks.conf
     init.vim        ~/.config/nvim/init.vim
     snakemake.vim   ~/.config/nvim/snakemake.vim
     user-dirs       ~/.config/user-dirs.dirs
@@ -16,7 +17,7 @@ FILES=(
 )
 
 mkdir -p ~/trash
-for i in $(seq 0 2 21); do
+for i in $(seq 0 2 ${#FILES[@]}); do
     src=${FILES[${i}]};
     dst=${FILES[$((i+1))]};
     if [[ -e ${dst} ]]; then mv ${dst} ~/trash/${src}; fi;
