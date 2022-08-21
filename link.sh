@@ -16,7 +16,7 @@ FILES=(
 )
 
 mkdir -p ~/trash
-for i in $(seq 0 2 14); do
+for i in $(seq 0 2 21); do
     src=${FILES[${i}]};
     dst=${FILES[$((i+1))]};
     if [[ -e ${dst} ]]; then mv ${dst} ~/trash/${src}; fi;
@@ -25,5 +25,9 @@ for i in $(seq 0 2 14); do
 done;
 
 rm -rf ~/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
+
 mkdir -p ~/.config/nvim/autoload
-curl -Lo ~/.config/nvim/autoload/plug.vim https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+if [[ ! -e ~/.config/nvim/autoload/plug.vim ]]; then
+    curl -Lo ~/.config/nvim/autoload/plug.vim \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+fi
