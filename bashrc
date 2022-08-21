@@ -1,6 +1,8 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return;
 
+echo "Sourced bashrc"
+
 # history
 HISTSIZE=-1
 HISTFILESIZE=-1

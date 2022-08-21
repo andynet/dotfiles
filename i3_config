@@ -47,7 +47,7 @@ bindsym $mod+Return exec xfce4-terminal
 bindsym $mod+Shift+q kill
 # exit-menu
 # bindsym $mod+Shift+e exec ~/.config/i3/scripts/powermenu
-bindsym $mod+Shift+a exec i3-msg exit
+bindsym $mod+Shift+e exec i3-msg exit
 
 # Lock the system
 # lock with a picture:

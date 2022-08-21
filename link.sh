@@ -3,6 +3,7 @@ set -euxo pipefail
 
 FILES=(
     bashrc          ~/.bashrc
+    profile         ~/.bash_profile
     condarc         ~/.condarc
     i3_config       ~/.config/i3/config
     i3blocks.conf   ~/.config/i3/i3blocks.conf
@@ -10,7 +11,6 @@ FILES=(
     snakemake.vim   ~/.config/nvim/snakemake.vim
     user-dirs       ~/.config/user-dirs.dirs
     gdbinit         ~/.gdbinit
-    profile         ~/.profile
     ssh_config      ~/.ssh/config
     taskrc          ~/.taskrc
     xinitrc         ~/.xinitrc
