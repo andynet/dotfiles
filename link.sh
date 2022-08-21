@@ -2,7 +2,7 @@
 set -euxo pipefail
 
 FILES=(
-    profile         ~/.bash_profile
+    profile         ~/.profile
     user-dirs       ~/.config/user-dirs.dirs
     bashrc          ~/.bashrc
     condarc         ~/.condarc

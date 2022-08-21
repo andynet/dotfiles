@@ -36,8 +36,10 @@ if [ -f "$HOME/.cargo/env" ]; then
 fi
 
 # XDG Base Directories
-XDG_CONFIG_HOME=$HOME/.config       # user-specific configurations (analogous to /etc)
-XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essential data (analogous to /var/cache)
-XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analogous to /usr/share)
-XDG_STATE_HOME=$HOME/.local/state   # user-specific state files (analogous to /var/lib)
+export XDG_CONFIG_HOME=$HOME/.config       # user-specific configurations (analogous to /etc)
+export XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essential data (analogous to /var/cache)
+export XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analogous to /usr/share)
+export XDG_STATE_HOME=$HOME/.local/state   # user-specific state files (analogous to /var/lib)
+
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
 
