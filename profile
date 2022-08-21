@@ -8,6 +8,8 @@
 # for ssh logins, install and configure the libpam-umask package.
 #umask 022
 
+echo "Sourced profile"
+
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
     # include .bashrc if it exists
@@ -29,4 +31,8 @@ fi
 . "$HOME/.cargo/env"
 
 # XDG Base Directories
-# TODO
+XDG_CONFIG_HOME=$HOME/.config       # user-specific configurations (analogous to /etc)
+XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essential data (analogous to /var/cache)
+XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analogous to /usr/share)
+XDG_STATE_HOME=$HOME/.local/state   # user-specific state files (analogous to /var/lib)
+
