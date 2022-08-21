@@ -6,6 +6,7 @@ echo "Sourced bashrc"
 # history
 HISTSIZE=-1
 HISTFILESIZE=-1
+HISTFILE="$XDG_STATE_HOME"/bash/history
 HISTTIMEFORMAT='%F %T '
 HISTIGNORE='+([a-z])*([\t ])'
 HISTCONTROL=ignoreboth  # ignore duplicate and space-starting lines
@@ -83,4 +84,6 @@ fi
 unset __conda_setup
 # <<< conda initialize <<<
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env";
+fi

@@ -2,14 +2,14 @@
 set -euxo pipefail
 
 FILES=(
-    bashrc          ~/.bashrc
     profile         ~/.bash_profile
+    user-dirs       ~/.config/user-dirs.dirs
+    bashrc          ~/.bashrc
     condarc         ~/.condarc
     i3_config       ~/.config/i3/config
     i3blocks.conf   ~/.config/i3/i3blocks.conf
     init.vim        ~/.config/nvim/init.vim
     snakemake.vim   ~/.config/nvim/snakemake.vim
-    user-dirs       ~/.config/user-dirs.dirs
     gdbinit         ~/.gdbinit
     ssh_config      ~/.ssh/config
     taskrc          ~/.taskrc
@@ -32,3 +32,5 @@ if [[ ! -e ~/.config/nvim/autoload/plug.vim ]]; then
     curl -Lo ~/.config/nvim/autoload/plug.vim \
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
+
+mkdir -p ~/data ~/downloads ~/projects ~/tools ~/trash

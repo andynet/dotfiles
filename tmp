@@ -1,6 +1,0 @@
-sudo pacman -S terminus-font
-
-Also make sure these file does not exist in your home directory:
-~/.bash_profile
-~/.bash_login
-

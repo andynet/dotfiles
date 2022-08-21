@@ -9,6 +9,9 @@
 #umask 022
 
 echo "Sourced profile"
+setfont ter-124b
+
+export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 
 # if running bash
 if [ -n "$BASH_VERSION" ]; then
@@ -28,7 +31,9 @@ if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
 
-. "$HOME/.cargo/env"
+if [ -f "$HOME/.cargo/env" ]; then
+    . "$HOME/.cargo/env";
+fi
 
 # XDG Base Directories
 XDG_CONFIG_HOME=$HOME/.config       # user-specific configurations (analogous to /etc)
