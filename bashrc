@@ -49,6 +49,7 @@ alias la='ls -A'
 alias l='ls -CF'
 alias tree='tree --dirsfirst'
 alias lsd='ls -d .*'
+alias tl="task list -BLOCKED"
 
 # limits recursive functions, see 'man bash'
 [[ -z "$FUNCNEST" ]] && export FUNCNEST=100
