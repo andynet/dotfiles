@@ -7,6 +7,7 @@ echo "Sourced bashrc"
 HISTSIZE=-1
 HISTFILESIZE=-1
 export HISTFILE="$XDG_STATE_HOME"/bash/history
+shopt -s extglob
 HISTTIMEFORMAT='%F %T '
 HISTIGNORE='+([a-z])*([\t ])'
 HISTCONTROL=ignoreboth  # ignore duplicate and space-starting lines
