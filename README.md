@@ -2,14 +2,12 @@
 
 https://wiki.archlinux.org/title/XDG_Base_Directory
 
-# to list shell variables
-( set -o posix ; set ) | less
-# to list env variables
-env | less
+to list shell variables
+`( set -o posix ; set ) | less`
+to list env variables
+`env | less`
 
-sudo pacman -S terminus-font
+`sudo pacman -S terminus-font`
 
-Also make sure these file does not exist in your home directory:
-~/.bash_profile
-~/.bash_login
-
+this is what happens after init script:
+`https://wiki.archlinux.org/title/Arch_boot_process#Late_userspace`
