@@ -1,6 +1,5 @@
 echo "Loading profile..."
 
-env
 # remove env variables except XDG_RUNTIME_DIR and HOME
 for var in $(env | cut -f1 -d"="); do
     case $var in
