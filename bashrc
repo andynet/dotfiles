@@ -52,3 +52,4 @@ alias tl="task list -BLOCKED"
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
+export CONDARC="$XDG_CONFIG_HOME/conda/condarc"

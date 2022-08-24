@@ -3,29 +3,30 @@ set -euxo pipefail
 
 FILES=(
     profile         ~/.profile
-    user-dirs       ~/.config/user-dirs.dirs
     bashrc          ~/.bashrc
-    condarc         ~/.condarc
+    xinitrc         ~/.xinitrc
+    ssh_config      ~/.ssh/config
+    user-dirs       ~/.config/user-dirs.dirs
+    condarc         ~/.config/conda/condarc
     i3_config       ~/.config/i3/config
     i3blocks.conf   ~/.config/i3/i3blocks.conf
     init.vim        ~/.config/nvim/init.vim
     snakemake.vim   ~/.config/nvim/snakemake.vim
-    gdbinit         ~/.gdbinit
-    ssh_config      ~/.ssh/config
-    taskrc          ~/.taskrc
-    xinitrc         ~/.xinitrc
+    gdbinit         ~/.config/gdb/gdbinit
+    taskrc          ~/.config/task/taskrc
 )
 
-mkdir -p ~/trash
+mkdir -p ~/data ~/downloads ~/projects ~/tools ~/tmp
+rm -rf ~/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
+
 for i in $(seq 1 2 ${#FILES[@]}); do
     src=${FILES[$((i-1))]};
     dst=${FILES[${i}]};
-    if [[ -e ${dst} ]]; then mv ${dst} ~/trash/${src}; fi;
+    if [[ -e ${dst} ]]; then mv ${dst} ~/tmp/${src}; fi;
     mkdir -p $(dirname ${dst})
     ln -s $(realpath ${src}) ${dst};
 done;
 
-rm -rf ~/{Desktop,Documents,Downloads,Music,Pictures,Public,Templates,Videos}
 
 mkdir -p ~/.config/nvim/autoload
 if [[ ! -e ~/.config/nvim/autoload/plug.vim ]]; then
@@ -33,4 +34,3 @@ if [[ ! -e ~/.config/nvim/autoload/plug.vim ]]; then
         https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 fi
 
-mkdir -p ~/data ~/downloads ~/projects ~/tools ~/trash

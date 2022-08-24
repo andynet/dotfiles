@@ -9,6 +9,7 @@ $HOME
 ├── .local/share/   # XDG_DATA_HOME     user-specific data (analogous to /usr/share)
 ├── .local/state/   # XDG_STATE_HOME    user-specific state files (analogous to /var/lib)
 │                   # XDG_RUNTIME_DIR   set by pam_systemd
+├── .dotfiles/
 ├── .mozilla/       # this seems to be impossible to remove from home
 ├── .ssh/
 │   └── config
