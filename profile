@@ -1,39 +1,18 @@
-# ~/.profile: executed by the command interpreter for login shells.
-# This file is not read by bash(1), if ~/.bash_profile or ~/.bash_login
-# exists.
-# see /usr/share/doc/bash/examples/startup-files for examples.
-# the files are located in the bash-doc package.
+echo "Loading profile..."
 
-# the default umask is set in /etc/profile; for setting the umask
-# for ssh logins, install and configure the libpam-umask package.
-#umask 022
+env
+# remove env variables except XDG_RUNTIME_DIR and HOME
+for var in $(env | cut -f1 -d"="); do
+    case $var in
+        XDG_RUNTIME_DIR);;
+        HOME);;
+        TERM);;
+        LANG);;
+        *) unset $var;;
+    esac;
+done;
 
-echo "Sourced profile"
-setfont ter-124b
-
-export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-
-# if running bash
-if [ -n "$BASH_VERSION" ]; then
-    # include .bashrc if it exists
-    if [ -f "$HOME/.bashrc" ]; then
-	. "$HOME/.bashrc"
-    fi
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/.local/bin" ] ; then
-    PATH="$HOME/.local/bin:$PATH"
-fi
-
-if [ -f "$HOME/.cargo/env" ]; then
-    . "$HOME/.cargo/env";
-fi
+export PATH="/usr/local/sbin:/usr/local/bin:/usr/bin"
 
 # XDG Base Directories
 export XDG_CONFIG_HOME=$HOME/.config       # user-specific configurations (analogous to /etc)
@@ -41,5 +20,13 @@ export XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essential data (a
 export XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analogous to /usr/share)
 export XDG_STATE_HOME=$HOME/.local/state   # user-specific state files (analogous to /var/lib)
 
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+if [ -n "$BASH_VERSION" ]; then
+    if [ -f "$HOME/.bashrc" ]; then
+        source "$HOME/.bashrc"
+    fi
+fi
+
+# setfont ter-124b
+# export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
+# export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
 

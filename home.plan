@@ -13,5 +13,6 @@ $HOME
 ├── .ssh/
 │   └── config
 ├── .profile
-└── .bashrc
+├── .bashrc
+└── .Xauthority
 
