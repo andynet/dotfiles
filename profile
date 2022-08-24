@@ -25,7 +25,3 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-# setfont ter-124b
-# export CUDA_CACHE_PATH="$XDG_CACHE_HOME"/nv
-# export XAUTHORITY="$XDG_RUNTIME_DIR"/Xauthority
-

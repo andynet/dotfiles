@@ -2,6 +2,13 @@
 [[ $- != *i* ]] && return;
 
 echo "Loading bashrc..."
+# setfont ter-124b
+
+export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
+export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+export LC_COLLATE="C"
+export CARGO_HOME="$XDG_DATA_HOME"/cargo
+export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar     # allow "**" pathname expansion
@@ -52,4 +59,11 @@ alias tl="task list -BLOCKED"
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
-export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
+
+if [[ -x "$HOME/.conda/bin/conda" ]]; then
+    eval "$(/home/balaz/.conda/bin/conda shell.bash hook)"
+fi
+
+if [[ -e "$CARGO_HOME/env" ]]; then
+    source "/home/balaz/.local/share/cargo/env"
+fi

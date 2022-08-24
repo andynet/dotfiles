@@ -13,6 +13,8 @@ $HOME
 ├── .mozilla/       # this seems to be impossible to remove from home
 ├── .ssh/
 │   └── config
+├── .pki            # this is always created by vscodium
+├── .vscode-oss     # this is always created by vscodium
 ├── .profile
 ├── .bashrc
 └── .Xauthority

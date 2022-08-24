@@ -3,3 +3,4 @@ channels:
   - conda-forge
   - bioconda
   - defaults
+anaconda_upload: false
