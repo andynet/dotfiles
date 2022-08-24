@@ -10,6 +10,8 @@ export LC_COLLATE="C"
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 
+PATH="/usr/local/texlive/2022/bin/x86_64-linux:$PATH"
+
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar     # allow "**" pathname expansion
 shopt -s extglob        # extended globbing used in HISTIGNORE

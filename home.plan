@@ -10,11 +10,12 @@ $HOME
 ├── .local/state/   # XDG_STATE_HOME    user-specific state files (analogous to /var/lib)
 │                   # XDG_RUNTIME_DIR   set by pam_systemd
 ├── .dotfiles/
-├── .mozilla/       # this seems to be impossible to remove from home
 ├── .ssh/
 │   └── config
 ├── .pki            # this is always created by vscodium
 ├── .vscode-oss     # this is always created by vscodium
+├── .mozilla/       # this seems to be impossible to remove from home
+├── .zotero         # this seems to be related to mozilla
 ├── .profile
 ├── .bashrc
 └── .Xauthority
