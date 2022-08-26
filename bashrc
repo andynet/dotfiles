@@ -25,6 +25,9 @@ HISTTIMEFORMAT='%F %T '
 HISTIGNORE='+([a-z])*([\t ])'
 HISTCONTROL='ignorespace:erasedups'  # ignore duplicate and space-starting lines
 
+export TASKRC="$XDG_CONFIG_HOME/task/taskrc"
+TASKDATA="$XDG_STATE_HOME/task/"
+
 # ulimit -c unlimited   # store core dumps
 
 # make less more friendly for non-text input files, see lesspipe(1)
@@ -51,7 +54,7 @@ alias grep='grep --color=auto'
 alias fgrep='fgrep --color=auto'
 alias egrep='egrep --color=auto'
 alias tree='tree --dirsfirst'
-alias tl="task list -BLOCKED"
+alias tl='task next -BLOCKED'
 
 # limits recursive functions, see 'man bash'
 [[ -z "$FUNCNEST" ]] && FUNCNEST=100

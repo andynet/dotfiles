@@ -29,9 +29,14 @@ data.location=~/.config/task/mine
 #include /usr/share/taskwarrior/solarized-light-256.theme
 #include /usr/share/taskwarrior/no-color.theme
 
-uda.priority.values=H,M,,L
 dateformat=Y-M-D H:N:S
-color.blocked=gray5
-urgency.uda.priority.L.coefficient=0
-urgency.uda.priority..coefficient=1.8
+uda.priority.values=H,M,,L
+urgency.uda.priority.L.coefficient=-4
+urgency.uda.priority..coefficient=0
+urgency.uda.priority.M.coefficient=4
+urgency.uda.priority.H.coefficient=8
+urgency.blocking.coefficient=5.0
 alias.burndown=burndown.daily
+color.blocking=on gray2
+color.blocked=gray5
+report.next.columns=id,start.age,entry.age,depends,priority,project,tags,recur,scheduled.countdown,due.relative,until.remaining,description.count,urgency
