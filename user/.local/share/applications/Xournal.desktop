@@ -1,0 +1,14 @@
+[Desktop Entry]
+Type=Application
+
+Name=Xournal++
+Comment=Take handwritten notes
+Keywords=Tablet;Wacom;Pen Input;PDF Annotation;Markup
+
+Exec=xournalpp %f
+StartupWMClass=xournalpp
+Terminal=false
+StartupNotify=true
+MimeType=application/x-xoj;application/x-xojpp;application/x-xopp;application/x-xopt;application/pdf;
+Icon=com.github.xournalpp.xournalpp
+Categories=Office;GNOME;GTK;

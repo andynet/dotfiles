@@ -1,0 +1,5 @@
+# https://github.com/orestisfl/dotfiles/blob/b2a0c96034f9a837389322e33ee176706f895b13/executables/bin/i3-rofi-actions
+  
+  # dmenu calculator                           
+  # press tab to continue with last answer    
+  # xsel -o | dmenu -p Calculate: | xargs echo | bc 2>&1 | dmenu -p Answer: | xsel -i
