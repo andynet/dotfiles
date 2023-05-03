@@ -1,0 +1,24 @@
+#!/bin/bash
+
+set -euo pipefail
+IFS=$'\n\t'
+
+if [[ $# -lt 1 ]]; then
+	echo "Usage: config_add <file/dir>"
+	exit
+fi
+if [[ ! -e ${1} ]]; then
+	echo "${1} does not exist."
+	exit
+fi
+
+path="$(realpath ${1})"
+destination="${HOME}/.dotfiles/user/${path#${HOME}/}"
+
+echo "Moving ${path} to ${destination}."
+
+mkdir -p "$(dirname ${destination})"
+mv "${path}" "${destination}"
+
+
+# mv $HOME/<path>/<file> to $HOME/.dotfiles/user/<path>/<file>
