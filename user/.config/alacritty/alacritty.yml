@@ -1,20 +1,18 @@
 font:
   normal:
     family: RobotoMono Nerd Font
-    # family: Roboto Mono
     style: Regular
 
   bold:
-    # family: RobotoMono Nerd Font
-    family: Roboto Mono
+    family: RobotoMono Nerd Font
     style: Bold
 
   italic:
-    family: Roboto Mono
+    family: RobotoMono Nerd Font 
     style: Italic
 
   bold_italic:
-    family: Roboto Mono
+    family: RobotoMono Nerd Font
     style: Bold Italic
 
   size: 10

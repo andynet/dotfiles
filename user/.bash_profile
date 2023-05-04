@@ -22,4 +22,3 @@
 #     fi
 # fi
 
-# . "/home/andy/.local/share/cargo/env"
