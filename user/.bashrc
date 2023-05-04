@@ -64,11 +64,11 @@ alias tree='tree --dirsfirst'
 alias tl='task next -BLOCKED rc.verbose:nothing'
 alias gd='google-drive-ocamlfuse ~/gdrive && echo "Gdrive mounted"'
 alias gdx='fusermount -u ~/gdrive && echo "Gdrive exited"'
-# alias startx="startx > session.log 2>&1"
-alias mm="micromamba"
+alias gui="startx > session.log 2>&1"
+alias mamba="micromamba"
 alias snake="snakemake -c4 -s scripts/vinkofagy/heterozygosity.smk"
-alias anv="NVIM_APPNAME=astronvim nvim"
-alias config='/usr/bin/git --git-dir=${HOME}/.cfg/ --work-tree=${HOME}'
+alias avim="NVIM_APPNAME=astronvim nvim"
+alias config="git -C ~/.dotfiles"
 
 # limits recursive functions, see 'man bash'
 [[ -z "$FUNCNEST" ]] && FUNCNEST=100
