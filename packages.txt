@@ -1,52 +1,67 @@
-# boot
-efibootmgr                      18-2
-grub                            2:2.06.r499.ge67a551a4-1
-intel-ucode                     20230214-1
+# booting
+grub
+efibootmgr
+amd-ucode
+intel-ucode
 # system
-linux                           6.2.13.arch1-1
-linux-firmware          20230404.2e92a49f-1
-base                            3-1
-base-devel                      1-1
-# GUI
-xorg-server                     21.1.8-1
-xorg-xauth                      1.1.2-1
-xorg-xinit                      1.4.2-1
-xf86-video-intel                1:2.99.917+923+gb74b67f0-1
-ttf-roboto-mono-nerd    3.0.0-1
-i3-wm                           4.22-4
-i3lock                          2.14.1-1
-i3status                                2.14-1
-xss-lock                                0.3.0.g1e158fb20108-4
-arandr                          0.1.11-1
-dmenu                           5.2-1
-unclutter                       1:1.6-3
-dex                                     0.9.0-1
-# networking
-network-manager-applet  1.32.0-1
-networkmanager          1.42.6-1
-openssh                                 9.3p1-1
-openvpn                                 2.6.3-1
+linux
+linux-firmware
+base
+base-devel
+# network
+networkmanager
+network-manager-applet
+openssh
+openvpn
+firefox
 # sound
-pacutils                                0.11.1-1
-pavucontrol                     1:5.0+r61+gee77d86-2
-# printing
-simple-scan                     44.0-1
-system-config-printer   1.5.18-1
-cups                            1:2.4.2-6
+pulseaudio
+pacutils
+pavucontrol
+# printers
+cups
+system-config-printer
+epson-inkjet-printer-202101w # AUR
+simple-scan
+# files
+thunar
+thunar-volman
+gvfs
+gvfs-mtp
+ntfs-3g
+# GUI
+xorg-server
+xorg-xinit
+ttf-roboto-mono-nerd
+terminus-font
+i3-wm
+i3status
+i3lock
+xss-lock
+dmenu
+dex
+arandr
+nitrogen
+xorg-xbacklight
+unclutter
+scrot
 # TUI
-alacritty                       0.12.0-1
-bash-completion                 2.11-3
-htop                            3.2.2-1
-perl-rename                     1.14-1
+alacritty
+man-pages
+man-db
+htop
+stow
+unzip
+perl-rename
+bash-completion ?
 # development
-gdb                                     13.1-2
-git                                     2.40.1-1
-neovim                          0.9.0-2
-# media
-firefox                                 112.0.2-2
-libreoffice-fresh               7.5.2-1
-okular                          23.04.0-1
-eog                                     44.1-1
-scrot                           1.9-1
-vlc                                     3.0.18-9
+neovim
+git
+gdb
+cmake
+# multimedia
+libreoffice-fresh
+okular
+vlc
+eog
 

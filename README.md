@@ -1,9 +1,10 @@
-from $HOME/.dotfiles
-stow -v user
+#Dotfiles
+---
+## install
+```
+git clone https://github.com/andynet/dotfiles.git ~/.dotfiles
+cd ~/.dotfiles
+stow -v user # apply user configuration
 
-// for system  config
-sudo stow -vt / root
-
-
-// git
-git -C ~/.dotfiles status
+stow -vt / system # apply system configuration
+```

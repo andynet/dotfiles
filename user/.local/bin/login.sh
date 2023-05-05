@@ -3,7 +3,7 @@ set -euo pipefail
 
 option=$(
     echo -e "Lock\nReload\nExit\nSleep\nShutdown\nReboot" \
-    | dmenu -i -l 6 -fn "RobotoMono-15"
+    | dmenu -i -l 6 -fn "Roboto Mono Nerd Font-15"
 )
 
 case $option in
