@@ -15,10 +15,10 @@ font:
     family: RobotoMono Nerd Font
     style: Bold Italic
 
-  size: 10
-  offset:
-    x: 0    # For letter spacing.
-    y: 4    # For line spacing.
+#   size: 10
+#   offset:
+#     x: 0    # For letter spacing.
+#     y: 4    # For line spacing.
 
 # Colors (Gruvbox dark)
 colors:
