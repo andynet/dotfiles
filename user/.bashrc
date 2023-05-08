@@ -6,17 +6,17 @@ export XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essentia>
 export XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analog>
 export XDG_STATE_HOME=$HOME/.local/state   # user-specific state files >
 
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
+export XINITRC="$XDG_CONFIG_HOME/xinitrc"
+export XAUTHORITY="$XDG_STATE_HOME/Xauthority"
+
+export CARGO_HOME="$XDG_DATA_HOME/cargo"
+export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export LC_COLLATE="C"
-export CARGO_HOME="$XDG_DATA_HOME"/cargo
-export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export PATH="$HOME/.local/bin:$PATH"
 export TERM="alacritty"
-export XINITRC="$XDG_CONFIG_HOME/xinitrc"
 
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar # allow "**" pathname expansion
@@ -28,7 +28,7 @@ mkdir -p "${XDG_STATE_HOME}/bash"
 touch "${XDG_STATE_HOME}/bash/history"
 HISTSIZE=-1
 HISTFILESIZE=-1
-HISTFILE="$XDG_STATE_HOME"/bash/history
+HISTFILE="$XDG_STATE_HOME/bash/history"
 HISTTIMEFORMAT='%F %T '
 HISTIGNORE='+([a-z])*([\t ])'
 HISTCONTROL='ignorespace:erasedups'  # ignore duplicate and space-st>
