@@ -15,7 +15,8 @@ export LC_COLLATE="C"
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export RUSTUP_HOME="$XDG_DATA_HOME"/rustup
 export PATH="$HOME/.local/bin:$PATH"
-export TERM=xterm
+export TERM="alacritty"
+export XINITRC="$XDG_CONFIG_HOME/xinitrc"
 
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar # allow "**" pathname expansion
