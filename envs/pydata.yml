@@ -1,0 +1,13 @@
+name: pydata
+channels:
+- conda-forge
+dependencies:
+- jupyterlab
+- pandas
+- matplotlib
+- seaborn
+- scipy
+- scikit-learn
+# - pytorch
+# - pyro
+

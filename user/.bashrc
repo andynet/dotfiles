@@ -12,11 +12,14 @@ export XAUTHORITY="$XDG_STATE_HOME/Xauthority"
 export CARGO_HOME="$XDG_DATA_HOME/cargo"
 export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
 
+export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
+export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
+
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export LC_COLLATE="C"
 export PATH="$HOME/.local/bin:$PATH"
-export TERM="alacritty"
+export TERM="xterm"
 
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar # allow "**" pathname expansion

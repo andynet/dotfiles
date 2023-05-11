@@ -1,0 +1,26 @@
+name: biotools
+channels:
+  - defaults
+  - bioconda
+  - conda-forge
+dependencies:
+  - snakemake       # 1
+  - blast           # 2 mapping
+  - bwa             # 2
+  - minimap2        # 2
+  - bcftools        # 3 utilities
+  - csvtk           # 3
+  - exonerate       # 3
+  - gfatools        # 3
+  - samtools        # 3
+  - seqkit          # 3
+  - bandage         # 4 visualization
+  - krona           # 4
+  - cd-hit          # 9 other
+  - insilicoseq     # 9
+  - medusa          # 9
+  - mummer          # 9
+  - spades          # 9
+  - taxonkit        # 9
+  - treecluster     # 9
+
