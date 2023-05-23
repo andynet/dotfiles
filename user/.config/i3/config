@@ -33,6 +33,7 @@ tiling_drag modifier titlebar
 bindsym $mod+Return exec alacritty
 bindsym $mod+Shift+Return exec firefox
 bindsym $mod+Shift+q kill
+bindsym $mod+Shift+w exec "HOME=$XDG_CONFIG_HOME qutebrowser"
 
 bindsym $mod+d          exec --no-startup-id ~/.local/bin/applications.sh
 bindsym $mod+Escape     exec --no-startup-id ~/.local/bin/login.sh
@@ -48,8 +49,6 @@ bindsym $mod+Right focus right
 bindsym $mod+h split horizontal
 bindsym $mod+v split vertical
 bindsym $mod+e layout toggle split
-bindsym $mod+f fullscreen toggle
-bindsym $mod+t floating toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -89,8 +88,12 @@ bindsym $mod+Shift+8 move container to workspace number $ws8
 bindsym $mod+Shift+9 move container to workspace number $ws9
 
 bindsym $mod+x move workspace to output next
+
+# floating toggle takes out from scratchpad
 bindsym $mod+Shift+m move scratchpad
 bindsym $mod+m scratchpad show
+bindsym $mod+t floating toggle
+bindsym $mod+f fullscreen toggle
 
 bindsym $mod+r mode "resize"
 mode "resize" {

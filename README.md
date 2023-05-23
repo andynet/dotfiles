@@ -38,3 +38,21 @@ bash install.sh
 ```
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
+
+## latex
+```
+wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
+tar -xvzf install-tl-unx.tar.gz
+cd install-tl-*
+perl install-tl --texdir=~/.local/texmf --texuserdir=~/.local/texmf --scheme scheme-basic
+
+PATH=~/.local/texmf/bin/x86_64-linux:$PATH
+MANPATH=~/.local/texmf/texmf-dist/doc/man:$MANPATH
+
+tlmgr install latexmk biblatex cm-super biber microtype
+```
+
+## gurobi
+```
+grbgetkey <key>
+```
