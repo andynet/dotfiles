@@ -40,6 +40,7 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 ## latex
+#### install
 ```
 wget https://mirror.ctan.org/systems/texlive/tlnet/install-tl-unx.tar.gz
 tar -xvzf install-tl-unx.tar.gz
@@ -48,8 +49,23 @@ perl install-tl --texdir=~/.local/texmf --texuserdir=~/.local/texmf --scheme sch
 
 PATH=~/.local/texmf/bin/x86_64-linux:$PATH
 MANPATH=~/.local/texmf/texmf-dist/doc/man:$MANPATH
-
-tlmgr install latexmk biblatex cm-super biber microtype
+```
+#### install packages
+```
+tlmgr install latexmk texliveonfly biblatex cm-super biber microtype
+tlmgr search --file <file> --global
+tlmgr install <pkg>
+tlmgr list --only-installed --data name
+```
+#### install custom .sty files
+```
+kpsewhich -var-value=TEXMFHOME
+cd <there>
+mkdir -p tex/latex
+cd tex/latex/
+cp <file.sty> .
+mktexlsr .
+kpsewhich <file.sty>
 ```
 
 ## gurobi

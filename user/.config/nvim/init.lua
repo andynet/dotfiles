@@ -9,6 +9,7 @@ vim.keymap.set("n", "<C-t>", ":tabnew<CR>")
 vim.opt.listchars = "tab:> ,trail:."
 vim.opt.list = true
 vim.opt.colorcolumn = "80"
+vim.opt.columns = 85
 vim.opt.clipboard:append("unnamedplus")
 vim.opt.number = true
 vim.opt.softtabstop = 4
