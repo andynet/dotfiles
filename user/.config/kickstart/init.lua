@@ -63,39 +63,40 @@ require('lazy').setup(plugins)
 require('mason').setup()
 require('lualine').setup({
     options = {
-        icons_enabled = false,
+        icons_enabled = true,
         theme = 'gruvbox',
         component_separators = '|',
         section_separators = ''
     }
 })
 
-require('gitsigns').setup({
-    signs = {
-        add = {text = '+'},
-        change = {text = '~'},
-        delete = {text = '_'},
-        topdelete = {text = '‾'},
-        changedelete = {text = '~'}
-    },
-    on_attach = function(bufnr)
-        vim.keymap.set(
-            'n', '<leader>gp', require('gitsigns').prev_hunk,
-            {buffer = bufnr, desc = '[G]o to [P]revious Hunk'}
-        )
-        vim.keymap.set(
-            'n', '<leader>gn', require('gitsigns').next_hunk,
-            {buffer = bufnr, desc = '[G]o to [N]ext Hunk'}
-        )
-        vim.keymap.set(
-            'n', '<leader>ph', require('gitsigns').preview_hunk,
-            {buffer = bufnr, desc = '[P]review [H]unk'}
-        )
-    end
-})
+require('gitsigns').setup()
+-- require('gitsigns').setup({
+--     signs = {
+--         add = {text = '+'},
+--         change = {text = '~'},
+--         delete = {text = '_'},
+--         topdelete = {text = '‾'},
+--         changedelete = {text = '~'}
+--     },
+--     on_attach = function(bufnr)
+--         vim.keymap.set(
+--             'n', '<leader>gp', require('gitsigns').prev_hunk,
+--             {buffer = bufnr, desc = '[G]o to [P]revious Hunk'}
+--         )
+--         vim.keymap.set(
+--             'n', '<leader>gn', require('gitsigns').next_hunk,
+--             {buffer = bufnr, desc = '[G]o to [N]ext Hunk'}
+--         )
+--         vim.keymap.set(
+--             'n', '<leader>ph', require('gitsigns').preview_hunk,
+--             {buffer = bufnr, desc = '[P]review [H]unk'}
+--         )
+--     end
+-- })
 
-require('fidget').setup({})
-require('which-key').setup({})
+require('fidget').setup()
+require('which-key').setup()
 
 vim.cmd.colorscheme 'gruvbox'
 vim.o.hlsearch = false
@@ -126,9 +127,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*'
 })
 
-require('telescope').setup {
+require('telescope').setup({
     defaults = {mappings = {i = {['<C-u>'] = false, ['<C-d>'] = false}}}
-}
+})
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
@@ -154,6 +155,8 @@ vim.keymap.set(
     end,
     {desc = '[/] Fuzzily search in current buffer'}
 )
+
+vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
 
 vim.keymap.set(
     'n', '<leader>gf', require('telescope.builtin').git_files, {desc = 'Search [G]it [F]iles'}
