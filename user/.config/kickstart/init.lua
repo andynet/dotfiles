@@ -156,6 +156,15 @@ vim.keymap.set(
     {desc = '[/] Fuzzily search in current buffer'}
 )
 
+require("neo-tree").setup({
+    window = {
+        width = 30,
+        mappings = {
+            ["<cr>"] = "open_tabnew",
+        },
+    }
+})
+
 vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
 
 vim.keymap.set(
