@@ -1,6 +1,8 @@
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ';'       -- defines <Leader>
 vim.g.maplocalleader = ';'  -- defines <LocalLeader>
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
@@ -27,14 +29,14 @@ local plugins = {
             'hrsh7th/cmp-nvim-lsp',
         }
     }, {
-        "nvim-neo-tree/neo-tree.nvim",
-        branch = "v3.x",
-        dependencies = {
-            "nvim-lua/plenary.nvim",
-            "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
-            "MunifTanjim/nui.nvim",
-        }
-    }, {
+--         "nvim-neo-tree/neo-tree.nvim",
+--         branch = "v3.x",
+--         dependencies = {
+--             "nvim-lua/plenary.nvim",
+--             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
+--             "MunifTanjim/nui.nvim",
+--         }
+--     }, {
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
         dependencies = {'nvim-lua/plenary.nvim'}
@@ -43,17 +45,17 @@ local plugins = {
         build = 'make'
     }, {
         'nvim-treesitter/nvim-treesitter',
-        -- dependencies = {'nvim-treesitter/nvim-treesitter-textobjects'},
         build = ':TSUpdate'
     },
+    'nvim-tree/nvim-tree.lua',
+    "nvim-tree/nvim-web-devicons",
     'folke/which-key.nvim',
     'lewis6991/gitsigns.nvim',
     'nvim-lualine/lualine.nvim',
     'morhetz/gruvbox',
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
---     {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
---     'rebelot/heirline.nvim', -- this is for UI, see astronvim/l/p/heirline.lua
+    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
 }
 
 require('lazy').setup(plugins)
@@ -67,7 +69,7 @@ require('lualine').setup({
         section_separators = ''
     }
 })
-require('gitsigns').setup()
+require('gitsigns').setup({})
 require('fidget').setup()
 require('which-key').setup()
 require('neodev').setup()
@@ -76,15 +78,8 @@ require('telescope').setup({
         sorting_strategy = 'ascending',
     }
 })
-require('neo-tree').setup({
-    close_if_last_window = true,
-    window = {
-        width = 30,
-        mappings = {
-            ['<CR>'] = 'open_tabnew',
-        },
-    }
-})
+require("nvim-tree").setup()
+
 require('nvim-treesitter.configs').setup({
     modules = {'highlight'},
     sync_install = false,
@@ -93,7 +88,6 @@ require('nvim-treesitter.configs').setup({
     auto_install = false,
 
     highlight = {enable = true},
-    -- indent = {enable = true},
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -200,26 +194,17 @@ local cmp_config = {
 
 cmp.setup(cmp_config)
 
--- require("bufferline").setup()
+local bufferline_config = {
+    options = {
+        numbers = "buffer_id",
+        offsets = {
+            {filetype = "NvimTree", text = "NvimTree", padding = 1}
+        },
+    },
+    highlights = {}
+}
 
--- local bufferline = {
---     { condition = function ()
---         local tmp1 = vim.api.nvim_tabpage_list_wins(0)[1]
---         local tmp2 = vim.api.nvim_win_get_buf(tmp1)
---         print(tmp1)
---         print(tmp2)
---         return true
---     end,
---     provider = 'tree '
---     },
---     { provider = 'something'},
---     update = {'ModeChanged'}
--- 
--- }
--- 
--- require('heirline').setup({
---     tabline = bufferline
--- })
+require("bufferline").setup(bufferline_config)
 
 vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
 vim.g.vimwiki_global_ext = 0
@@ -244,12 +229,12 @@ vim.o.termguicolors = true
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
-vim.keymap.set('i', '<C-s>', '<ESC>:w<CR>')
+vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<leader>x', ':tabclose<CR>')
-vim.keymap.set('n', '<leader>l', ':tabnext<CR>')
-vim.keymap.set('n', '<leader>h', ':tabprevious<CR>')
+vim.keymap.set('n', '<leader>x', ':bdelete<CR>:blast<CR>')
+vim.keymap.set('n', '<leader>l', ':bnext<CR>')
+vim.keymap.set('n', '<leader>h', ':bprevious<CR>')
 vim.keymap.set('n', '<leader>n', ':nohlsearch<CR>')
 
 -- Remap for dealing with word wrap
@@ -287,7 +272,7 @@ local wrap = function(f, ...)
 end
 
 local tsb = require('telescope.builtin')
-vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
+vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>', {desc = 'Toggle tree'})
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, {desc = '[S]earch by [G]rep'})
 vim.keymap.set('n', '<leader>ss', wrap(tsb.diagnostics, {bufnr = 0}))
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, {desc = '[S]earch [D]iagnostics'})
