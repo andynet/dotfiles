@@ -55,10 +55,11 @@ local plugins = {
     'folke/which-key.nvim',
     'lewis6991/gitsigns.nvim',
     'nvim-lualine/lualine.nvim',
-    'rebelot/heirline.nvim',
-    'morhetz/gruvbox', -- this is for UI, see astronvim/l/p/heirline.lua
+    'morhetz/gruvbox',
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
+--     {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+--     'rebelot/heirline.nvim', -- this is for UI, see astronvim/l/p/heirline.lua
 }
 
 require('lazy').setup(plugins)
@@ -75,7 +76,27 @@ require('lualine').setup({
 require('gitsigns').setup()
 require('fidget').setup()
 require('which-key').setup()
--- require('heirline').setup({})
+
+-- require("bufferline").setup()
+
+-- local bufferline = {
+--     { condition = function ()
+--         local tmp1 = vim.api.nvim_tabpage_list_wins(0)[1]
+--         local tmp2 = vim.api.nvim_win_get_buf(tmp1)
+--         print(tmp1)
+--         print(tmp2)
+--         return true
+--     end,
+--     provider = 'tree '
+--     },
+--     { provider = 'something'},
+--     update = {'ModeChanged'}
+-- 
+-- }
+-- 
+-- require('heirline').setup({
+--     tabline = bufferline
+-- })
 
 vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
 vim.g.vimwiki_global_ext = 0
@@ -99,6 +120,11 @@ vim.o.termguicolors = true
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
 vim.keymap.set('i', '<C-s>', '<ESC>:w<CR>')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set('n', '<C-h>', '<C-w>h')
+vim.keymap.set('n', '<leader>x', ':tabclose<CR>')
+vim.keymap.set('n', '<leader>l', ':tabnext<CR>')
+vim.keymap.set('n', '<leader>h', ':tabprevious<CR>')
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
@@ -131,6 +157,7 @@ vim.keymap.set(
 )
 
 require("neo-tree").setup({
+    close_if_last_window = true,
     window = {
         width = 30,
         mappings = {
@@ -140,11 +167,17 @@ require("neo-tree").setup({
 })
 
 vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
+-- local tsb = require('telescope.builtin')
 vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, {desc = '[S]earch by [G]rep'})
+-- vim.keymap.set('n', '<leader>ss', require('telescope.builtin').diagnostics({bufnr = 0}), {desc = '[S]earch [D]iagnostics'})
 vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, {desc = '[S]earch [D]iagnostics'})
 
+
 require('nvim-treesitter.configs').setup({
+    modules = {'highlight'},
+    sync_install = false,
     ensure_installed = {'python', 'rust', 'c', 'cpp', 'lua', 'vimdoc', 'vim'},
+    ignore_install = {},
     auto_install = false,
 
     highlight = {enable = true},
@@ -152,54 +185,12 @@ require('nvim-treesitter.configs').setup({
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<c-space>',
-            node_incremental = '<c-space>',
-            scope_incremental = '<c-s>',
+            init_selection = '<C-space>',
+            node_incremental = '<C-space>',
             node_decremental = '<M-space>'
         }
     },
---     textobjects = {
---         select = {
---             enable = true,
---             lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
---             keymaps = {
---                 -- You can use the capture groups defined in textobjects.scm
---                 ['aa'] = '@parameter.outer',
---                 ['ia'] = '@parameter.inner',
---                 ['af'] = '@function.outer',
---                 ['if'] = '@function.inner',
---                 ['ac'] = '@class.outer',
---                 ['ic'] = '@class.inner'
---             }
---         },
---         move = {
---             enable = true,
---             set_jumps = true, -- whether to set jumps in the jumplist
---             goto_next_start = {
---                 [']m'] = '@function.outer',
---                 [']]'] = '@class.outer'
---             },
---             goto_next_end = {
---                 [']M'] = '@function.outer',
---                 [']['] = '@class.outer'
---             },
---             goto_previous_start = {
---                 ['[m'] = '@function.outer',
---                 ['[['] = '@class.outer'
---             },
---             goto_previous_end = {
---                 ['[M'] = '@function.outer',
---                 ['[]'] = '@class.outer'
---             }
---         },
---         swap = {
---             enable = true,
---             swap_next = {['<leader>a'] = '@parameter.inner'},
---             swap_previous = {['<leader>A'] = '@parameter.inner'}
---         }
---     }
-}
-)
+})
 
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open floating diagnostic message'})
@@ -264,7 +255,7 @@ local luasnip = require('luasnip')
 require('luasnip.loaders.from_vscode').lazy_load() -- ???
 luasnip.config.setup({})
 
-cmp.setup({
+local cmp_config = {
     snippet = {expand = function(args) luasnip.lsp_expand(args.body) end},
     mapping = cmp.mapping.preset.insert {
         ['<C-n>'] = cmp.mapping.select_next_item(),
@@ -295,8 +286,13 @@ cmp.setup({
             end
         end, {'i', 's'})
     },
-    sources = {{name = 'nvim_lsp'}, {name = 'luasnip'}}
-})
+    sources = {
+        {name = 'nvim_lsp'},
+        {name = 'luasnip'}
+    }
+}
+
+cmp.setup(cmp_config)
 
 print('Successfuly loaded.')
 
