@@ -1,18 +1,12 @@
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ';'
-vim.g.maplocalleader = ';'
-
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_ruby_provider = 0
+vim.g.mapleader = ';'       -- defines <Leader>
+vim.g.maplocalleader = ';'  -- defines <LocalLeader>
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system {
-        'git', 'clone', 'https://github.com/folke/lazy.nvim.git',
-        lazypath
-    }
+    vim.fn.system({
+        'git', 'clone', 'https://github.com/folke/lazy.nvim.git', lazypath
+    })
 end
 vim.opt.runtimepath:prepend(lazypath)
 
@@ -49,7 +43,7 @@ local plugins = {
         build = 'make'
     }, {
         'nvim-treesitter/nvim-treesitter',
-        dependencies = {'nvim-treesitter/nvim-treesitter-textobjects'},
+        -- dependencies = {'nvim-treesitter/nvim-treesitter-textobjects'},
         build = ':TSUpdate'
     },
     'folke/which-key.nvim',
@@ -76,103 +70,21 @@ require('lualine').setup({
 require('gitsigns').setup()
 require('fidget').setup()
 require('which-key').setup()
-
--- require("bufferline").setup()
-
--- local bufferline = {
---     { condition = function ()
---         local tmp1 = vim.api.nvim_tabpage_list_wins(0)[1]
---         local tmp2 = vim.api.nvim_win_get_buf(tmp1)
---         print(tmp1)
---         print(tmp2)
---         return true
---     end,
---     provider = 'tree '
---     },
---     { provider = 'something'},
---     update = {'ModeChanged'}
--- 
--- }
--- 
--- require('heirline').setup({
---     tabline = bufferline
--- })
-
-vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
-vim.g.vimwiki_global_ext = 0
-
-
-vim.cmd.colorscheme 'gruvbox'
--- vim.o.hlsearch = false
-vim.wo.number = true
-vim.o.mouse = ''
-vim.o.clipboard = 'unnamedplus'
-vim.o.breakindent = true
-vim.o.undofile = true
-vim.o.ignorecase = true
-vim.o.smartcase = true
-vim.wo.signcolumn = 'yes'
-vim.o.updatetime = 250
-vim.o.timeoutlen = 300
-vim.o.completeopt = 'menuone,noselect'
-vim.o.termguicolors = true
-
-vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
-vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
-vim.keymap.set('i', '<C-s>', '<ESC>:w<CR>')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', '<leader>x', ':tabclose<CR>')
-vim.keymap.set('n', '<leader>l', ':tabnext<CR>')
-vim.keymap.set('n', '<leader>h', ':tabprevious<CR>')
-
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true})
-
--- [[ Highlight on yank ]]
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
-vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function() vim.highlight.on_yank() end,
-    group = highlight_group,
-    pattern = '*'
+require('neodev').setup()
+require('telescope').setup({
+    defaults = {
+        sorting_strategy = 'ascending',
+    }
 })
-
-require('telescope').setup({})
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
-
--- See `:help telescope.builtin`
-vim.keymap.set(
-    'n', '<leader>?', require('telescope.builtin').oldfiles,
-    {desc = '[?] Find recently opened files'}
-)
-vim.keymap.set(
-    'n', '<leader>/', function()
-        require('telescope.builtin').current_buffer_fuzzy_find(
-            require('telescope.themes').get_dropdown {winblend = 10, previewer = false}
-        )
-    end,
-    {desc = '[/] Fuzzily search in current buffer'}
-)
-
-require("neo-tree").setup({
+require('neo-tree').setup({
     close_if_last_window = true,
     window = {
         width = 30,
         mappings = {
-            ["<cr>"] = "open_tabnew",
+            ['<CR>'] = 'open_tabnew',
         },
     }
 })
-
-vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
--- local tsb = require('telescope.builtin')
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, {desc = '[S]earch by [G]rep'})
--- vim.keymap.set('n', '<leader>ss', require('telescope.builtin').diagnostics({bufnr = 0}), {desc = '[S]earch [D]iagnostics'})
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, {desc = '[S]earch [D]iagnostics'})
-
-
 require('nvim-treesitter.configs').setup({
     modules = {'highlight'},
     sync_install = false,
@@ -181,7 +93,7 @@ require('nvim-treesitter.configs').setup({
     auto_install = false,
 
     highlight = {enable = true},
-    indent = {enable = true},
+    -- indent = {enable = true},
     incremental_selection = {
         enable = true,
         keymaps = {
@@ -191,11 +103,6 @@ require('nvim-treesitter.configs').setup({
         }
     },
 })
-
--- Diagnostic keymaps
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open floating diagnostic message'})
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {desc = 'Open diagnostics list'})
-
 -- [[ Configure LSP ]]
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
@@ -231,7 +138,6 @@ local servers = {
     }
 }
 
-require('neodev').setup()
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
@@ -240,7 +146,7 @@ local mason_lspconfig = require('mason-lspconfig')
 
 mason_lspconfig.setup({ensure_installed = vim.tbl_keys(servers)})
 
-mason_lspconfig.setup_handlers {
+mason_lspconfig.setup_handlers({
     function(server_name)
         require('lspconfig')[server_name].setup {
             capabilities = capabilities,
@@ -248,7 +154,7 @@ mason_lspconfig.setup_handlers {
             settings = servers[server_name]
         }
     end
-}
+})
 
 local cmp = require('cmp')
 local luasnip = require('luasnip')
@@ -293,6 +199,102 @@ local cmp_config = {
 }
 
 cmp.setup(cmp_config)
+
+-- require("bufferline").setup()
+
+-- local bufferline = {
+--     { condition = function ()
+--         local tmp1 = vim.api.nvim_tabpage_list_wins(0)[1]
+--         local tmp2 = vim.api.nvim_win_get_buf(tmp1)
+--         print(tmp1)
+--         print(tmp2)
+--         return true
+--     end,
+--     provider = 'tree '
+--     },
+--     { provider = 'something'},
+--     update = {'ModeChanged'}
+-- 
+-- }
+-- 
+-- require('heirline').setup({
+--     tabline = bufferline
+-- })
+
+vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
+vim.g.vimwiki_global_ext = 0
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
+vim.cmd.colorscheme 'gruvbox'
+vim.wo.number = true
+vim.o.mouse = ''
+vim.o.clipboard = 'unnamedplus'
+vim.o.breakindent = true
+vim.o.undofile = true
+vim.o.ignorecase = true
+vim.o.smartcase = true
+vim.wo.signcolumn = 'yes'
+vim.o.updatetime = 250
+vim.o.timeoutlen = 300
+vim.o.completeopt = 'menuone,noselect'
+vim.o.termguicolors = true
+
+vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
+vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
+vim.keymap.set('i', '<C-s>', '<ESC>:w<CR>')
+vim.keymap.set('n', '<C-l>', '<C-w>l')
+vim.keymap.set('n', '<C-h>', '<C-w>h')
+vim.keymap.set('n', '<leader>x', ':tabclose<CR>')
+vim.keymap.set('n', '<leader>l', ':tabnext<CR>')
+vim.keymap.set('n', '<leader>h', ':tabprevious<CR>')
+vim.keymap.set('n', '<leader>n', ':nohlsearch<CR>')
+
+-- Remap for dealing with word wrap
+vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
+vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true})
+
+-- [[ Highlight on yank ]]
+local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
+vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function() vim.highlight.on_yank() end,
+    group = highlight_group,
+    pattern = '*'
+})
+
+-- Enable telescope fzf native, if installed
+pcall(require('telescope').load_extension, 'fzf')
+
+-- See `:help telescope.builtin`
+vim.keymap.set(
+    'n', '<leader>?', require('telescope.builtin').oldfiles,
+    {desc = '[?] Find recently opened files'}
+)
+vim.keymap.set(
+    'n', '<leader>/', function()
+        require('telescope.builtin').current_buffer_fuzzy_find(
+            require('telescope.themes').get_dropdown {winblend = 10, previewer = false}
+        )
+    end,
+    {desc = '[/] Fuzzily search in current buffer'}
+)
+
+local wrap = function(f, ...)
+    local args = {...}
+    return function() f(unpack(args)) end
+end
+
+local tsb = require('telescope.builtin')
+vim.keymap.set('n', '<leader>t', ':Neotree toggle<CR>', {desc = 'Toggle tree'})
+vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, {desc = '[S]earch by [G]rep'})
+vim.keymap.set('n', '<leader>ss', wrap(tsb.diagnostics, {bufnr = 0}))
+vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, {desc = '[S]earch [D]iagnostics'})
+
+-- Diagnostic keymaps
+vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open floating diagnostic message'})
+vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {desc = 'Open diagnostics list'})
 
 print('Successfuly loaded.')
 
