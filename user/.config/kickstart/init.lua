@@ -48,14 +48,15 @@ local plugins = {
         build = ':TSUpdate'
     },
     'nvim-tree/nvim-tree.lua',
-    "nvim-tree/nvim-web-devicons",
+    'nvim-tree/nvim-web-devicons',
     'folke/which-key.nvim',
     'lewis6991/gitsigns.nvim',
     'nvim-lualine/lualine.nvim',
     'morhetz/gruvbox',
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
-    {'akinsho/bufferline.nvim', version = "*", dependencies = 'nvim-tree/nvim-web-devicons'},
+    'ibab/vim-snakemake',
+    {'akinsho/bufferline.nvim', dependencies = 'nvim-tree/nvim-web-devicons'},
 }
 
 require('lazy').setup(plugins)
@@ -69,6 +70,7 @@ require('lualine').setup({
         section_separators = ''
     }
 })
+
 require('gitsigns').setup({})
 require('fidget').setup()
 require('which-key').setup()
@@ -78,8 +80,13 @@ require('telescope').setup({
         sorting_strategy = 'ascending',
     }
 })
-require("nvim-tree").setup()
-
+require('nvim-tree').setup({
+    renderer = {
+        icons = {
+            git_placement = 'after'
+        }
+    }
+})
 require('nvim-treesitter.configs').setup({
     modules = {'highlight'},
     sync_install = false,
@@ -97,6 +104,7 @@ require('nvim-treesitter.configs').setup({
         }
     },
 })
+
 -- [[ Configure LSP ]]
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
@@ -196,15 +204,17 @@ cmp.setup(cmp_config)
 
 local bufferline_config = {
     options = {
-        numbers = "buffer_id",
-        offsets = {
-            {filetype = "NvimTree", text = "NvimTree", padding = 1}
-        },
+        style_preset = require('bufferline').style_preset.minimal,
+        numbers = 'buffer_id',
+        buffer_close_icon = '',
+        close_icon = '',
+        offsets = {{filetype = 'NvimTree', text = 'NvimTree', padding = 1}},
     },
     highlights = {}
 }
 
 require("bufferline").setup(bufferline_config)
+-- end of plugin configuration
 
 vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
 vim.g.vimwiki_global_ext = 0
@@ -236,6 +246,7 @@ vim.keymap.set('n', '<leader>x', ':bdelete<CR>:blast<CR>')
 vim.keymap.set('n', '<leader>l', ':bnext<CR>')
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>')
 vim.keymap.set('n', '<leader>n', ':nohlsearch<CR>')
+vim.keymap.set('n', '<leader>p', require('nvim-tree.api').fs.copy.absolute_path, {desc = '[p] get absolute path'})
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
