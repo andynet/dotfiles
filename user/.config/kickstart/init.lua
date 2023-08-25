@@ -29,14 +29,6 @@ local plugins = {
             'hrsh7th/cmp-nvim-lsp',
         }
     }, {
---         "nvim-neo-tree/neo-tree.nvim",
---         branch = "v3.x",
---         dependencies = {
---             "nvim-lua/plenary.nvim",
---             "nvim-tree/nvim-web-devicons", -- not strictly required, but recommended
---             "MunifTanjim/nui.nvim",
---         }
---     }, {
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
         dependencies = {'nvim-lua/plenary.nvim'}
@@ -85,7 +77,10 @@ require('nvim-tree').setup({
         icons = {
             git_placement = 'after'
         }
-    }
+    },
+    filters = {
+        git_ignored = false,
+    },
 })
 require('nvim-treesitter.configs').setup({
     modules = {'highlight'},
@@ -236,6 +231,10 @@ vim.o.updatetime = 250
 vim.o.timeoutlen = 300
 vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
+vim.opt.listchars = "tab:> ,trail:."
+vim.opt.list = true
+vim.opt.wrap = false
+vim.opt.colorcolumn = "80"
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})

@@ -1,4 +1,8 @@
 user/.local/bin/micromamba
+user/.config/simple-scan/
+user/.config/spyder-py3/
+user/.config/GIMP/
+user/.config/obsidian/
 user/.config/.pki/
 user/.config/QtProject.conf
 user/.config/Thunar/

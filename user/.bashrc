@@ -75,6 +75,7 @@ alias gui="startx > session.log 2>&1"
 alias mamba="micromamba"
 alias snake="snakemake -c4 -s scripts/vinkofagy/heterozygosity.smk"
 alias avim="NVIM_APPNAME=astronvim nvim"
+alias vim="NVIM_APPNAME=kickstart nvim"
 alias config="git -C ~/.dotfiles"
 
 # limits recursive functions, see 'man bash'
@@ -110,3 +111,20 @@ else
 fi
 unset __mamba_setup
 # <<< mamba initialize <<<
+
+function n() {
+    [ "${NNNLVL:-0}" -eq 0 ] || {
+        echo "nnn is already running"
+        return
+    }
+
+    NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    # export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+
+    command nnn "$@"
+
+    [ ! -f "$NNN_TMPFILE" ] || {
+        . "$NNN_TMPFILE"
+        rm -f "$NNN_TMPFILE" > /dev/null
+    }
+}

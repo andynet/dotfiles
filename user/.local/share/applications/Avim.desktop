@@ -1,0 +1,10 @@
+[Desktop Entry]
+Name=Avim
+Exec=sh -c "NVIM_APPNAME=astronvim alacritty -e nvim"
+Terminal=false
+Type=Application
+Icon=avim
+StartupWMClass=avim
+Comment=Avim
+MimeType=x-scheme-handler/Avim;
+Categories=Office;
