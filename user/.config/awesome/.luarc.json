@@ -1,0 +1,4 @@
+{
+  "workspace.library": ["/usr/share/awesome/lib"],
+  "diagnostics.globals": ["awesome", "screen", "client", "root"]
+}
