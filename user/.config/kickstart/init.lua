@@ -223,7 +223,8 @@ vim.g.loaded_ruby_provider = 0
 vim.cmd.colorscheme 'gruvbox'
 vim.wo.number = true
 vim.o.mouse = ''
-vim.o.clipboard = 'unnamedplus'
+-- vim.o.clipboard = 'unnamedplus'
+vim.opt.clipboard:append('unnamedplus')
 vim.o.breakindent = true
 vim.o.undofile = true
 vim.o.ignorecase = true
@@ -235,10 +236,19 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.opt.listchars = "tab:> ,trail:."
 vim.opt.list = true
-vim.opt.wrap = false
 vim.opt.colorcolumn = "80"
+vim.opt.softtabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.expandtab = true
+vim.opt.wrap = false
+
+-- https://neovim.io/doc/user/lua-guide.html#lua-guide
+vim.cmd("highlight ColorColumn ctermbg=darkgray")
+vim.cmd("packadd termdebug")
+vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
+vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
 vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
@@ -248,6 +258,7 @@ vim.keymap.set('n', '<leader>l', ':bnext<CR>')
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>')
 vim.keymap.set('n', '<leader>n', ':nohlsearch<CR>')
 vim.keymap.set('n', '<leader>p', require('nvim-tree.api').fs.copy.absolute_path, {desc = '[p] get absolute path'})
+vim.keymap.set('n', 'x', '"_x')
 
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
