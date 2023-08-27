@@ -38,6 +38,9 @@ local plugins = {
     }, {
         'nvim-treesitter/nvim-treesitter',
         build = ':TSUpdate'
+    }, {
+        'akinsho/bufferline.nvim',
+        dependencies = 'nvim-tree/nvim-web-devicons'
     },
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
@@ -48,7 +51,6 @@ local plugins = {
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
     'ibab/vim-snakemake',
-    {'akinsho/bufferline.nvim', dependencies = 'nvim-tree/nvim-web-devicons'},
 }
 
 require('lazy').setup(plugins)
