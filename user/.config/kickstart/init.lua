@@ -4,6 +4,9 @@ vim.g.maplocalleader = ';'  -- defines <LocalLeader>
 vim.g.loaded_netrw = 1
 vim.g.loaded_netrwPlugin = 1
 
+vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
+vim.g.vimwiki_global_ext = 0
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -213,8 +216,6 @@ local bufferline_config = {
 require("bufferline").setup(bufferline_config)
 -- end of plugin configuration
 
-vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
-vim.g.vimwiki_global_ext = 0
 vim.g.loaded_node_provider = 0
 vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
@@ -243,9 +244,9 @@ vim.opt.expandtab = true
 vim.opt.wrap = false
 
 -- https://neovim.io/doc/user/lua-guide.html#lua-guide
-vim.cmd("highlight ColorColumn ctermbg=darkgray")
-vim.cmd("packadd termdebug")
-vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
+-- vim.cmd("highlight ColorColumn ctermbg=darkgray")
+-- vim.cmd("packadd termdebug")
+-- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
