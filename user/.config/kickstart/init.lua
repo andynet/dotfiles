@@ -243,6 +243,9 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
 
+vim.o.foldmethod = 'expr'
+vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+
 -- https://neovim.io/doc/user/lua-guide.html#lua-guide
 -- vim.cmd("highlight ColorColumn ctermbg=darkgray")
 -- vim.cmd("packadd termdebug")
@@ -269,10 +272,17 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = tru
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
 vim.api.nvim_create_autocmd('TextYankPost', {
-    callback = function() vim.highlight.on_yank() end,
     group = highlight_group,
-    pattern = '*'
+    pattern = '*',
+    callback = function() vim.highlight.on_yank() end,
 })
+
+-- do not start folded
+-- autocmd BufReadPost,FileReadPost * normal zR
+vim.api.nvim_create_autocmd(
+    {'BufReadPost', 'FileReadPost'},
+    {pattern = '*', command = 'normal zR'}
+)
 
 -- Enable telescope fzf native, if installed
 pcall(require('telescope').load_extension, 'fzf')
