@@ -98,9 +98,9 @@ require('nvim-treesitter.configs').setup({
     incremental_selection = {
         enable = true,
         keymaps = {
-            init_selection = '<C-space>',
-            node_incremental = '<C-space>',
-            node_decremental = '<M-space>'
+            init_selection = '<M-Space>',
+            node_incremental = '<M-Space>',
+            node_decremental = '<M-b>'
         }
     },
 })
@@ -249,6 +249,7 @@ vim.opt.wrap = false
 -- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
+vim.keymap.set({'n', 'v'}, '<C-Space>', '<C-f>', {silent = true})
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set({'n'}, '<leader>c', ':ColorToggle<CR>', {desc = '[c] Toggle color'})
 vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
