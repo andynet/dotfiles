@@ -237,11 +237,12 @@ vim.o.completeopt = 'menuone,noselect'
 vim.o.termguicolors = true
 vim.opt.listchars = "tab:> ,trail:."
 vim.opt.list = true
-vim.opt.colorcolumn = "80"
+vim.opt.colorcolumn = "80,120"
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
+vim.o.scrolloff = 5
 
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
@@ -268,6 +269,10 @@ vim.keymap.set('n', 'x', '"_x')
 -- Remap for dealing with word wrap
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true})
+vim.keymap.set('n', '<Up>', "v:count == 0 ? 'gk' : 'k'", {expr = true, silent = true})
+vim.keymap.set('n', '<Down>', "v:count == 0 ? 'gj' : 'j'", {expr = true, silent = true})
+-- scroll after EOF
+vim.keymap.set('n', 'j', "line('.') >= line('$') - 5 ? '<C-e>gj' : 'gj'", {expr = true, silent = true})
 
 -- [[ Highlight on yank ]]
 local highlight_group = vim.api.nvim_create_augroup('YankHighlight', {clear = true})
