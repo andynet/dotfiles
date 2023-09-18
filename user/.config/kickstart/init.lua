@@ -54,8 +54,54 @@ local plugins = {
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
     'ibab/vim-snakemake',
-    -- 'mfussenegger/nvim-dap',
-    -- 'rcarriga/nvim-dap-ui',
+    {
+        'mfussenegger/nvim-dap',
+        dependencies = {
+            'rcarriga/nvim-dap-ui',
+            'williamboman/mason.nvim',
+            'jay-babu/mason-nvim-dap.nvim',
+        },
+        config = function()
+            local dap = require('dap')
+            local dapui = require('dapui')
+            local masondap = require('mason-nvim-dap')
+
+            masondap.setup({
+                automatic_setup = true,
+                ensure_installed = {'codelldb'},
+            })
+
+            dap.adapters.lldb = {
+                type = "server",
+                port = "${port}",
+                host = "127.0.0.1",
+                executable = {
+                    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+                    args = { "--port", "${port}" },
+                },
+            }
+
+            dap.configurations.rust = {{
+                type = 'lldb',
+                request = 'launch',
+                name = 'Launch',
+                program = function()
+                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+            }}
+
+            vim.keymap.set('n', '<F5>', dap.continue, { desc = 'Debug: Start/Continue' })
+            vim.keymap.set('n', '<F1>', dap.step_into, { desc = 'Debug: Step Into' })
+            vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+            vim.keymap.set('n', '<F3>', dap.step_out, { desc = 'Debug: Step Out' })
+            vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+            vim.keymap.set('n', '<leader>B', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
+
+            dapui.setup()
+
+            vim.keymap.set('n', '<F7>', dapui.toggle, { desc = 'Debug: See last session result.' })
+        end,
+    },
     -- require('debug'),
 }
 
@@ -72,40 +118,9 @@ require('lualine').setup({
 })
 
 -- https://neovim.io/doc/user/lua-guide.html#lua-guide
--- vim.cmd("highlight ColorColumn ctermbg=darkgray")
 -- vim.cmd("packadd termdebug")
 -- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
 
--- require('dapui').setup()
-
--- local dap = require('dap')
--- dap.set_log_level('TRACE')
-
--- dap.adapters.lldb = {
---   type = 'executable',
---   -- command = '/home/balaz/.local/share/cargo/bin/rust-lldb', -- must be absolute path
---   command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
--- }
-
--- dap.adapters.lldb = {
---   type = "server",
---   port = "${port}",
---   host = "127.0.0.1",
---   executable = {
---     command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
---     args = { "--port", "${port}" },
---   },
--- }
--- 
--- dap.configurations.rust = {{
---     type = 'lldb',
---     request = 'launch',
---     name = 'Launch',
---     program = function()
---       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
---     end,
--- }}
--- 
 -- dap.configurations.python = {
 --   {
 --     type = 'python';
