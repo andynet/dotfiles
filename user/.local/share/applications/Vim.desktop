@@ -1,0 +1,11 @@
+[Desktop Entry]
+Name=Vim
+Exec="sh -c 'NVIM_APPNAME=kickstart alacritty -e nvim'"
+Terminal=false
+Type=Application
+Icon=vim
+StartupWMClass=vim
+Comment=Editor
+MimeType=text/english;text/plain;
+Categories=Office;
+X-Desktop-File-Install-Version=0.26

@@ -23,6 +23,8 @@ export LC_COLLATE="C"
 export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
 export MANPATH="~/.local/texmf/texmf-dist/doc/man:$MANPATH"
 export TERM="xterm"
+export NVIM_APPNAME="kickstart"
+export EDITOR="nvim"
 
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar # allow "**" pathname expansion
@@ -86,6 +88,10 @@ alias config="git -C ~/.dotfiles"
 bind '"\e[A":history-search-backward'
 bind '"\e[B":history-search-forward'
 
+# make completion
+# https://stackoverflow.com/a/38415982
+complete -W "\`grep -oE '^[a-zA-Z0-9_.-]+:([^=]|$)' ?akefile | sed 's/[^a-zA-Z0-9_.-]*$//'\`" make
+
 # if [[ $(ps --no-header --pid=$PPID --format=comm) != "fish" && -z ${BASH_EXECUTION_STRING} ]]
 # then
     # exec fish
@@ -119,7 +125,7 @@ function n() {
     }
 
     export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
-    command nnn -d "$@"
+    command nnn -d -e "$@"
 
     [ ! -f "$NNN_TMPFILE" ] || {
         . "$NNN_TMPFILE"

@@ -54,6 +54,9 @@ local plugins = {
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
     'ibab/vim-snakemake',
+    -- 'mfussenegger/nvim-dap',
+    -- 'rcarriga/nvim-dap-ui',
+    -- require('debug'),
 }
 
 require('lazy').setup(plugins)
@@ -67,6 +70,53 @@ require('lualine').setup({
         section_separators = ''
     }
 })
+
+-- https://neovim.io/doc/user/lua-guide.html#lua-guide
+-- vim.cmd("highlight ColorColumn ctermbg=darkgray")
+-- vim.cmd("packadd termdebug")
+-- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
+
+-- require('dapui').setup()
+
+-- local dap = require('dap')
+-- dap.set_log_level('TRACE')
+
+-- dap.adapters.lldb = {
+--   type = 'executable',
+--   -- command = '/home/balaz/.local/share/cargo/bin/rust-lldb', -- must be absolute path
+--   command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+-- }
+
+-- dap.adapters.lldb = {
+--   type = "server",
+--   port = "${port}",
+--   host = "127.0.0.1",
+--   executable = {
+--     command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+--     args = { "--port", "${port}" },
+--   },
+-- }
+-- 
+-- dap.configurations.rust = {{
+--     type = 'lldb',
+--     request = 'launch',
+--     name = 'Launch',
+--     program = function()
+--       return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+--     end,
+-- }}
+-- 
+-- dap.configurations.python = {
+--   {
+--     type = 'python';
+--     request = 'launch';
+--     name = "Launch file";
+--     program = "${file}";
+--     pythonPath = function()
+--       return '/usr/bin/python'
+--     end;
+--   },
+-- }
 
 require('gitsigns').setup({})
 require('fidget').setup()
@@ -90,7 +140,7 @@ require('nvim-tree').setup({
 require('nvim-treesitter.configs').setup({
     modules = {'highlight'},
     sync_install = false,
-    ensure_installed = {'python', 'rust', 'c', 'cpp', 'lua', 'vimdoc', 'vim'},
+    ensure_installed = {'python', 'rust', 'c', 'cpp', 'lua', 'vimdoc', 'vim', 'json'},
     ignore_install = {},
     auto_install = false,
 
@@ -208,6 +258,8 @@ local bufferline_config = {
         numbers = 'buffer_id',
         buffer_close_icon = '',
         close_icon = '',
+        -- name_formatter = function(buf) return vim.fn.pathshorten(buf.path) end,
+        truncate_names = false,
         offsets = {{filetype = 'NvimTree', text = 'NvimTree', padding = 1}},
     },
     highlights = {}
@@ -224,7 +276,6 @@ vim.g.loaded_ruby_provider = 0
 vim.cmd.colorscheme 'gruvbox'
 vim.wo.number = true
 vim.o.mouse = ''
--- vim.o.clipboard = 'unnamedplus'
 vim.opt.clipboard:append('unnamedplus')
 vim.o.breakindent = true
 vim.o.undofile = true
@@ -247,11 +298,6 @@ vim.o.scrolloff = 5
 vim.o.foldmethod = 'expr'
 vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
--- https://neovim.io/doc/user/lua-guide.html#lua-guide
--- vim.cmd("highlight ColorColumn ctermbg=darkgray")
--- vim.cmd("packadd termdebug")
--- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
-
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set({'n', 'v'}, '<C-Space>', '<C-f>', {silent = true})
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
@@ -264,6 +310,7 @@ vim.keymap.set('n', '<leader>l', ':bnext<CR>')
 vim.keymap.set('n', '<leader>h', ':bprevious<CR>')
 vim.keymap.set('n', '<leader>n', ':nohlsearch<CR>')
 vim.keymap.set('n', '<leader>p', require('nvim-tree.api').fs.copy.absolute_path, {desc = '[p] get absolute path'})
+-- :echo buffer_name()
 vim.keymap.set('n', 'x', '"_x')
 
 -- Remap for dealing with word wrap

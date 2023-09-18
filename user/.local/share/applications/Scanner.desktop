@@ -10,3 +10,4 @@ Terminal=false
 Type=Application
 StartupNotify=true
 Categories=GNOME;GTK;Graphics;Scanning;
+X-Desktop-File-Install-Version=0.26
