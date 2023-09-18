@@ -15,6 +15,91 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
+local debug = {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+        'rcarriga/nvim-dap-ui',
+        'williamboman/mason.nvim',
+        'jay-babu/mason-nvim-dap.nvim',
+    },
+    config = function()
+        local dap = require('dap')
+        local dapui = require('dapui')
+        local masondap = require('mason-nvim-dap')
+
+        masondap.setup({
+            automatic_installation= false,
+            ensure_installed = {'codelldb'},
+        })
+
+        dap.adapters.lldb = {
+            type = "server",
+            port = "${port}",
+            host = "127.0.0.1",
+            executable = {
+                command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+                args = { "--port", "${port}" },
+            },
+        }
+
+--         local last_cmd = ""
+--         local program = ""
+--         local args = {}
+--
+--         local fn1 = function()
+--             local cmd = vim.fn.input("Debug: ", last_cmd, 'file')
+--             last_cmd = cmd
+--             local splits = vim.split(cmd, " ")
+--             if #splits > 0 then
+--                 program = splits[1]
+--                 if #splits > 1 then
+--                     table.remove(splits, 1)
+--                     args = splits
+--                 end
+--             end
+--         end
+--         https://www.reddit.com/r/neovim/comments/txfy9z/codelldb_configuration_for_nvimdap/
+
+        dap.configurations.rust = {{
+            type = 'lldb',
+            request = 'launch',
+            name = 'Launch',
+            program = function ()
+                return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
+            end,
+            args = function ()
+                return vim.split(vim.fn.input('args: '), ' ')
+            end
+        }}
+
+        local dapui_setup = {
+            controls = {enabled = false},
+            layouts = {{
+                elements = {{id = "scopes", size = 1.0}},
+                position = "right",
+                size = 30
+            },{
+                elements = {
+                    {id = "repl", size = 0.5},
+                    {id = "console", size = 0.5}
+                },
+                position = "bottom",
+                size = 10
+            }}
+        }
+        dapui.setup(dapui_setup)
+
+        vim.keymap.set('n', '<F1>', dap.continue,  { desc = 'Debug: Start/Continue' })
+        vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
+        vim.keymap.set('n', '<F3>', dap.step_into, { desc = 'Debug: Step Into' })
+        vim.keymap.set('n', '<F4>', dap.step_out,  { desc = 'Debug: Step Out' })
+        vim.keymap.set('n', '<F5>', dap.run_last,  { desc = 'Debug: Rerun' })
+        vim.keymap.set('n', '<F6>', dapui.toggle,  { desc = 'Debug: See last session result.' })
+        vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
+        vim.keymap.set('n', '<leader>B', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
+    end,
+}
+
 local plugins = {
     {
         'neovim/nvim-lspconfig',
@@ -54,91 +139,7 @@ local plugins = {
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
     'ibab/vim-snakemake',
-    {
-        'mfussenegger/nvim-dap',
-        dependencies = {
-            'rcarriga/nvim-dap-ui',
-            'williamboman/mason.nvim',
-            'jay-babu/mason-nvim-dap.nvim',
-        },
-        config = function()
-            local dap = require('dap')
-            local dapui = require('dapui')
-            local masondap = require('mason-nvim-dap')
-
-            masondap.setup({
-                automatic_installation= false,
-                ensure_installed = {'codelldb'},
-            })
-
-            dap.adapters.lldb = {
-                type = "server",
-                port = "${port}",
-                host = "127.0.0.1",
-                executable = {
-                    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
-                    args = { "--port", "${port}" },
-                },
-            }
-
---             local last_cmd = ""
---             local program = ""
---             local args = {}
--- 
---             local fn1 = function()
---                 local cmd = vim.fn.input("Debug: ", last_cmd, 'file')
---                 last_cmd = cmd
---                 local splits = vim.split(cmd, " ")
---                 if #splits > 0 then
---                     program = splits[1]
---                     if #splits > 1 then
---                         table.remove(splits, 1)
---                         args = splits
---                     end
---                 end
---             end
---             https://www.reddit.com/r/neovim/comments/txfy9z/codelldb_configuration_for_nvimdap/
-
-            dap.configurations.rust = {{
-                type = 'lldb',
-                request = 'launch',
-                name = 'Launch',
-                program = function ()
-                    return vim.fn.input('Path to executable: ', vim.fn.getcwd() .. '/', 'file')
-                end,
-                args = function ()
-                    return vim.split(vim.fn.input('args: '), ' ')
-                end
-            }}
-
-            local dapui_setup = {
-                controls = {enabled = false},
-                layouts = {{
-                    elements = {{id = "scopes", size = 1.0}},
-                    position = "right",
-                    size = 30
-                },{
-                    elements = {
-                        {id = "repl", size = 0.5},
-                        {id = "console", size = 0.5}
-                    },
-                    position = "bottom",
-                    size = 10
-                }}
-            }
-            dapui.setup(dapui_setup)
-
-            vim.keymap.set('n', '<F1>', dap.continue,  { desc = 'Debug: Start/Continue' })
-            vim.keymap.set('n', '<F2>', dap.step_over, { desc = 'Debug: Step Over' })
-            vim.keymap.set('n', '<F3>', dap.step_into, { desc = 'Debug: Step Into' })
-            vim.keymap.set('n', '<F4>', dap.step_out,  { desc = 'Debug: Step Out' })
-            vim.keymap.set('n', '<F5>', dap.run_last,  { desc = 'Debug: Rerun' })
-            vim.keymap.set('n', '<F6>', dapui.toggle,  { desc = 'Debug: See last session result.' })
-            vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, { desc = 'Debug: Toggle Breakpoint' })
-            vim.keymap.set('n', '<leader>B', function() dap.set_breakpoint(vim.fn.input 'Breakpoint condition: ') end, { desc = 'Debug: Set Breakpoint' })
-        end,
-    },
-    -- require('debug'),
+    debug
 }
 
 require('lazy').setup(plugins)
