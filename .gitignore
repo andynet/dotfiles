@@ -25,4 +25,8 @@ user/.config/pulse/
 user/.config/qutebrowser/
 user/.config/vlc/
 user/.config/xfce4/
+user/.config/emacs/
+user/.config/audacious/
+user/.config/mgba/
+user/.local/share/applications/mimeinfo.cache
 
