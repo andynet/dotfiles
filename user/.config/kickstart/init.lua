@@ -7,6 +7,11 @@ vim.g.loaded_netrwPlugin = 1
 vim.g.vimwiki_list = {{path = '~/data/knowledge_vault', syntax = 'markdown', ext = '.md'}}
 vim.g.vimwiki_global_ext = 0
 
+vim.g.loaded_node_provider = 0
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
@@ -15,7 +20,7 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.runtimepath:prepend(lazypath)
 
-local debug = {
+local nvim_dap = {
     'mfussenegger/nvim-dap',
     dependencies = {
         'rcarriga/nvim-dap-ui',
@@ -41,6 +46,22 @@ local debug = {
                 args = { "--port", "${port}" },
             },
         }
+
+-- https://neovim.io/doc/user/lua-guide.html#lua-guide
+-- vim.cmd("packadd termdebug")
+-- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
+
+-- dap.configurations.python = {
+--   {
+--     type = 'python';
+--     request = 'launch';
+--     name = "Launch file";
+--     program = "${file}";
+--     pythonPath = function()
+--       return '/usr/bin/python'
+--     end;
+--   },
+-- }
 
 --         local last_cmd = ""
 --         local program = ""
@@ -100,23 +121,32 @@ local debug = {
     end,
 }
 
+local nvim_lspconfig = {
+    'neovim/nvim-lspconfig',
+    dependencies = {
+        'williamboman/mason.nvim',
+        'williamboman/mason-lspconfig.nvim',
+        {'j-hui/fidget.nvim', tag = 'legacy'},
+        'folke/neodev.nvim'
+    }
+}
+
+local nvim_cmp = {
+    'hrsh7th/nvim-cmp',
+    dependencies = {
+        'L3MON4D3/LuaSnip',
+        'saadparwaiz1/cmp_luasnip',
+        'hrsh7th/cmp-nvim-lsp',
+    },
+    config = function()
+    end,
+}
+
 local plugins = {
+    nvim_lspconfig,
+    nvim_cmp,
+    nvim_dap,
     {
-        'neovim/nvim-lspconfig',
-        dependencies = {
-            'williamboman/mason.nvim',
-            'williamboman/mason-lspconfig.nvim',
-            {'j-hui/fidget.nvim', tag = 'legacy'},
-            'folke/neodev.nvim'
-        }
-    }, {
-        'hrsh7th/nvim-cmp',
-        dependencies = {
-            'L3MON4D3/LuaSnip',
-            'saadparwaiz1/cmp_luasnip',
-            'hrsh7th/cmp-nvim-lsp',
-        }
-    }, {
         'nvim-telescope/telescope.nvim',
         branch = '0.1.x',
         dependencies = {'nvim-lua/plenary.nvim'}
@@ -138,8 +168,7 @@ local plugins = {
     'morhetz/gruvbox',
     'vimwiki/vimwiki',
     'chrisbra/Colorizer',
-    'ibab/vim-snakemake',
-    debug
+    'ibab/vim-snakemake'
 }
 
 require('lazy').setup(plugins)
@@ -153,22 +182,6 @@ require('lualine').setup({
         section_separators = ''
     }
 })
-
--- https://neovim.io/doc/user/lua-guide.html#lua-guide
--- vim.cmd("packadd termdebug")
--- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
-
--- dap.configurations.python = {
---   {
---     type = 'python';
---     request = 'launch';
---     name = "Launch file";
---     program = "${file}";
---     pythonPath = function()
---       return '/usr/bin/python'
---     end;
---   },
--- }
 
 require('gitsigns').setup({})
 require('fidget').setup()
@@ -319,11 +332,6 @@ local bufferline_config = {
 
 require("bufferline").setup(bufferline_config)
 -- end of plugin configuration
-
-vim.g.loaded_node_provider = 0
-vim.g.loaded_perl_provider = 0
-vim.g.loaded_python3_provider = 0
-vim.g.loaded_ruby_provider = 0
 
 vim.cmd.colorscheme 'gruvbox'
 vim.wo.number = true
