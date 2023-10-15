@@ -28,15 +28,14 @@ local nvim_dap = {
         'jay-babu/mason-nvim-dap.nvim',
     },
     config = function()
-        local dap = require('dap')
-        local dapui = require('dapui')
         local masondap = require('mason-nvim-dap')
-
         masondap.setup({
             automatic_installation= false,
-            ensure_installed = {'codelldb'},
+            ensure_installed = {'codelldb', 'debugpy'},
         })
 
+        local dap = require('dap')
+        -- https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation#python
         dap.adapters.lldb = {
             type = "server",
             port = "${port}",
@@ -46,41 +45,6 @@ local nvim_dap = {
                 args = { "--port", "${port}" },
             },
         }
-
--- https://neovim.io/doc/user/lua-guide.html#lua-guide
--- vim.cmd("packadd termdebug")
--- vim.keymap.set('n', '<C-D>', ':Termdebug<CR><C-w>j<C-w>j<C-w>L<C-w>h<C-w>k')
-
--- dap.configurations.python = {
---   {
---     type = 'python';
---     request = 'launch';
---     name = "Launch file";
---     program = "${file}";
---     pythonPath = function()
---       return '/usr/bin/python'
---     end;
---   },
--- }
-
---         local last_cmd = ""
---         local program = ""
---         local args = {}
---
---         local fn1 = function()
---             local cmd = vim.fn.input("Debug: ", last_cmd, 'file')
---             last_cmd = cmd
---             local splits = vim.split(cmd, " ")
---             if #splits > 0 then
---                 program = splits[1]
---                 if #splits > 1 then
---                     table.remove(splits, 1)
---                     args = splits
---                 end
---             end
---         end
---         https://www.reddit.com/r/neovim/comments/txfy9z/codelldb_configuration_for_nvimdap/
-
         dap.configurations.rust = {{
             type = 'lldb',
             request = 'launch',
@@ -93,6 +57,26 @@ local nvim_dap = {
             end
         }}
 
+        -- https://github.com/microsoft/debugpy/wiki/Debug-configuration-settings
+        dap.adapters.python = {
+            type = 'executable';
+            command = 'python';
+            args = { '-m', 'debugpy.adapter' };
+        }
+        dap.configurations.python = {{
+            type = 'python';
+            request = 'launch';
+            name = 'Launch';
+            program = '${file}';
+            args = function ()
+                return vim.split(vim.fn.input('args: '), ' ')
+            end,
+            pythonPath = function()
+                return 'python'
+            end;
+        }}
+
+        local dapui = require('dapui')
         local dapui_setup = {
             controls = {enabled = false},
             layouts = {{
@@ -101,8 +85,8 @@ local nvim_dap = {
                 size = 30
             },{
                 elements = {
-                    {id = "repl", size = 0.5},
-                    {id = "console", size = 0.5}
+                    {id = "repl", size = 1.0},
+                    -- {id = "console", size = 0.5}
                 },
                 position = "bottom",
                 size = 10
@@ -392,7 +376,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- do not start folded
 -- autocmd BufReadPost,FileReadPost * normal zR
 vim.api.nvim_create_autocmd(
-    {'BufReadPost', 'FileReadPost'},
+    {'BufReadPost', 'FilterReadPost', 'FileReadPost'},
     {pattern = '*', command = 'normal zR'}
 )
 
