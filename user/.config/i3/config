@@ -110,36 +110,41 @@ mode "resize" {
 }
 
 # appearance
-# font pango:Roboto Mono 15
 font pango:RobotoMono Nerd Font 15
-# font pango:JetBrains Mono 14
 
-set $black   #282828
-set $red     #cc241d
-set $green   #98971a
-set $yellow  #d79921
-set $blue    #458588
-set $magenta #b16286
-set $cyan    #689d6a
-set $white   #a89984
+set_from_resource $fg       i3wm.foreground #ffffff
+set_from_resource $bg       i3wm.background #000000
 
-# class        border  bg      text    indi    child
-# client.focused $green  $black  $green  $cyan   $green
-# client.unfocused 
-# client.focused_inactive 
-# client.urgent 
+set_from_resource $red      i3wm.color1     #900000
+set_from_resource $green    i3wm.color2     #285577
+# set_from_resource $yellow   i3wm.color3
+# set_from_resource $blue     i3wm.color4
+
+set_from_resource $bgreen   i3wm.color10    #4c7899
+set_from_resource $cyan     i3wm.color6     #2e9ef4
+
+# https://thomashunter.name/i3-configurator/
+# class                 border  bground text    indicator   child_border
+client.focused          $bgreen $green  $fg     $cyan       $green
+client.focused_inactive #333333 #5F676A $fg     #484E50     #5F676A
+client.unfocused        #333333 #222222 #888888 #292D2E     #222222
+client.urgent           #2F343A $red    $fg     $red        $red
+client.placeholder      $bg     #0C0C0C $fg     $bg         #0C0C0C
+
+client.background       $fg
 
 bar {
-        status_command i3status
-#         colors {
-#                 separator $magenta
-#                 background $green
-#                 statusline $red
-# #                                 border bg     txt    indicator
-#                 focused_workspace $green $green $green $green
-#                 # active_workspace  
-#                 # inactive_workspace
-#                 urgent_workspace $red $red $red $red
-#         }
+    status_command i3status
+    colors {
+        background $bg
+        statusline $fg
+        separator  #666666
+
+        focused_workspace  $bgreen $green   $fg
+        active_workspace   #333333 #222222  $fg
+        inactive_workspace #333333 #222222  #888888
+        urgent_workspace   #2F343A  $red    $fg
+        binding_mode       #2F343A  $red    $fg
+    }
 }
 
