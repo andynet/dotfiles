@@ -143,6 +143,23 @@ local plugins = {
     }, {
         'akinsho/bufferline.nvim',
         dependencies = 'nvim-tree/nvim-web-devicons'
+    }, {
+        'Julian/lean.nvim',
+        event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+        dependencies = {
+            'neovim/nvim-lspconfig',
+            'nvim-lua/plenary.nvim',
+            -- you also will likely want nvim-cmp or some completion engine
+        },
+        -- see details below for full configuration options
+        opts = {
+            lsp = { on_attach = on_attach,},
+            mappings = true,
+        }
+    }, {
+        'NoahTheDuke/vim-just',
+        event = { 'BufReadPre', 'BufNewFile' },
+        ft = { '\\cjustfile', '*.just', '.justfile' },
     },
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
@@ -168,6 +185,9 @@ require('lualine').setup({
 })
 
 require('gitsigns').setup({})
+-- :Gitsigns toggle_current_line_blame
+-- :Gitsigns next_hunk
+-- :Gitsigns reset_hunk
 require('fidget').setup()
 require('which-key').setup()
 require('neodev').setup()
