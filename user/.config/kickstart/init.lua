@@ -12,14 +12,6 @@ vim.g.loaded_perl_provider = 0
 vim.g.loaded_python3_provider = 0
 vim.g.loaded_ruby_provider = 0
 
-local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
-if not vim.loop.fs_stat(lazypath) then
-    vim.fn.system({
-        'git', 'clone', 'https://github.com/folke/lazy.nvim.git', lazypath
-    })
-end
-vim.opt.runtimepath:prepend(lazypath)
-
 local nvim_dap = {
     'mfussenegger/nvim-dap',
     dependencies = {
@@ -126,52 +118,136 @@ local nvim_cmp = {
     end,
 }
 
+local gitsigns = {
+    'lewis6991/gitsigns.nvim',
+    config = function ()
+        require('gitsigns').setup({})
+    end
+-- :Gitsigns toggle_current_line_blame
+-- :Gitsigns next_hunk
+-- :Gitsigns reset_hunk
+}
+
+local telescope = {
+    'nvim-telescope/telescope.nvim',
+    branch = '0.1.x',
+    dependencies = {'nvim-lua/plenary.nvim'},
+    config = function ()
+        require('telescope').setup({
+            defaults = {
+                sorting_strategy = 'ascending',
+            }
+        })
+        local wrap = function(f, ...)
+            local args = {...}
+            return function() f(unpack(args)) end
+        end
+
+        local tsb = require('telescope.builtin')
+        vim.keymap.set('n', '<leader>?', tsb.oldfiles, {desc = '[?] Find recently opened files'})
+        vim.keymap.set('n', '<leader>sg', tsb.live_grep, {desc = '[S]earch by [G]rep'})
+        vim.keymap.set('n', '<leader>ss', wrap(tsb.diagnostics, {bufnr = 0}), {desc = '[S]earch diagnostics here'})
+        vim.keymap.set('n', '<leader>sd', tsb.diagnostics, {desc = '[S]earch [D]iagnostics'})
+    end
+}
+
+local treesitter = {
+    'nvim-treesitter/nvim-treesitter',
+    build = ':TSUpdate',
+    config = function ()
+        require('nvim-treesitter.configs').setup({
+            modules = {'highlight'},
+            sync_install = false,
+            ensure_installed = {'rust', 'python', 'c', 'cpp', 'lua', 'vimdoc', 'vim', 'json'},
+            ignore_install = {},
+            auto_install = false,
+
+            highlight = {enable = true},
+            incremental_selection = {
+                enable = true,
+                keymaps = {
+                    init_selection = '<M-Space>',
+                    node_incremental = '<M-Space>',
+                    node_decremental = '<M-b>'
+                }
+            },
+        })
+        vim.o.foldmethod = 'expr'
+        vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
+        vim.o.foldlevel = 10
+    end
+}
+
+local lean = {
+    'Julian/lean.nvim',
+    event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
+    dependencies = {
+        'neovim/nvim-lspconfig',
+        'nvim-lua/plenary.nvim',
+        -- you also will likely want nvim-cmp or some completion engine
+    },
+    -- see details below for full configuration options
+    opts = {
+        lsp = { on_attach = on_attach,},
+        mappings = true,
+    }
+}
+
+local bufferline = {
+    'akinsho/bufferline.nvim',
+    dependencies = 'nvim-tree/nvim-web-devicons',
+    config = function ()
+        local bufferline_config = {
+            options = {
+                style_preset = require('bufferline').style_preset.minimal,
+                numbers = 'buffer_id',
+                buffer_close_icon = '',
+                close_icon = '',
+                -- name_formatter = function(buf) return vim.fn.pathshorten(buf.path) end,
+                truncate_names = false,
+                offsets = {{filetype = 'NvimTree', text = 'NvimTree', padding = 1}},
+            },
+            highlights = {}
+        }
+        require("bufferline").setup(bufferline_config)
+    end
+}
+
+local just = {
+    'NoahTheDuke/vim-just',
+    event = { 'BufReadPre', 'BufNewFile' },
+    ft = { '\\cjustfile', '*.just', '.justfile' },
+}
+
 local plugins = {
     nvim_lspconfig,
     nvim_cmp,
     nvim_dap,
-    {
-        'nvim-telescope/telescope.nvim',
-        branch = '0.1.x',
-        dependencies = {'nvim-lua/plenary.nvim'}
-    }, {
-        'nvim-telescope/telescope-fzf-native.nvim',
-        build = 'make'
-    }, {
-        'nvim-treesitter/nvim-treesitter',
-        build = ':TSUpdate'
-    }, {
-        'akinsho/bufferline.nvim',
-        dependencies = 'nvim-tree/nvim-web-devicons'
-    }, {
-        'Julian/lean.nvim',
-        event = { 'BufReadPre *.lean', 'BufNewFile *.lean' },
-        dependencies = {
-            'neovim/nvim-lspconfig',
-            'nvim-lua/plenary.nvim',
-            -- you also will likely want nvim-cmp or some completion engine
-        },
-        -- see details below for full configuration options
-        opts = {
-            lsp = { on_attach = on_attach,},
-            mappings = true,
-        }
-    }, {
-        'NoahTheDuke/vim-just',
-        event = { 'BufReadPre', 'BufNewFile' },
-        ft = { '\\cjustfile', '*.just', '.justfile' },
-    },
+    telescope,
+    treesitter,
+    gitsigns,
+    'folke/which-key.nvim',
+
+    bufferline,
     'nvim-tree/nvim-tree.lua',
     'nvim-tree/nvim-web-devicons',
-    'folke/which-key.nvim',
-    'lewis6991/gitsigns.nvim',
     'nvim-lualine/lualine.nvim',
     'morhetz/gruvbox',
-    'vimwiki/vimwiki',
     'chrisbra/Colorizer',
-    'ibab/vim-snakemake'
+
+    'vimwiki/vimwiki',
+    'ibab/vim-snakemake',
+    lean,
+    just,
 }
 
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
+if not vim.loop.fs_stat(lazypath) then
+    vim.fn.system({
+        'git', 'clone', 'https://github.com/folke/lazy.nvim.git', lazypath
+    })
+end
+vim.opt.runtimepath:prepend(lazypath)
 require('lazy').setup(plugins)
 
 require('mason').setup()
@@ -184,18 +260,9 @@ require('lualine').setup({
     }
 })
 
-require('gitsigns').setup({})
--- :Gitsigns toggle_current_line_blame
--- :Gitsigns next_hunk
--- :Gitsigns reset_hunk
 require('fidget').setup()
 require('which-key').setup()
 require('neodev').setup()
-require('telescope').setup({
-    defaults = {
-        sorting_strategy = 'ascending',
-    }
-})
 require('nvim-tree').setup({
     renderer = {
         icons = {
@@ -206,24 +273,6 @@ require('nvim-tree').setup({
         git_ignored = false,
     },
 })
-require('nvim-treesitter.configs').setup({
-    modules = {'highlight'},
-    sync_install = false,
-    ensure_installed = {'python', 'rust', 'c', 'cpp', 'lua', 'vimdoc', 'vim', 'json'},
-    ignore_install = {},
-    auto_install = false,
-
-    highlight = {enable = true},
-    incremental_selection = {
-        enable = true,
-        keymaps = {
-            init_selection = '<M-Space>',
-            node_incremental = '<M-Space>',
-            node_decremental = '<M-b>'
-        }
-    },
-})
-
 -- [[ Configure LSP ]]
 local on_attach = function(_, bufnr)
     local nmap = function(keys, func, desc)
@@ -234,10 +283,10 @@ local on_attach = function(_, bufnr)
 
     nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
     nmap('gd', vim.lsp.buf.definition, '[G]oto [D]efinition')
-    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
-    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
     nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
     nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
+    nmap('gr', require('telescope.builtin').lsp_references, '[G]oto [R]eferences')
+    nmap('<leader>ds', require('telescope.builtin').lsp_document_symbols, '[D]ocument [S]ymbols')
 
     -- Create a command `:Format` local to the LSP buffer
     vim.api.nvim_buf_create_user_command(
@@ -321,20 +370,6 @@ local cmp_config = {
 
 cmp.setup(cmp_config)
 
-local bufferline_config = {
-    options = {
-        style_preset = require('bufferline').style_preset.minimal,
-        numbers = 'buffer_id',
-        buffer_close_icon = '',
-        close_icon = '',
-        -- name_formatter = function(buf) return vim.fn.pathshorten(buf.path) end,
-        truncate_names = false,
-        offsets = {{filetype = 'NvimTree', text = 'NvimTree', padding = 1}},
-    },
-    highlights = {}
-}
-
-require("bufferline").setup(bufferline_config)
 -- end of plugin configuration
 
 vim.cmd.colorscheme 'gruvbox'
@@ -358,9 +393,6 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.wrap = false
 vim.o.scrolloff = 5
-
-vim.o.foldmethod = 'expr'
-vim.o.foldexpr = 'nvim_treesitter#foldexpr()'
 
 vim.keymap.set({'n', 'v'}, '<Space>', '<Nop>', {silent = true})
 vim.keymap.set({'n', 'v'}, '<C-Space>', '<C-f>', {silent = true})
@@ -393,41 +425,7 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     callback = function() vim.highlight.on_yank() end,
 })
 
--- do not start folded
--- autocmd BufReadPost,FileReadPost * normal zR
-vim.api.nvim_create_autocmd(
-    {'BufReadPost', 'FilterReadPost', 'FileReadPost'},
-    {pattern = '*', command = 'normal zR'}
-)
-
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
-
--- See `:help telescope.builtin`
-vim.keymap.set(
-    'n', '<leader>?', require('telescope.builtin').oldfiles,
-    {desc = '[?] Find recently opened files'}
-)
-vim.keymap.set(
-    'n', '<leader>/', function()
-        require('telescope.builtin').current_buffer_fuzzy_find(
-            require('telescope.themes').get_dropdown {winblend = 10, previewer = false}
-        )
-    end,
-    {desc = '[/] Fuzzily search in current buffer'}
-)
-
-local wrap = function(f, ...)
-    local args = {...}
-    return function() f(unpack(args)) end
-end
-
-local tsb = require('telescope.builtin')
 vim.keymap.set('n', '<leader>t', ':NvimTreeToggle<CR>', {desc = 'Toggle tree'})
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, {desc = '[S]earch by [G]rep'})
-vim.keymap.set('n', '<leader>ss', wrap(tsb.diagnostics, {bufnr = 0}))
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, {desc = '[S]earch [D]iagnostics'})
-
 -- Diagnostic keymaps
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float, {desc = 'Open floating diagnostic message'})
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist, {desc = 'Open diagnostics list'})
