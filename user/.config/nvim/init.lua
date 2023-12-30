@@ -24,15 +24,15 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.termguicolors = true
 
-vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
-vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>')
-vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
-vim.keymap.set('n', '<C-l>', '<C-w>l')
-vim.keymap.set('n', '<C-h>', '<C-w>h')
-vim.keymap.set('n', 'x', '"_x')
-vim.keymap.set('n', '<Leader>k', ':bprevious<CR>')
-vim.keymap.set('n', '<Leader>l', ':bnext<CR>')
-vim.keymap.set('n', '<Leader>x', ':bdelete<CR>:blast<CR>')
+vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>', {desc = 'Save file'})
+vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>', {desc = 'Scroll page down'})
+vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {desc = 'Escape terminal'})
+vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Go right'})
+vim.keymap.set('n', '<C-h>', '<C-w>h', {desc = 'Go left'})
+vim.keymap.set('n', 'x', '"_x', {desc = 'Delete'})
+vim.keymap.set('n', '<Leader>k', ':bprevious<CR>', {desc = 'Previous buffer'})
+vim.keymap.set('n', '<Leader>l', ':bnext<CR>', {desc = 'Next buffer'})
+vim.keymap.set('n', '<Leader>x', ':bdelete<CR>:blast<CR>', {desc = 'Close buffer'})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),
