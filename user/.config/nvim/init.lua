@@ -30,6 +30,9 @@ vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', 'x', '"_x')
+vim.keymap.set('n', '<Leader>k', ':bprevious<CR>')
+vim.keymap.set('n', '<Leader>l', ':bnext<CR>')
+vim.keymap.set('n', '<Leader>x', ':bdelete<CR>:blast<CR>')
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),
