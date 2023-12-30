@@ -8,7 +8,15 @@ return {{
     config = function()
         require('mason-tool-installer').setup({
             ensure_installed = {
+                -- Rust
+                'rust-analyzer', 'codelldb',
+                -- C
+                'clangd', 'codelldb',
+                -- Python
+                'python-lsp-server', 'mypy', 'debugpy', 'black',
+                -- Lua
                 'lua-language-server',
+                -- Bash
                 'shellcheck',
             }
         })
@@ -19,13 +27,14 @@ return {{
     config = function()
         local lspconfig = require('lspconfig')
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
         lspconfig.lua_ls.setup({capabilities = capabilities})
 
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
 
         vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'Hover'})
-        vim.keymap.set('n', '<C-k>', vim.lsp.buf.signature_help, {desc = 'Signature help'})
+        vim.keymap.set('n', '<C-K>', vim.lsp.buf.signature_help, {desc = 'Signature help'})
         vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, {desc = 'Diagnostic'})
         vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, {desc = 'List diagnostics'})
         vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, {desc = 'Code action'})
