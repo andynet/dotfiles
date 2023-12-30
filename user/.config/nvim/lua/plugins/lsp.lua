@@ -15,9 +15,11 @@ return {{
     end
 }, {
     'neovim/nvim-lspconfig',
+    dependencies = 'hrsh7th/cmp-nvim-lsp',
     config = function()
         local lspconfig = require('lspconfig')
-        lspconfig.lua_ls.setup({})
+        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        lspconfig.lua_ls.setup({capabilities = capabilities})
 
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
