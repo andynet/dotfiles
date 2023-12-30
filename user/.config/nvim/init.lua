@@ -24,8 +24,8 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 
 vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
-vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>', {})
-vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {})
+vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>')
+vim.keymap.set('t', '<ESC>', '<C-\\><C-n>')
 vim.keymap.set('n', '<C-l>', '<C-w>l')
 vim.keymap.set('n', '<C-h>', '<C-w>h')
 vim.keymap.set('n', 'x', '"_x')
