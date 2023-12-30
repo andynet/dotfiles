@@ -1,3 +1,4 @@
+#!/bin/bash
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
@@ -21,9 +22,8 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 export LC_COLLATE="C"
 export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
-export MANPATH="~/.local/texmf/texmf-dist/doc/man:$MANPATH"
+export MANPATH="$HOME/.local/texmf/texmf-dist/doc/man:$MANPATH"
 export TERM="xterm"
-export NVIM_APPNAME="kickstart"
 export EDITOR="nvim"
 
 shopt -s checkwinsize   # adjust window size after each command
@@ -77,7 +77,8 @@ alias gui="startx > session.log 2>&1"
 alias mamba="micromamba"
 alias snake="snakemake -c4 -s scripts/vinkofagy/heterozygosity.smk"
 alias avim="NVIM_APPNAME=astronvim nvim"
-alias vim="NVIM_APPNAME=kickstart nvim"
+alias kvim="NVIM_APPNAME=kickstart nvim"
+alias vim="nvim"
 alias config="git -C ~/.dotfiles"
 
 # limits recursive functions, see 'man bash'
@@ -128,7 +129,7 @@ function n() {
     command nnn -d -e "$@"
 
     [ ! -f "$NNN_TMPFILE" ] || {
-        . "$NNN_TMPFILE"
+        source "$NNN_TMPFILE"
         rm -f "$NNN_TMPFILE" > /dev/null
     }
 }
