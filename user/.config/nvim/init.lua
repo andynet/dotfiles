@@ -1,23 +1,23 @@
-vim.g.mapleader = ';'       -- defines <Leader>
-vim.g.maplocalleader = ';'  -- defines <LocalLeader>
+vim.g.mapleader = ';'      -- defines <Leader>
+vim.g.maplocalleader = ';' -- defines <LocalLeader>
 
-local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
+local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 if not vim.loop.fs_stat(lazypath) then
     vim.fn.system({
-        "git", "clone", "--filter=blob:none", "https://github.com/folke/lazy.nvim.git", "--branch=stable",
+        'git', 'clone', '--filter=blob:none', 'https://github.com/folke/lazy.nvim.git', '--branch=stable',
         lazypath,
     })
 end
 vim.opt.rtp:prepend(lazypath)
-require("lazy").setup("plugins")
+require('lazy').setup('plugins')
 
 vim.opt.number = true
-vim.opt.mouse = ""
+vim.opt.mouse = ''
 vim.opt.scrolloff = 5
 vim.opt.clipboard:append('unnamedplus')
-vim.opt.listchars = "tab:> ,trail:."
+vim.opt.listchars = 'tab:> ,trail:.'
 vim.opt.list = true
-vim.opt.colorcolumn = "80,120"
+vim.opt.colorcolumn = '80,120'
 vim.opt.wrap = false
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
@@ -35,4 +35,3 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     pattern = '*',
     callback = function() vim.highlight.on_yank() end,
 })
-

@@ -1,4 +1,4 @@
-return { {
+return {{
     'williamboman/mason.nvim',
     config = function()
         require('mason').setup()
@@ -33,7 +33,7 @@ return { {
         end)
 
         vim.keymap.set('n', '<Leader>f', function()
-            vim.lsp.buf.format({ async = true })
+            vim.lsp.buf.format({async = true})
         end)
     end
-} }
+}}

@@ -1,7 +1,7 @@
 return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
-    config = function ()
+    config = function()
         require('nvim-treesitter.configs').setup({
             modules = {'highlight'},
             sync_install = false,
