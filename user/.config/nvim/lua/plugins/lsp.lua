@@ -8,7 +8,8 @@ return {{
     config = function()
         require('mason-tool-installer').setup({
             ensure_installed = {
-                'lua-language-server'
+                'lua-language-server',
+                'shellcheck',
             }
         })
     end
@@ -35,5 +36,16 @@ return {{
         vim.keymap.set('n', '<Leader>f', function()
             vim.lsp.buf.format({async = true})
         end)
+    end
+}, {
+    'nvimtools/none-ls.nvim',
+    config = function()
+        local null_ls = require('null-ls')
+        null_ls.setup({
+            sources = {
+                -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
+                null_ls.builtins.diagnostics.shellcheck
+            },
+        })
     end
 }}

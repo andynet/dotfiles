@@ -22,6 +22,7 @@ vim.opt.wrap = false
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
+vim.opt.termguicolors = true
 
 vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>')
 vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>')
