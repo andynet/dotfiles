@@ -33,6 +33,7 @@ vim.keymap.set('n', 'x', '"_x', {desc = 'Delete'})
 vim.keymap.set('n', '<Leader>k', ':bprevious<CR>', {desc = 'Previous buffer'})
 vim.keymap.set('n', '<Leader>l', ':bnext<CR>', {desc = 'Next buffer'})
 vim.keymap.set('n', '<Leader>x', ':bdelete<CR>:blast<CR>', {desc = 'Close buffer'})
+vim.keymap.set('n', '<CR>', '<C-]>', {desc = 'Follow link'})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),
