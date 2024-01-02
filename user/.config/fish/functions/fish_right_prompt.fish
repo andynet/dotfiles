@@ -1,5 +1,5 @@
 function fish_right_prompt -d "Write out the right prompt"
-    date '+%m/%d/%y'
+    # date '+%m/%d/%y'
     # number of commands
     # git branch
     # mamba env
@@ -7,4 +7,5 @@ function fish_right_prompt -d "Write out the right prompt"
     # host
     # user
     # exit status of previous command
+    echo -sn (fish_vcs_prompt)
 end

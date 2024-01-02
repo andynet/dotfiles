@@ -29,6 +29,17 @@ return {{
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
         -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
         lspconfig.lua_ls.setup({capabilities = capabilities})
+        lspconfig.rust_analyzer.setup({
+            capabilities = capabilities,
+            settings = {
+                ['rust-analyzer'] = {
+                    check = {
+                        command = 'clippy',
+                        ignore = {'clippy::needless_return'}
+                    },
+                }
+            }
+        })
 
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
@@ -55,7 +66,8 @@ return {{
         null_ls.setup({
             sources = {
                 -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
-                null_ls.builtins.diagnostics.shellcheck
+                null_ls.builtins.diagnostics.shellcheck,
+                null_ls.builtins.diagnostics.fish
             },
         })
     end

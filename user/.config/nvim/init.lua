@@ -29,11 +29,13 @@ vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>', {desc = 'Scroll page down'})
 vim.keymap.set('t', '<ESC>', '<C-\\><C-n>', {desc = 'Escape terminal'})
 vim.keymap.set('n', '<C-l>', '<C-w>l', {desc = 'Go right'})
 vim.keymap.set('n', '<C-h>', '<C-w>h', {desc = 'Go left'})
+vim.keymap.set('n', '<C-j>', '<C-w>j', {desc = 'Go down'})
+vim.keymap.set('n', '<C-k>', '<C-w>k', {desc = 'Go up'})
 vim.keymap.set('n', 'x', '"_x', {desc = 'Delete'})
 vim.keymap.set('n', '<Leader>k', ':bprevious<CR>', {desc = 'Previous buffer'})
 vim.keymap.set('n', '<Leader>l', ':bnext<CR>', {desc = 'Next buffer'})
 vim.keymap.set('n', '<Leader>x', ':bdelete<CR>:blast<CR>', {desc = 'Close buffer'})
-vim.keymap.set('n', '<CR>', '<C-]>', {desc = 'Follow link'})
+vim.keymap.set('n', '<C-CR>', '<C-]>', {desc = 'Follow link'})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),
