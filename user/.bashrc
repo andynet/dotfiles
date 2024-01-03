@@ -2,30 +2,6 @@
 # If not running interactively, don't do anything
 [[ $- != *i* ]] && return
 
-export XDG_CONFIG_HOME=$HOME/.config       # user-specific configuratio>
-export XDG_CACHE_HOME=$HOME/.cache         # user-specific non-essentia>
-export XDG_DATA_HOME=$HOME/.local/share    # user-specific data (analog>
-export XDG_STATE_HOME=$HOME/.local/state   # user-specific state files >
-
-export XINITRC="$XDG_CONFIG_HOME/xinitrc"
-export XAUTHORITY="$XDG_STATE_HOME/Xauthority"
-
-export CARGO_HOME="$XDG_DATA_HOME/cargo"
-export RUSTUP_HOME="$XDG_DATA_HOME/rustup"
-
-export GRB_LICENSE_FILE="/home/balaz/.config/gurobi.lic"
-
-export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
-export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
-
-export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
-export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
-export LC_COLLATE="C"
-export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
-export MANPATH="$HOME/.local/texmf/texmf-dist/doc/man:$MANPATH"
-export TERM="xterm"
-export EDITOR="nvim"
-
 shopt -s checkwinsize   # adjust window size after each command
 # shopt -s globstar # allow "**" pathname expansion
 shopt -s extglob        # extended globbing used in HISTIGNORE
@@ -41,14 +17,10 @@ HISTTIMEFORMAT='%F %T '
 HISTIGNORE='+([a-z])*([\t ])'
 HISTCONTROL='ignorespace:erasedups'  # ignore duplicate and space-st>
 
-export TASKRC="$XDG_CONFIG_HOME/task/taskrc"
-export TASKDATA="$XDG_STATE_HOME/task/"
-
 # ulimit -c unlimited   # store core dumps
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
-
 
 function bash_prompt {
     local C1="\[\033[01;32m\]"  # bright green
@@ -107,6 +79,7 @@ fi
 export MAMBA_EXE="/home/balaz/.dotfiles/user/.local/bin/micromamba";
 export MAMBA_ROOT_PREFIX="/home/balaz/.local/share/micromamba";
 __mamba_setup="$("$MAMBA_EXE" shell hook --shell bash --prefix "$MAMBA_ROOT_PREFIX" 2> /dev/null)"
+# shellcheck disable=SC2181
 if [ $? -eq 0 ]; then
     eval "$__mamba_setup"
 else
@@ -125,10 +98,11 @@ function n() {
         return
     }
 
-    export NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
+    NNN_TMPFILE="${XDG_CONFIG_HOME:-$HOME/.config}/nnn/.lastd"
     command nnn -d -e "$@"
 
     [ ! -f "$NNN_TMPFILE" ] || {
+        # shellcheck source=/dev/null
         source "$NNN_TMPFILE"
         rm -f "$NNN_TMPFILE" > /dev/null
     }
