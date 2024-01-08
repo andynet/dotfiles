@@ -17,7 +17,7 @@ vim.opt.scrolloff = 5
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.listchars = 'tab:> ,trail:.'
 vim.opt.list = true
-vim.opt.colorcolumn = '80,120'
+vim.opt.colorcolumn = '80,110'
 vim.opt.wrap = false
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
