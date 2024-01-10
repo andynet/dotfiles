@@ -16,9 +16,6 @@ export JUPYTER_CONFIG_DIR="$XDG_CONFIG_HOME/jupyter"
 export IPYTHONDIR="$XDG_CONFIG_HOME/ipython"
 export CONDARC="$XDG_CONFIG_HOME/conda/condarc"
 
-export TASKRC="$XDG_CONFIG_HOME/task/taskrc"
-export TASKDATA="$XDG_STATE_HOME/task/"
-
 export GRB_LICENSE_FILE="/home/balaz/.config/gurobi.lic"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export LC_COLLATE="C"
