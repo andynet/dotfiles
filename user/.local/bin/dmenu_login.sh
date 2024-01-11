@@ -1,9 +1,11 @@
-#!/bin/bash
-set -euo pipefail
+#!/bin/sh
+set -euo
 
 option=$(
-    echo -e "Lock\nReload\nExit\nSleep\nShutdown\nReboot" \
-    | dmenu -i -l 6 -fn "Roboto Mono Nerd Font-15"
+    printf "Lock\nReload\nExit\nSleep\nShutdown\nReboot"                        \
+    | dmenu -i -l 6 -fn "Roboto Mono Nerd Font-15"                              \
+        -nf "#fbf1c7" -sf "#fbf1c7" -nb "#1d2021" -sb "#98971a"
+
 )
 
 case $option in
