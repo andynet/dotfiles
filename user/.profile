@@ -24,6 +24,8 @@ export TERM="xterm"
 
 export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
 
+export NNN_OPENER="$HOME/.config/nnn/plugins/nuke"
+
 export EDITOR="nvim"
 export BROWSER="qutebrowser"
 
