@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Settings;HardwareSettings;
+Exec=system-config-printer
+Name=Printers settings
+StartupNotify=true
+Terminal=false
+Type=Application
+

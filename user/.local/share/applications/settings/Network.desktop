@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Settings;HardwareSettings;
+Exec=nm-connection-editor
+Name=Network settings
+StartupNotify=true
+Terminal=false
+Type=Application
+

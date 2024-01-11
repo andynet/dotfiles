@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Settings;HardwareSettings;
+Exec=pavucontrol
+Name=Sound settings
+StartupNotify=true
+Terminal=false
+Type=Application
+

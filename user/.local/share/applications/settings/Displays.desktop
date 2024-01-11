@@ -1,0 +1,8 @@
+[Desktop Entry]
+Categories=Settings;HardwareSettings;
+Exec=arandr
+Name=Display settings
+StartupNotify=true
+Terminal=false
+Type=Application
+
