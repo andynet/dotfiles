@@ -1,25 +1,93 @@
+-- treesitter -> https://github.com/nvim-treesitter/nvim-treesitter#supported-languages
+-- tools -> :Mason
+-- lsp -> https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
+-- dap -> https://github.com/mfussenegger/nvim-dap/wiki/Debug-Adapter-installation
+-- nls -> https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
+
+local languages = {
+    rust = {
+        tools = {'rust-analyzer', 'codelldb'},
+        lsp = function(lspconfig, capabilities)
+            lspconfig.rust_analyzer.setup({
+                capabilities = capabilities,
+                settings = {
+                    ['rust-analyzer'] = {
+                        check = {
+                            command = 'clippy',
+                            ignore = {'clippy::needless_return'}
+                        },
+                    }
+                }
+            })
+        end,
+        dap = function() end,
+        null = {},
+    },
+    python = {
+        tools = {'python-lsp-server', 'mypy', 'debugpy', 'black'},
+        lsp = function() end,
+        dap = function() end,
+        null = {},
+    },
+    c = {
+        tools = {'clangd', 'codelldb'},
+        lsp = function(lspconfig, capabilities)
+            lspconfig.clangd.setup({capabilities = capabilities})
+        end,
+        dap = function() end,
+        null = {},
+    },
+    lua = {
+        tools = {'lua-language-server'},
+        lsp = function(lspconfig, capabilities)
+            lspconfig.lua_ls.setup({capabilities = capabilities})
+        end,
+        dap = function() end,
+        null = {},
+    },
+    shell = {
+        tools = {'shellcheck'},
+        lsp = function() end,
+        dap = function() end,
+        null = {},
+    },
+    tex = {
+        tools = {'texlab', 'tectonic'}, -- ltex-ls (for grammar check), tectonic (self-contained TeX/LaTeX engine)
+        lsp = function(lspconfig, capabilities)
+            lspconfig.texlab.setup({
+                capabilities = capabilities,
+                settings = {
+                    texlab = {
+                        build = {
+                            executable = 'tectonic',
+                            args = {'%f', '--synctex', '--keep-logs', '--keep-intermediates'},
+                            -- executable = 'latemk',
+                            -- args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
+                            onSave = true
+                        },
+                    }
+                }
+            })
+        end,
+        dap = function() end,
+        null = {},
+    },
+}
+
 return {{
     'williamboman/mason.nvim',
-    config = function()
-        require('mason').setup()
-    end
+    config = function() require('mason').setup() end
 }, {
     'WhoIsSethDaniel/mason-tool-installer.nvim',
     config = function()
-        require('mason-tool-installer').setup({
-            ensure_installed = {
-                -- Rust
-                'rust-analyzer', 'codelldb',
-                -- C
-                'clangd', 'codelldb',
-                -- Python
-                'python-lsp-server', 'mypy', 'debugpy', 'black',
-                -- Lua
-                'lua-language-server',
-                -- Bash
-                'shellcheck',
-            }
-        })
+        local tools = {}
+        for _, lang in pairs(languages) do
+            for _, tool in ipairs(lang.tools) do
+                table.insert(tools, tool)
+            end
+        end
+
+        require('mason-tool-installer').setup({ensure_installed = tools})
     end
 }, {
     'neovim/nvim-lspconfig',
@@ -27,19 +95,10 @@ return {{
     config = function()
         local lspconfig = require('lspconfig')
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
-        -- https://github.com/williamboman/mason-lspconfig.nvim/blob/main/doc/server-mapping.md
-        lspconfig.lua_ls.setup({capabilities = capabilities})
-        lspconfig.rust_analyzer.setup({
-            capabilities = capabilities,
-            settings = {
-                ['rust-analyzer'] = {
-                    check = {
-                        command = 'clippy',
-                        ignore = {'clippy::needless_return'}
-                    },
-                }
-            }
-        })
+
+        for _, lang in pairs(languages) do
+            lang.lsp(lspconfig, capabilities)
+        end
 
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
         vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
@@ -48,6 +107,7 @@ return {{
         vim.keymap.set('n', '<C-K>', vim.lsp.buf.signature_help, {desc = 'Signature help'})
         vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, {desc = 'Diagnostic'})
         vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, {desc = 'List diagnostics'})
+        vim.keymap.set('n', '<Leader>d', vim.diagnostic.goto_next, {desc = 'Go to next diagnostic'})
         vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, {desc = 'Code action'})
         vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, {desc = 'Rename symbol'})
 
@@ -65,7 +125,6 @@ return {{
         local null_ls = require('null-ls')
         null_ls.setup({
             sources = {
-                -- https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
                 null_ls.builtins.diagnostics.shellcheck,
                 null_ls.builtins.diagnostics.fish
             },
