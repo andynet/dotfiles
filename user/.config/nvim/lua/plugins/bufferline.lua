@@ -15,5 +15,14 @@ return {
                 }},
             },
         })
+        local close = function()
+            local buf = vim.api.nvim_get_current_buf()
+            vim.cmd('bprevious')
+            vim.cmd(string.format('bdelete %d', buf))
+        end
+
+        vim.keymap.set('n', '<Leader>x', close, {desc = 'Close buffer'})
+        vim.keymap.set('n', '<Leader>k', ':bprevious<CR>', {desc = 'Previous buffer'})
+        vim.keymap.set('n', '<Leader>l', ':bnext<CR>', {desc = 'Next buffer'})
     end
 }

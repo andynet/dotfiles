@@ -6,6 +6,7 @@
 
 local languages = {
     rust = {
+        -- TODO: add https://github.com/facebookexperimental/MIRAI
         tools = {'rust-analyzer', 'codelldb'},
         lsp = function(lspconfig, capabilities)
             lspconfig.rust_analyzer.setup({
