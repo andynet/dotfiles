@@ -5,6 +5,7 @@
 -- nls -> https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
 
 local languages = {
+    -- TODO: replace with https://github.com/mrcjkb/rustaceanvim???
     rust = {
         -- TODO: add https://github.com/facebookexperimental/MIRAI
         tools = {'rust-analyzer', 'codelldb'},
@@ -21,7 +22,29 @@ local languages = {
                 }
             })
         end,
-        dap = function() end,
+        dap = function(dap)
+            -- TODO: try this https://jonboh.dev/posts/rr/
+            -- https://aur.archlinux.org/packages/rr
+            dap.adapters.codelldb = {
+                type = 'server',
+                port = '${port}',
+                executable = {
+                    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
+                    args = {'--port', '${port}'},
+                },
+            }
+            dap.configurations.rust = {{
+                name = 'Launch',
+                type = 'codelldb',
+                request = 'launch',
+                program = function()
+                    return vim.fn.input('executable: ', vim.fn.getcwd() .. '/', 'file')
+                end,
+                args = function()
+                    return vim.split(vim.fn.input('args: '), ' ')
+                end
+            }}
+        end,
         null = {},
     },
     python = {
@@ -37,6 +60,7 @@ local languages = {
         end,
         dap = function() end,
         null = {},
+        -- cppcheck
     },
     lua = {
         tools = {'lua-language-server'},
@@ -45,6 +69,7 @@ local languages = {
         end,
         dap = function() end,
         null = {},
+        -- luacheck
     },
     shell = {
         tools = {'shellcheck'},
@@ -72,6 +97,7 @@ local languages = {
         end,
         dap = function() end,
         null = {},
+        -- chktex
     },
 }
 
@@ -92,7 +118,7 @@ return {{
     end
 }, {
     'neovim/nvim-lspconfig',
-    dependencies = 'hrsh7th/cmp-nvim-lsp',
+    dependencies = {'hrsh7th/cmp-nvim-lsp'},
     config = function()
         local lspconfig = require('lspconfig')
         local capabilities = require('cmp_nvim_lsp').default_capabilities()
@@ -130,5 +156,46 @@ return {{
                 null_ls.builtins.diagnostics.fish
             },
         })
+    end
+}, {
+    'mfussenegger/nvim-dap',
+    config = function()
+        local dap = require('dap')
+
+        for _, lang in pairs(languages) do
+            lang.dap(dap)
+        end
+
+        vim.keymap.set('n', '<F1>', dap.continue, {desc = 'Debug: Start/Continue'})
+        vim.keymap.set('n', '<F2>', dap.step_over, {desc = 'Debug: Step Over'})
+        vim.keymap.set('n', '<F3>', dap.step_into, {desc = 'Debug: Step Into'})
+        vim.keymap.set('n', '<F4>', dap.step_out, {desc = 'Debug: Step Out'})
+        vim.keymap.set('n', '<F5>', dap.run_last, {desc = 'Debug: Rerun'})
+        vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {desc = 'Debug: Toggle Breakpoint'})
+        vim.keymap.set('n', '<leader>B', function()
+            dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
+        end, {desc = 'Debug: Set Breakpoint'})
+    end
+}, {
+    'rcarriga/nvim-dap-ui',
+    requires = {'mfussenegger/nvim-dap'},
+    config = function()
+        local dapui = require('dapui')
+        dapui.setup({
+            controls = {enabled = false},
+            layouts = {{
+                elements = {{id = 'scopes', size = 1.0}},
+                position = 'right',
+                size = 30
+            }, {
+                elements = {
+                    {id = 'repl', size = 1.0},
+                    -- {id = "console", size = 0.5}
+                },
+                position = 'bottom',
+                size = 10
+            }}
+        })
+        vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
     end
 }}
