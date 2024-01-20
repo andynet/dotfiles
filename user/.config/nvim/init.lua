@@ -13,7 +13,6 @@ require('lazy').setup('plugins')
 
 vim.opt.number = true
 vim.opt.mouse = ''
--- vim.opt.scrolloff = 5
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.listchars = 'tab:> ,trail:.'
 vim.opt.list = true
@@ -24,8 +23,8 @@ vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.termguicolors = true
 
-vim.keymap.set({'i', 'n'}, '<C-s>', '<ESC>:w<CR>', {desc = 'Save file'})
-vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>', {desc = 'Scroll page down'})
+vim.keymap.set({'i', 'n'}, '<C-s>'  , '<ESC>:w<CR>', {desc = 'Save file'})
+vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>'      , {desc = 'Scroll page down'})
 vim.keymap.set('t', '<ESC>'  , '<C-\\><C-n>', {desc = 'Escape terminal'})
 vim.keymap.set('n', '<C-l>'  , '<C-w>l'     , {desc = 'Go right'})
 vim.keymap.set('n', '<C-h>'  , '<C-w>h'     , {desc = 'Go left'})

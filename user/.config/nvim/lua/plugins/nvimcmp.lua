@@ -17,12 +17,11 @@ return {
                 expand = function(args) snippy.expand_snippet(args.body) end
             },
             mapping = cmp.mapping.preset.insert({
-                -- ['<Tab>'] = cmp.mapping.complete(),
-                ['<Tab>'] = cmp.mapping.select_next_item(),
+                ['<Tab>']   = cmp.mapping.select_next_item(),
                 ['<S-Tab>'] = cmp.mapping.select_prev_item(),
-                ['<C-j>'] = cmp.mapping.scroll_docs(5),
-                ['<C-k>'] = cmp.mapping.scroll_docs(-5),
-                ['<CR>'] = cmp.mapping.confirm({select = true}),
+                ['<C-j>']   = cmp.mapping.scroll_docs(5),
+                ['<C-k>']   = cmp.mapping.scroll_docs(-5),
+                ['<CR>']    = cmp.mapping.confirm({select = true}),
             }),
             sources = {
                 {name = 'nvim_lsp'},

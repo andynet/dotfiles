@@ -8,9 +8,10 @@ return {
         }
     end,
     keys = {
-        {'<leader>rt', '<CMD>ReplToggle<CR>' , mode = 'n', {desc = 'Toggle REPL'}},
+        {'<leader>rt', '<CMD>ReplToggle<CR>',  mode = 'n', {desc = 'Toggle REPL'}},
+        {'<leader>rc', '<CMD>ReplClear<CR>',   mode = 'n', {desc = 'Clear REPL'}},
         {'<leader>sc', '<CMD>ReplRunCell<CR>', mode = 'n', {desc = 'Send cell to REPL'}},
-        {'<leader>sl', '<Plug>ReplSendLine'  , mode = 'n', {desc = 'Send line to REPL'}},
+        {'<leader>sl', '<Plug>ReplSendLine',   mode = 'n', {desc = 'Send line to REPL'}},
         {'<leader>ss', '<Plug>ReplSendVisual', mode = 'v', {desc = 'Send selection to REPL'}}
     },
 }

@@ -70,6 +70,7 @@ local languages = {
         end,
         null = function(null_ls)
             -- /home/balaz/.local/share/nvim/mason/bin/mypy --install-types .
+            -- vim.fn.stdpath('data') -> /home/balaz/.local/share/nvim/
             return {null_ls.builtins.diagnostics.mypy}
         end
     },
@@ -115,7 +116,6 @@ local languages = {
                 }
             })
         end,
-        dap = function() end,
         -- chktex
     },
 }
@@ -152,16 +152,15 @@ return {{
             end
         end
 
-        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
-        vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
-
-        vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'Hover'})
-        vim.keymap.set('n', '<C-K>', vim.lsp.buf.signature_help, {desc = 'Signature help'})
-        vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, {desc = 'Diagnostic'})
-        vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, {desc = 'List diagnostics'})
-        vim.keymap.set('n', '<Leader>d', vim.diagnostic.goto_next, {desc = 'Go to next diagnostic'})
-        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, {desc = 'Code action'})
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, {desc = 'Rename symbol'})
+        vim.keymap.set('n', 'gd'        , vim.lsp.buf.definition    , {desc = 'Go to definition'})
+        vim.keymap.set('n', 'gr'        , vim.lsp.buf.references    , {desc = 'Go to references'})
+        vim.keymap.set('n', 'K'         , vim.lsp.buf.hover         , {desc = 'Hover'})
+        vim.keymap.set('n', '<C-K>'     , vim.lsp.buf.signature_help, {desc = 'Signature help'})
+        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action   , {desc = 'Code action'})
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename        , {desc = 'Rename symbol'})
+        vim.keymap.set('n', '<Leader>e' , vim.diagnostic.open_float , {desc = 'Diagnostic'})
+        vim.keymap.set('n', '<Leader>q' , vim.diagnostic.setloclist , {desc = 'List diagnostics'})
+        vim.keymap.set('n', '<Leader>d' , vim.diagnostic.goto_next  , {desc = 'Go to next diagnostic'})
 
         vim.keymap.set('n', '<Leader>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
@@ -201,11 +200,11 @@ return {{
             end
         end
 
-        vim.keymap.set('n', '<F1>', dap.continue, {desc = 'Debug: Start/Continue'})
-        vim.keymap.set('n', '<F2>', dap.step_over, {desc = 'Debug: Step Over'})
-        vim.keymap.set('n', '<F3>', dap.step_into, {desc = 'Debug: Step Into'})
-        vim.keymap.set('n', '<F4>', dap.step_out, {desc = 'Debug: Step Out'})
-        vim.keymap.set('n', '<F5>', dap.run_last, {desc = 'Debug: Rerun'})
+        vim.keymap.set('n', '<F1>'     , dap.continue         , {desc = 'Debug: Start/Continue'})
+        vim.keymap.set('n', '<F2>'     , dap.step_over        , {desc = 'Debug: Step Over'})
+        vim.keymap.set('n', '<F3>'     , dap.step_into        , {desc = 'Debug: Step Into'})
+        vim.keymap.set('n', '<F4>'     , dap.step_out         , {desc = 'Debug: Step Out'})
+        vim.keymap.set('n', '<F5>'     , dap.run_last         , {desc = 'Debug: Rerun'})
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {desc = 'Debug: Toggle Breakpoint'})
         vim.keymap.set('n', '<leader>B', function()
             dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
@@ -232,6 +231,6 @@ return {{
             }}
         })
         vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
-        vim.keymap.set('n', 'E', dapui.eval, {desc = 'Dapui eval'})
+        vim.keymap.set('n', 'E'   , dapui.eval  , {desc = 'Dapui eval'})
     end
 }}

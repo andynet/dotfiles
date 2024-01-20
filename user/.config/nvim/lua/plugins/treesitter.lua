@@ -13,7 +13,7 @@ return {
             incremental_selection = {
                 enable = true,
                 keymaps = {
-                    init_selection = '<M-Space>',
+                    init_selection   = '<M-Space>',
                     node_incremental = '<M-Space>',
                     node_decremental = '<M-b>'
                 }
