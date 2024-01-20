@@ -65,6 +65,7 @@ local languages = {
     lua = {
         tools = {'lua-language-server'},
         lsp = function(lspconfig, capabilities)
+            require('neodev').setup()
             lspconfig.lua_ls.setup({capabilities = capabilities})
         end,
         dap = function() end,
@@ -118,10 +119,12 @@ return {{
     end
 }, {
     'neovim/nvim-lspconfig',
-    dependencies = {'hrsh7th/cmp-nvim-lsp'},
+    dependencies = {'hrsh7th/cmp-nvim-lsp', 'folke/neodev.nvim'},
     config = function()
         local lspconfig = require('lspconfig')
-        local capabilities = require('cmp_nvim_lsp').default_capabilities()
+        local capabilities = require('cmp_nvim_lsp').default_capabilities(
+            vim.lsp.protocol.make_client_capabilities()
+        )
 
         for _, lang in pairs(languages) do
             lang.lsp(lspconfig, capabilities)
