@@ -45,13 +45,33 @@ local languages = {
                 end
             }}
         end,
-        null = {},
     },
     python = {
-        tools = {'python-lsp-server', 'mypy', 'debugpy', 'black'},
-        lsp = function() end,
-        dap = function() end,
-        null = {},
+        tools = {'python-lsp-server', 'mypy', 'debugpy'},
+        lsp = function(lspconfig, capabilities)
+            lspconfig.pylsp.setup({capabilities = capabilities})
+        end,
+        dap = function(dap)
+            dap.adapters.python = {
+                type = 'executable';
+                command = 'python';
+                args = {'-m', 'debugpy.adapter'};
+            }
+            dap.configurations.python = {{
+                name = 'Launch';
+                type = 'python';
+                request = 'launch';
+                program = '${file}';
+                args = function()
+                    return vim.split(vim.fn.input('args: '), ' ')
+                end,
+                pythonPath = function() return 'python' end;
+            }}
+        end,
+        null = function(null_ls)
+            -- /home/balaz/.local/share/nvim/mason/bin/mypy --install-types .
+            return {null_ls.builtins.diagnostics.mypy}
+        end
     },
     c = {
         tools = {'clangd', 'codelldb'},
@@ -59,7 +79,6 @@ local languages = {
             lspconfig.clangd.setup({capabilities = capabilities})
         end,
         dap = function() end,
-        null = {},
         -- cppcheck
     },
     lua = {
@@ -68,15 +87,15 @@ local languages = {
             require('neodev').setup()
             lspconfig.lua_ls.setup({capabilities = capabilities})
         end,
-        dap = function() end,
-        null = {},
-        -- luacheck
     },
     shell = {
         tools = {'shellcheck'},
-        lsp = function() end,
-        dap = function() end,
-        null = {},
+        null = function(null_ls)
+            return {
+                null_ls.builtins.diagnostics.shellcheck,
+                null_ls.builtins.diagnostics.fish,
+            }
+        end,
     },
     tex = {
         tools = {'texlab', 'tectonic'}, -- ltex-ls (for grammar check), tectonic (self-contained TeX/LaTeX engine)
@@ -97,7 +116,6 @@ local languages = {
             })
         end,
         dap = function() end,
-        null = {},
         -- chktex
     },
 }
@@ -110,8 +128,10 @@ return {{
     config = function()
         local tools = {}
         for _, lang in pairs(languages) do
-            for _, tool in ipairs(lang.tools) do
-                table.insert(tools, tool)
+            if lang.tools then
+                for _, tool in ipairs(lang.tools) do
+                    table.insert(tools, tool)
+                end
             end
         end
 
@@ -127,7 +147,9 @@ return {{
         )
 
         for _, lang in pairs(languages) do
-            lang.lsp(lspconfig, capabilities)
+            if lang.lsp then
+                lang.lsp(lspconfig, capabilities)
+            end
         end
 
         vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
@@ -153,11 +175,19 @@ return {{
     'nvimtools/none-ls.nvim',
     config = function()
         local null_ls = require('null-ls')
+
+        local sources = {}
+        for _, lang in pairs(languages) do
+            if lang.null then
+                local x = lang.null(null_ls)
+                for _, source in ipairs(x) do
+                    table.insert(sources, source)
+                end
+            end
+        end
+
         null_ls.setup({
-            sources = {
-                null_ls.builtins.diagnostics.shellcheck,
-                null_ls.builtins.diagnostics.fish
-            },
+            sources = sources,
         })
     end
 }, {
@@ -166,7 +196,9 @@ return {{
         local dap = require('dap')
 
         for _, lang in pairs(languages) do
-            lang.dap(dap)
+            if lang.dap then
+                lang.dap(dap)
+            end
         end
 
         vim.keymap.set('n', '<F1>', dap.continue, {desc = 'Debug: Start/Continue'})
@@ -189,16 +221,17 @@ return {{
             layouts = {{
                 elements = {{id = 'scopes', size = 1.0}},
                 position = 'right',
-                size = 30
+                size = 0.25
             }, {
                 elements = {
-                    {id = 'repl', size = 1.0},
-                    -- {id = "console", size = 0.5}
+                    {id = 'console', size = 0.35, position = 'right'},
+                    {id = 'repl', size = 0.65, position = 'left'},
                 },
                 position = 'bottom',
-                size = 10
+                size = 0.25
             }}
         })
         vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
+        vim.keymap.set('n', 'E', dapui.eval, {desc = 'Dapui eval'})
     end
 }}
