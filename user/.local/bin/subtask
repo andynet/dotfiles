@@ -1,0 +1,9 @@
+#!/bin/bash
+
+task_id="$1"
+args="${*:2}"
+
+output=$(task add "$args")
+subtask_id=$(echo "$output" | grep -e "[0-9]*" -o)
+echo "Created subtask $subtask_id."
+task "$task_id" modify depends:"$subtask_id"
