@@ -47,7 +47,8 @@ local languages = {
         end,
     },
     python = {
-        tools = {'python-lsp-server', 'mypy', 'debugpy'},
+        tools = {'python-lsp-server', 'debugpy'},
+        system_deps = {'mypy'},
         lsp = function(lspconfig, capabilities)
             lspconfig.pylsp.setup({capabilities = capabilities})
         end,
@@ -69,9 +70,14 @@ local languages = {
             }}
         end,
         null = function(null_ls)
-            -- /home/balaz/.local/share/nvim/mason/bin/mypy --install-types .
-            -- vim.fn.stdpath('data') -> /home/balaz/.local/share/nvim/
-            return {null_ls.builtins.diagnostics.mypy}
+            -- mypy --install-types .
+            vim.fn.system('mypy -h > /dev/null')
+            if vim.v.shell_error == 0 then
+                return {null_ls.builtins.diagnostics.mypy}
+            else
+                vim.notify('mypy not installed: pip install mypy')
+                return {}
+            end
         end
     },
     c = {
@@ -99,24 +105,27 @@ local languages = {
         end,
     },
     tex = {
-        tools = {'texlab', 'tectonic'}, -- ltex-ls (for grammar check), tectonic (self-contained TeX/LaTeX engine)
+        tools = {'texlab'},         -- ltex-ls (for grammar check)
+        system_deps = {'tectonic'}, -- chktex (some nice linter)
         lsp = function(lspconfig, capabilities)
+            vim.fn.system('tectonic -h > /dev/null')
+            if vim.v.shell_error ~= 0 then return end
+
+            local texlab = {
+                build = {
+                    onSave = true,
+                    executable = 'tectonic',
+                    args = {
+                        '%f', '--keep-intermediates', '--keep-logs',
+                        '--synctex', '--untrusted'
+                    },
+                }
+            }
             lspconfig.texlab.setup({
                 capabilities = capabilities,
-                settings = {
-                    texlab = {
-                        build = {
-                            executable = 'tectonic',
-                            args = {'%f', '--synctex', '--keep-logs', '--keep-intermediates'},
-                            -- executable = 'latemk',
-                            -- args = { "-pdf", "-interaction=nonstopmode", "-synctex=1", "%f" },
-                            onSave = true
-                        },
-                    }
-                }
+                settings = {texlab = texlab}
             })
         end,
-        -- chktex
     },
 }
 
@@ -152,15 +161,15 @@ return {{
             end
         end
 
-        vim.keymap.set('n', 'gd'        , vim.lsp.buf.definition    , {desc = 'Go to definition'})
-        vim.keymap.set('n', 'gr'        , vim.lsp.buf.references    , {desc = 'Go to references'})
-        vim.keymap.set('n', 'K'         , vim.lsp.buf.hover         , {desc = 'Hover'})
-        vim.keymap.set('n', '<C-K>'     , vim.lsp.buf.signature_help, {desc = 'Signature help'})
-        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action   , {desc = 'Code action'})
-        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename        , {desc = 'Rename symbol'})
-        vim.keymap.set('n', '<Leader>e' , vim.diagnostic.open_float , {desc = 'Diagnostic'})
-        vim.keymap.set('n', '<Leader>q' , vim.diagnostic.setloclist , {desc = 'List diagnostics'})
-        vim.keymap.set('n', '<Leader>d' , vim.diagnostic.goto_next  , {desc = 'Go to next diagnostic'})
+        vim.keymap.set('n', 'gd', vim.lsp.buf.definition, {desc = 'Go to definition'})
+        vim.keymap.set('n', 'gr', vim.lsp.buf.references, {desc = 'Go to references'})
+        vim.keymap.set('n', 'K', vim.lsp.buf.hover, {desc = 'Hover'})
+        vim.keymap.set('n', '<C-K>', vim.lsp.buf.signature_help, {desc = 'Signature help'})
+        vim.keymap.set('n', '<Leader>ca', vim.lsp.buf.code_action, {desc = 'Code action'})
+        vim.keymap.set('n', '<Leader>rn', vim.lsp.buf.rename, {desc = 'Rename symbol'})
+        vim.keymap.set('n', '<Leader>e', vim.diagnostic.open_float, {desc = 'Diagnostic'})
+        vim.keymap.set('n', '<Leader>q', vim.diagnostic.setloclist, {desc = 'List diagnostics'})
+        vim.keymap.set('n', '<Leader>d', vim.diagnostic.goto_next, {desc = 'Go to next diagnostic'})
 
         vim.keymap.set('n', '<Leader>wl', function()
             print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
@@ -200,11 +209,11 @@ return {{
             end
         end
 
-        vim.keymap.set('n', '<F1>'     , dap.continue         , {desc = 'Debug: Start/Continue'})
-        vim.keymap.set('n', '<F2>'     , dap.step_over        , {desc = 'Debug: Step Over'})
-        vim.keymap.set('n', '<F3>'     , dap.step_into        , {desc = 'Debug: Step Into'})
-        vim.keymap.set('n', '<F4>'     , dap.step_out         , {desc = 'Debug: Step Out'})
-        vim.keymap.set('n', '<F5>'     , dap.run_last         , {desc = 'Debug: Rerun'})
+        vim.keymap.set('n', '<F1>', dap.continue, {desc = 'Debug: Start/Continue'})
+        vim.keymap.set('n', '<F2>', dap.step_over, {desc = 'Debug: Step Over'})
+        vim.keymap.set('n', '<F3>', dap.step_into, {desc = 'Debug: Step Into'})
+        vim.keymap.set('n', '<F4>', dap.step_out, {desc = 'Debug: Step Out'})
+        vim.keymap.set('n', '<F5>', dap.run_last, {desc = 'Debug: Rerun'})
         vim.keymap.set('n', '<leader>b', dap.toggle_breakpoint, {desc = 'Debug: Toggle Breakpoint'})
         vim.keymap.set('n', '<leader>B', function()
             dap.set_breakpoint(vim.fn.input('Breakpoint condition: '))
@@ -224,13 +233,13 @@ return {{
             }, {
                 elements = {
                     {id = 'console', size = 0.35, position = 'right'},
-                    {id = 'repl', size = 0.65, position = 'left'},
+                    {id = 'repl',    size = 0.65, position = 'left'},
                 },
                 position = 'bottom',
                 size = 0.25
             }}
         })
         vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
-        vim.keymap.set('n', 'E'   , dapui.eval  , {desc = 'Dapui eval'})
+        vim.keymap.set('n', 'E', dapui.eval, {desc = 'Dapui eval'})
     end
 }}
