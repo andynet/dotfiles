@@ -113,18 +113,20 @@ local languages = {
 
             local texlab = {
                 build = {
-                    onSave = true,
+                    -- onSave = true,
                     executable = 'tectonic',
                     args = {
                         '%f', '--keep-intermediates', '--keep-logs',
                         '--synctex', '--untrusted'
                     },
-                }
+                },
+                formatterLineLength = 10000,
             }
             lspconfig.texlab.setup({
                 capabilities = capabilities,
                 settings = {texlab = texlab}
             })
+            vim.keymap.set('n', '<C-x>', ':TexlabBuild<CR>', {desc = 'Build TeX'})
         end,
     },
 }

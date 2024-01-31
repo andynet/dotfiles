@@ -13,6 +13,8 @@ context.back_burner.read=+back_burner
 context.back_burner.write=+back_burner
 context.normal.read=-back_burner -BLOCKED
 
+# gc=off
+
 uda.relativeRecurDue.type=duration
 uda.relativeRecurDue.label=Rel. Rec. Due
 uda.relativeRecurWait.type=duration

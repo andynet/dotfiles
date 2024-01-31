@@ -9,5 +9,10 @@ if status is-interactive
     set -gx MAMBA_ROOT_PREFIX "/home/balaz/.local/share/micromamba"
     $MAMBA_EXE shell hook --shell fish --prefix $MAMBA_ROOT_PREFIX | source
     # <<< mamba initialize <<<
+
+    abbr --add mm micromamba
+    abbr --add mma micromamba activate
+    abbr --add mmd micromamba deactivate
+    abbr --add conda micromamba
 end
 
