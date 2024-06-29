@@ -3,7 +3,8 @@ set $mod Mod4
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000 -f -n
-exec --no-startup-id nitrogen --restore &
+# exec --no-startup-id nitrogen --restore &
+exec --no-startup-id nitrogen --random --set-zoom-fill ~/data/pictures/backgrounds/ &
 exec --no-startup-id nm-applet
 exec --no-startup-id setxkbmap -model pc105 -layout us,sk -variant ,qwerty -option grp:win_space_toggle
 exec --no-startup-id unclutter -b
@@ -96,6 +97,9 @@ bindsym $mod+m scratchpad show
 bindsym $mod+t floating toggle
 bindsym $mod+f fullscreen toggle
 
+for_window [class="org-broad-igv-ui-Main"] floating enable
+for_window [class="org-broad-igv-ui-Main" title="IGV"] floating disable
+
 bindsym $mod+r mode "resize"
 mode "resize" {
         bindsym Left  resize shrink width  10 px or 10 ppt
@@ -135,6 +139,7 @@ client.background       $fg
 
 bar {
     status_command i3status
+    # status_command i3blocks
     colors {
         background $bg
         statusline $fg

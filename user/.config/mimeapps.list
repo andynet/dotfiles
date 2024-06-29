@@ -1,5 +1,8 @@
 [Default Applications]
 text/plain=Vim.desktop
+application/javascript=Vim.desktop
+application/json=Vim.desktop
+application/xml=Vim.desktop
 text/x-lua=Vim.desktop
 text/html=Vim.desktop
 image/png=sxiv.desktop
@@ -7,5 +10,6 @@ image/jpeg=sxiv.desktop
 image/svg+xml=sxiv.desktop
 application/postscript=okularApplication_xps.desktop
 application/pdf=okularApplication_pdf.desktop
+application/epub+zip=okularApplication_pdf.desktop
 x-scheme-handler/obsidian=obsidian.desktop
 

@@ -21,10 +21,11 @@ export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export LC_COLLATE="C"
 export MANPATH="$HOME/.local/texmf/texmf-dist/doc/man:$MANPATH"
 export TERM="xterm"
+export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
 
 export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
 
-export NNN_OPENER="$HOME/.config/nnn/plugins/nuke"
+# export NNN_OPENER="$HOME/.config/nnn/plugins/nuke"
 
 export EDITOR="nvim"
 export BROWSER="qutebrowser"

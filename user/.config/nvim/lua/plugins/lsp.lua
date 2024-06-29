@@ -99,7 +99,7 @@ local languages = {
         tools = {'shellcheck'},
         null = function(null_ls)
             return {
-                null_ls.builtins.diagnostics.shellcheck,
+                -- deprecated null_ls.builtins.diagnostics.shellcheck,
                 null_ls.builtins.diagnostics.fish,
             }
         end,
@@ -223,7 +223,8 @@ return {{
     end
 }, {
     'rcarriga/nvim-dap-ui',
-    requires = {'mfussenegger/nvim-dap'},
+    dependencies = {'nvim-neotest/nvim-nio'},
+    requires = {'mfussenegger/nvim-dap','nvim-neotest/nvim-nio'},
     config = function()
         local dapui = require('dapui')
         dapui.setup({

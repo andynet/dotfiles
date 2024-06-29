@@ -5,6 +5,8 @@
 # The following line should contain a sharp s:
 # ß
 # If the above line is not correctly displayed, fix your editor first!
+# https://github.com/greshake/i3status-rust
+# https://ultrabug.github.io/py3status/
 
 general {
     output_format = "none"
@@ -22,7 +24,7 @@ order += "volume master"
 order += "time"
 
 wireless _first_ {
-    format_up = "%essid: %quality"
+    format_up = " : %essid %quality"
     format_quality = "%d%s"
     format_down = ""
 }
@@ -33,7 +35,7 @@ ethernet _first_ {
 }
 
 battery all {
-    format = "%status: %percentage"
+    format = "%status: %emptytime %percentage"
     format_percentage = "%.00f%s"
     status_chr = "󰂄"
     status_bat = "󰁿"
@@ -45,7 +47,7 @@ cpu_usage {
 }
 
 memory {
-    format = "󰑹: %used"
+    format = "󰑹: %percentage_used"
 }
 
 volume master {

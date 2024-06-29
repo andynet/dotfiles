@@ -18,10 +18,12 @@ vim.opt.listchars = 'tab:> ,trail:.'
 vim.opt.list = true
 vim.opt.colorcolumn = '80,110'
 vim.opt.wrap = false
+vim.opt.linebreak = true
 vim.opt.softtabstop = 4
 vim.opt.shiftwidth = 4
 vim.opt.expandtab = true
 vim.opt.termguicolors = true
+vim.opt.signcolumn = 'yes'
 
 vim.keymap.set({'i', 'n'}, '<C-s>'  , '<ESC>:w<CR>', {desc = 'Save file'})
 vim.keymap.set({'n', 'v'}, '<Space>', '<C-f>'      , {desc = 'Scroll page down'})
@@ -34,8 +36,15 @@ vim.keymap.set('n', '<Right>', 'z<Right>'   , {desc = 'Window right'})
 vim.keymap.set('n', '<Left>' , 'z<Left>'    , {desc = 'Window left'})
 vim.keymap.set('n', '<Down>' , '<C-e>'      , {desc = 'Window down'})
 vim.keymap.set('n', '<Up>'   , '<C-y>'      , {desc = 'Window up'})
+vim.keymap.set('i', '<Down>' , '<C-o>gj'    , {desc = 'Go down'})
+vim.keymap.set('i', '<Up>'   , '<C-o>gk'    , {desc = 'Go up'})
 vim.keymap.set('n', 'x'      , '"_x'        , {desc = 'Delete'})
 vim.keymap.set('n', '<C-CR>' , '<C-]>'      , {desc = 'Follow link'})
+
+vim.keymap.set('n', '<leader>ab',
+    ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
+    {desc = 'Align bibtex'}
+)
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),

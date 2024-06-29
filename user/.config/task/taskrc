@@ -3,12 +3,12 @@
 
 data.location=~/.local/share/task
 hooks.location=~/.config/task/hooks
+# news.version=3.0.2
 
 # Color theme (uncomment one to use)
 #include no-color.theme
 include ./gruvbox.theme
 
-news.version=2.6.0
 context.back_burner.read=+back_burner
 context.back_burner.write=+back_burner
 context.normal.read=-back_burner -BLOCKED
