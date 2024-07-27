@@ -1,0 +1,65 @@
+TUI:
+wezterm alacritty
+yazi nnn
+fish
+neovim
+visidata sc
+task
+stow
+neofetch
+borg
+htop
+yt-dlp
+wget
+git-lfs
+pandoc-cli
+man-db
+man-pages
+
+GUI:
+chromium
+firefox
+krop
+calibre
+gnucash
+libreoffice-fresh
+obsidian
+okular
+sweethome3d
+xournalpp
+gparted
+i3-wm
+i3blocks
+scrot
+simplescreenrecorder
+simplescreenrecorder-debug
+sxiv
+dex
+
+Networking:
+nethogs
+network-manager-applet
+nmap
+ike
+openvpn
+strongswan
+
+controls:
+acpilight - backlight control
+arandr - monitor resolution and position control
+pavucontrol - volume control
+system-config-printer - printer settings
+
+arch-install-scripts
+base
+base-devel
+cronie
+cups
+efibootmgr
+intel-ucode
+terminus-font
+ttf-roboto-mono-nerd
+unclutter
+xorg-server
+xorg-xinit
+zram-generator

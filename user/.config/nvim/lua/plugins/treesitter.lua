@@ -5,7 +5,10 @@ return {
         require('nvim-treesitter.configs').setup({
             modules = {'highlight'},
             sync_install = false,
-            ensure_installed = {'rust', 'python', 'c', 'cpp', 'lua', 'vimdoc', 'vim', 'json'},
+            ensure_installed = {
+                'rust', 'python', 'c', 'cpp', 'lua',
+                'vimdoc', 'vim', 'json', 'xml'
+            },
             ignore_install = {},
             auto_install = false,
 

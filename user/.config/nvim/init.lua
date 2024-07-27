@@ -45,6 +45,7 @@ vim.keymap.set('n', '<leader>ab',
     ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
     {desc = 'Align bibtex'}
 )
+vim.keymap.set('n', '<leader>fxml', ':%!xmllint --format -', {desc = 'Format XML'})
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),

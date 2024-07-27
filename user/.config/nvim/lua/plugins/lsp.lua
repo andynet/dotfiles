@@ -99,8 +99,9 @@ local languages = {
         tools = {'shellcheck'},
         null = function(null_ls)
             return {
-                -- deprecated null_ls.builtins.diagnostics.shellcheck,
                 null_ls.builtins.diagnostics.fish,
+                require('none-ls-shellcheck.diagnostics'),
+                require('none-ls-shellcheck.code_actions'),
             }
         end,
     },
@@ -183,6 +184,7 @@ return {{
     end
 }, {
     'nvimtools/none-ls.nvim',
+    dependencies = { 'gbprod/none-ls-shellcheck.nvim', },
     config = function()
         local null_ls = require('null-ls')
 
@@ -224,7 +226,7 @@ return {{
 }, {
     'rcarriga/nvim-dap-ui',
     dependencies = {'nvim-neotest/nvim-nio'},
-    requires = {'mfussenegger/nvim-dap','nvim-neotest/nvim-nio'},
+    requires = {'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio'},
     config = function()
         local dapui = require('dapui')
         dapui.setup({
