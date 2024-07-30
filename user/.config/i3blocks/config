@@ -14,14 +14,19 @@ interval=5
 command="scripts/keyboard.sh"
 interval=1
 
+[backlight]
+command="scripts/backlight.sh"
+interval=once
+signal=10
+
 [volume]
 command="scripts/volume.sh"
 interval=once
 signal=10
 
-[usage]
-command="scripts/usage.sh"
-interval=1
+# [usage]
+# command="scripts/usage.sh"
+# interval=1
 
 [networking]
 command="scripts/networking.sh"
@@ -32,7 +37,7 @@ command="scripts/battery.sh"
 interval=5
 
 [weather]
-command="scripts/weather.sh"
+command="scripts/weather.py"
 interval=once
 
 [time]
