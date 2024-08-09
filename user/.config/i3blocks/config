@@ -32,6 +32,10 @@ signal=10
 command="scripts/networking.sh"
 interval=5
 
+[harddrive]
+command="scripts/harddrive.sh"
+interval=5
+
 [battery]
 command="scripts/battery.sh"
 interval=5

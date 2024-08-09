@@ -20,7 +20,7 @@ export GRB_LICENSE_FILE="/home/balaz/.config/gurobi.lic"
 export CUDA_CACHE_PATH="$XDG_CACHE_HOME/nv"
 export LC_COLLATE="C"
 export MANPATH="$HOME/.local/texmf/texmf-dist/doc/man:$MANPATH"
-export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true"
+export JDK_JAVA_OPTIONS="-Dawt.useSystemAAFontSettings=on -Dswing.aatext=true -Djava.util.prefs.userRoot=$XDG_CONFIG_HOME/java"
 
 export PATH="$HOME/.local/bin:$HOME/.local/texmf/bin/x86_64-linux:$PATH"
 
