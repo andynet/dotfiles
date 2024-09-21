@@ -81,9 +81,20 @@ local languages = {
         end
     },
     c = {
-        tools = {'clangd', 'codelldb'},
+        tools = {'codelldb'},
+        system_deps = {'clangd'},
         lsp = function(lspconfig, capabilities)
-            lspconfig.clangd.setup({capabilities = capabilities})
+            lspconfig.clangd.setup({
+                capabilities = capabilities,
+                filetypes = {"c", "h"},
+                cmd = {
+                    "clangd",
+                    "--log=verbose",
+                    "--background-index",
+                    "--clang-tidy",
+                    "--header-insertion=never"
+                }
+            })
         end,
         dap = function() end,
         -- cppcheck

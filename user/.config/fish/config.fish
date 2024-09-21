@@ -14,5 +14,6 @@ if status is-interactive
     abbr --add mma micromamba activate
     abbr --add mmd micromamba deactivate
     abbr --add conda micromamba
+    abbr --add gs git status
 end
 

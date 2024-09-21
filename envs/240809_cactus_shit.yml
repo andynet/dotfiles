@@ -1,0 +1,7 @@
+name: cactus_shit
+channels:
+- conda-forge
+dependencies:
+- pip
+- singularity
+

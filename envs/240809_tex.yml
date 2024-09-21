@@ -1,0 +1,6 @@
+name: tex
+channels:
+- conda-forge
+dependencies:
+- conda-forge::pygments
+

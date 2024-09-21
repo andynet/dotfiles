@@ -1,0 +1,10 @@
+name: thesis
+channels:
+- bioconda
+- conda-forge
+dependencies:
+- bioconda::bandage
+- conda-forge::bc
+- bioconda::pggb
+- bioconda::samtools
+

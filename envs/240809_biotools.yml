@@ -1,0 +1,28 @@
+name: biotools
+channels:
+- anaconda
+- bioconda
+dependencies:
+- bandage
+- bcftools
+- blast
+- bwa
+- cd-hit
+- csvtk
+- exonerate
+- gfatools
+- bioconda::igv
+- insilicoseq
+- jupyter
+- krona
+- medusa
+- minimap2
+- mummer
+- bioconda::picard
+- samtools
+- seqkit
+- snakemake
+- spades
+- taxonkit
+- treecluster
+

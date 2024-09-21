@@ -1,0 +1,7 @@
+name: stripy
+channels:
+- conda-forge
+dependencies:
+- conda-forge::pip
+- conda-forge::python=3.10
+

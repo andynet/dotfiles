@@ -1,0 +1,6 @@
+name: precommit
+channels:
+- conda-forge
+dependencies:
+- pre-commit
+

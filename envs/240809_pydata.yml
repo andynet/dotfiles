@@ -1,0 +1,19 @@
+name: pydata
+channels:
+- bioconda
+- conda-forge
+- gurobi
+dependencies:
+- biopython
+- ete3
+- gurobi
+- ipympl
+- jalview
+- jupyterlab
+- matplotlib
+- pandas
+- conda-forge::pandas-stubs
+- scikit-learn
+- seaborn
+- spyder-kernels=2.4
+

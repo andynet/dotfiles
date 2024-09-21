@@ -1,0 +1,23 @@
+name: dante
+channels:
+- bioconda
+- conda-forge
+- pkgs/main
+dependencies:
+- biopython
+- bwa
+- matplotlib
+- multiprocess
+- numba
+- numpy
+- pandas
+- pip
+- plotly
+- pysam
+- python
+- pyyaml
+- regex
+- samtools
+- scipy
+- spyder-kernels=2.4
+

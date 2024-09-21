@@ -1,0 +1,10 @@
+name: memsim
+channels:
+- bioconda
+- pkgs/main
+dependencies:
+- bedtools
+- gfatools
+- pip
+- samtools
+

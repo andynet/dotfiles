@@ -1,0 +1,16 @@
+name: snakemake
+channels:
+- bioconda
+dependencies:
+- bcftools
+- bwa
+- freebayes
+- gatk
+- hapcut2
+- minimap2
+- picard
+- samtools
+- seqkit
+- snakemake
+- vcftools
+

@@ -1,0 +1,10 @@
+name: gfamemsim
+channels:
+- bioconda
+- pkgs/main
+dependencies:
+- bedtools
+- gfatools
+- pip
+- samtools
+

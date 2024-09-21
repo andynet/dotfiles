@@ -1,0 +1,11 @@
+name: mems2gaf
+channels:
+- bioconda
+dependencies:
+- bedtools
+- bwa
+- gfatools
+- insilicoseq
+- samtools
+- seqtk
+

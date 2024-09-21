@@ -1,0 +1,15 @@
+name: maria
+channels:
+- bioconda
+- conda-forge
+dependencies:
+- biopython
+- bwa
+- insilicoseq[version='>=',build=1.5.4]
+- pggb
+- pip
+- psutil
+- samtools
+- seqkit
+- seqtk
+
