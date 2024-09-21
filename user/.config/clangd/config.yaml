@@ -1,2 +1,2 @@
 CompileFlags:
-  Add: [-xc, -std=gnu23, -Wall, -Wextra, -pedantic, -iquote/home/balaz/projects/c_programming/lib]
+  Add: [-xc, -std=gnu23, -Wall, -Wextra, -pedantic]
