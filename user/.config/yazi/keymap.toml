@@ -1,0 +1,4 @@
+[manager]
+prepend_keymap = [
+	{ on = [ "g", "d" ], run = 'cd ~/downloads/', desc = "Go to the downloads directory" },
+]

@@ -111,7 +111,7 @@ mode "resize" {
 }
 
 # appearance
-font pango:RobotoMono Nerd Font 15
+font pango:RobotoMono Nerd Font 18px
 
 set_from_resource $fg       i3wm.foreground #ffffff
 set_from_resource $bg       i3wm.background #000000

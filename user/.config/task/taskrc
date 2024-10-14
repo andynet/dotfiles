@@ -3,10 +3,14 @@
 
 data.location=~/.local/share/task
 hooks.location=~/.config/task/hooks
-news.version=3.0.2
+news.version=3.1.0
 
 # Color theme (uncomment one to use)
-include ./gruvbox.theme
+# include ./gruvbox.theme
+# include /usr/share/doc/task/rc/dark-16.theme
+# include /usr/share/doc/task/rc/dark-256.theme
+include ./dark-256.theme
+# include /usr/share/doc/task/rc/bubblegum-256.theme
 
 context.back_burner.read=+back_burner
 context.back_burner.write=+back_burner
@@ -21,6 +25,8 @@ uda.relativeRecurWait.label=Rel. Rec. Wait
 # urgency.age.coefficient=-32
 # urgency.age.max=32
 urgency.age.coefficient=0
+urgency.annotations.coefficient=0
+urgency.blocking.coefficient=0
 
 report.next.sort=urgency-,entry-
 # report.next.filter=status:pending -WAITING limit:page

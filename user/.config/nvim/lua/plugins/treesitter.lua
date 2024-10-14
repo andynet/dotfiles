@@ -7,7 +7,8 @@ return {
             sync_install = false,
             ensure_installed = {
                 'rust', 'python', 'c', 'cpp', 'lua',
-                'vimdoc', 'vim', 'json', 'xml'
+                'vimdoc', 'vim', 'json', 'xml',
+                'html', 'css', 'javascript',
             },
             ignore_install = {},
             auto_install = false,

@@ -48,7 +48,7 @@ local languages = {
     },
     python = {
         tools = {'python-lsp-server', 'debugpy'},
-        system_deps = {'mypy'},
+        system_deps = {'mypy', 'pylint'},
         lsp = function(lspconfig, capabilities)
             lspconfig.pylsp.setup({capabilities = capabilities})
         end,
@@ -73,7 +73,10 @@ local languages = {
             -- mypy --install-types .
             vim.fn.system('mypy -h > /dev/null')
             if vim.v.shell_error == 0 then
-                return {null_ls.builtins.diagnostics.mypy}
+                return {
+                    null_ls.builtins.diagnostics.mypy,
+                    null_ls.builtins.diagnostics.pylint,
+                }
             else
                 vim.notify('mypy not installed: pip install mypy')
                 return {}
@@ -90,7 +93,6 @@ local languages = {
                 cmd = {
                     "clangd",
                     "--log=verbose",
-                    "--background-index",
                     "--clang-tidy",
                     "--header-insertion=never"
                 }
