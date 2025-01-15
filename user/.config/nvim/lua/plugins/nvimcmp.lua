@@ -38,6 +38,7 @@ return {
                 {name = 'nvim_lsp_signature_help'},
                 {name = 'path'},
                 {name = 'buffer'},
+                {name = 'crates'},
             },
             formatting = {
                 format = format_func,

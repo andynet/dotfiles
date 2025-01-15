@@ -6,7 +6,7 @@ return {
             modules = {'highlight'},
             sync_install = false,
             ensure_installed = {
-                'rust', 'python', 'c', 'cpp', 'lua',
+                'rust', 'python', 'c', 'cpp', 'lua', 'odin',
                 'vimdoc', 'vim', 'json', 'xml',
                 'html', 'css', 'javascript',
             },

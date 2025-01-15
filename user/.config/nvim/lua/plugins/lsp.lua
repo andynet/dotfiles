@@ -5,109 +5,12 @@
 -- nls -> https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
 
 local languages = {
-    -- TODO: replace with https://github.com/mrcjkb/rustaceanvim???
-    rust = {
-        -- TODO: add https://github.com/facebookexperimental/MIRAI
-        tools = {'rust-analyzer', 'codelldb'},
-        lsp = function(lspconfig, capabilities)
-            lspconfig.rust_analyzer.setup({
-                capabilities = capabilities,
-                settings = {
-                    ['rust-analyzer'] = {
-                        check = {
-                            command = 'clippy',
-                            ignore = {'clippy::needless_return'}
-                        },
-                    }
-                }
-            })
-        end,
-        dap = function(dap)
-            -- TODO: try this https://jonboh.dev/posts/rr/
-            -- https://aur.archlinux.org/packages/rr
-            dap.adapters.codelldb = {
-                type = 'server',
-                port = '${port}',
-                executable = {
-                    command = vim.fn.stdpath('data') .. '/mason/bin/codelldb',
-                    args = {'--port', '${port}'},
-                },
-            }
-            dap.configurations.rust = {{
-                name = 'Launch',
-                type = 'codelldb',
-                request = 'launch',
-                program = function()
-                    return vim.fn.input('executable: ', vim.fn.getcwd() .. '/', 'file')
-                end,
-                args = function()
-                    return vim.split(vim.fn.input('args: '), ' ')
-                end
-            }}
-        end,
-    },
-    python = {
-        tools = {'python-lsp-server', 'debugpy'},
-        system_deps = {'mypy', 'pylint'},
-        lsp = function(lspconfig, capabilities)
-            lspconfig.pylsp.setup({capabilities = capabilities})
-        end,
-        dap = function(dap)
-            dap.adapters.python = {
-                type = 'executable';
-                command = 'python';
-                args = {'-m', 'debugpy.adapter'};
-            }
-            dap.configurations.python = {{
-                name = 'Launch';
-                type = 'python';
-                request = 'launch';
-                program = '${file}';
-                args = function()
-                    return vim.split(vim.fn.input('args: '), ' ')
-                end,
-                pythonPath = function() return 'python' end;
-            }}
-        end,
-        null = function(null_ls)
-            -- mypy --install-types .
-            vim.fn.system('mypy -h > /dev/null')
-            if vim.v.shell_error == 0 then
-                return {
-                    null_ls.builtins.diagnostics.mypy,
-                    null_ls.builtins.diagnostics.pylint,
-                }
-            else
-                vim.notify('mypy not installed: pip install mypy')
-                return {}
-            end
-        end
-    },
-    c = {
-        tools = {'codelldb'},
-        system_deps = {'clangd'},
-        lsp = function(lspconfig, capabilities)
-            lspconfig.clangd.setup({
-                capabilities = capabilities,
-                filetypes = {"c", "h"},
-                cmd = {
-                    "clangd",
-                    "--log=verbose",
-                    "--clang-tidy",
-                    "--header-insertion=never"
-                }
-            })
-        end,
-        dap = function() end,
-        -- cppcheck
-    },
-    lua = {
-        tools = {'lua-language-server'},
-        lsp = function(lspconfig, capabilities)
-            require('neodev').setup()
-            lspconfig.lua_ls.setup({capabilities = capabilities})
-        end,
-    },
+    rust = require('plugins.languages.rust'),
+    python = require('plugins.languages.python'),
+    c = require('plugins.languages.c'),
+    tex = require('plugins.languages.tex'),
+    odin = require('plugins.languages.odin'),
+    lua = require('plugins.languages.lua'),
     shell = {
         tools = {'shellcheck'},
         null = function(null_ls)
@@ -116,31 +19,6 @@ local languages = {
                 require('none-ls-shellcheck.diagnostics'),
                 require('none-ls-shellcheck.code_actions'),
             }
-        end,
-    },
-    tex = {
-        tools = {'texlab'},         -- ltex-ls (for grammar check)
-        system_deps = {'tectonic'}, -- chktex (some nice linter)
-        lsp = function(lspconfig, capabilities)
-            vim.fn.system('tectonic -h > /dev/null')
-            if vim.v.shell_error ~= 0 then return end
-
-            local texlab = {
-                build = {
-                    -- onSave = true,
-                    executable = 'tectonic',
-                    args = {
-                        '%f', '--keep-intermediates', '--keep-logs',
-                        '--synctex', '--untrusted'
-                    },
-                },
-                formatterLineLength = 10000,
-            }
-            lspconfig.texlab.setup({
-                capabilities = capabilities,
-                settings = {texlab = texlab}
-            })
-            vim.keymap.set('n', '<C-x>', ':TexlabBuild<CR>', {desc = 'Build TeX'})
         end,
     },
 }
@@ -211,9 +89,7 @@ return {{
             end
         end
 
-        null_ls.setup({
-            sources = sources,
-        })
+        null_ls.setup({sources = sources})
     end
 }, {
     'mfussenegger/nvim-dap',

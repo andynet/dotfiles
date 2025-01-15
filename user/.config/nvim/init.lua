@@ -42,8 +42,8 @@ vim.keymap.set('i', '<Up>'   , '<C-o>gk'    , {desc = 'Go up'})
 vim.keymap.set('n', 'x'      , '"_x'        , {desc = 'Delete'})
 vim.keymap.set('n', '<C-CR>' , '<C-]>'      , {desc = 'Follow link'})
 
--- :nnoremap <F5> :match Search /<C-R><C-W>/<CR>
-vim.keymap.set('n', '<F5>' , ':match Search /<C-R><C-W>/<CR>'      , {desc = 'Match under cursor'})
+vim.keymap.set('n', '<F5>', ':match Search /<C-R><C-W>/<CR>' , {desc = 'Match under cursor'})
+vim.keymap.set('n', '<F4>', ':match None<CR>'                , {desc = 'Unmatch'})
 
 vim.keymap.set('n', '<leader>ab',
     ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
