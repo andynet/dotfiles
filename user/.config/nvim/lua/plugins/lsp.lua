@@ -5,13 +5,13 @@
 -- nls -> https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
 
 local languages = {
-    rust = require('plugins.languages.rust'),
-    python = require('plugins.languages.python'),
-    c = require('plugins.languages.c'),
-    tex = require('plugins.languages.tex'),
-    odin = require('plugins.languages.odin'),
-    lua = require('plugins.languages.lua'),
-    shell = {
+    rust   = require('languages.rust'),
+    python = require('languages.python'),
+    c      = require('languages.c'),
+    tex    = require('languages.tex'),
+    odin   = require('languages.odin'),
+    lua    = require('languages.lua'),
+    shell  = {
         tools = {'shellcheck'},
         null = function(null_ls)
             return {
@@ -75,7 +75,7 @@ return {{
     end
 }, {
     'nvimtools/none-ls.nvim',
-    dependencies = { 'gbprod/none-ls-shellcheck.nvim', },
+    dependencies = {'gbprod/none-ls-shellcheck.nvim',},
     config = function()
         local null_ls = require('null-ls')
 
@@ -136,4 +136,6 @@ return {{
         vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
         vim.keymap.set('n', 'E', dapui.eval, {desc = 'Dapui eval'})
     end
+}, {
+    'barreiroleo/ltex-extra.nvim'
 }}

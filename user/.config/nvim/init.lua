@@ -17,7 +17,7 @@ vim.opt.mouse = ''
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.listchars = 'tab:> ,trail:.'
 vim.opt.list = true
-vim.opt.colorcolumn = '80,110'
+vim.opt.colorcolumn = '80,111'
 vim.opt.wrap = false
 vim.opt.linebreak = true
 vim.opt.softtabstop = 4
@@ -50,6 +50,10 @@ vim.keymap.set('n', '<leader>ab',
     {desc = 'Align bibtex'}
 )
 vim.keymap.set('n', '<leader>fxml', ':%!xmllint --format -', {desc = 'Format XML'})
+-- vim.keymap.set('n', '<F6>', ':set wrap<CR>:set columns=117<CR>', {desc = 'Start writting mode'})
+-- 117 = 80(text) + 30(neotree) + 1(NTsep) + 2(&signcolumn) + 4(&numberwidth)
+vim.keymap.set('n', '<F6>', ':set wrap<CR>:vert 86 split<CR><C-w>l:enew<CR><C-w>h', {desc = 'Start writting mode'})
+-- 86 = 80 + 2 + 4
 
 vim.api.nvim_create_autocmd('TextYankPost', {
     group = vim.api.nvim_create_augroup('YankHighlight', {clear = true}),
