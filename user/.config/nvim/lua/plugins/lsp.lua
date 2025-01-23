@@ -136,6 +136,4 @@ return {{
         vim.keymap.set('n', '<F6>', dapui.toggle, {desc = 'Dapui toggle'})
         vim.keymap.set('n', 'E', dapui.eval, {desc = 'Dapui eval'})
     end
-}, {
-    'barreiroleo/ltex-extra.nvim'
 }}

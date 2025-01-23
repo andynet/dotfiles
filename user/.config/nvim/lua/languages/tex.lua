@@ -43,4 +43,5 @@ return {
             },
         })
     end,
+    lazy = {'barreiroleo/ltex-extra.nvim'}
 }

@@ -5,6 +5,7 @@ return {
         require('nvim-treesitter.configs').setup({
             modules = {'highlight'},
             sync_install = false,
+            -- make this language dependent
             ensure_installed = {
                 'rust', 'python', 'c', 'cpp', 'lua', 'odin',
                 'vimdoc', 'vim', 'json', 'xml',
