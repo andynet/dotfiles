@@ -1,3 +1,6 @@
+-- How to do something like this?
+-- local languages = require('languages')
+
 local languages = {
     snakemake = require('languages.snakemake'),
     just = require('languages.just'),
