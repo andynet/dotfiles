@@ -1,12 +1,5 @@
--- How to do something like this?
--- local languages = require('languages')
-
-local languages = {
-    snakemake = require('languages.snakemake'),
-    just = require('languages.just'),
-    tex = require('languages.tex'),
-    rust = require('languages.rust'),
-}
+local languages = require('languages')
+-- vim.print(languages)
 
 return {
     languages.snakemake.lazy,
