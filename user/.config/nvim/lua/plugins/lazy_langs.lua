@@ -1,10 +1,12 @@
 local languages = require('languages')
 -- vim.print(languages)
 
-return {
-    languages.snakemake.lazy,
-    languages.just.lazy,
-    languages.tex.lazy,
-    languages.rust.lazy,
-    languages.jinja.lazy
-}
+local result = {}
+for _, lang in pairs(languages) do
+    if lang.lazy then
+        table.insert(result, lang.lazy)
+    end
+end
+
+-- vim.print(result)
+return result

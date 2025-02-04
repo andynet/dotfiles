@@ -1,7 +1,7 @@
 return {
     tools = {},
     system_deps = {},
-    lsp = function(lspconfig, capabilities) end,
+    -- lsp = function(lspconfig, capabilities) end,
     dap = function() end,
     lazy = {
         'snakemake/snakemake',

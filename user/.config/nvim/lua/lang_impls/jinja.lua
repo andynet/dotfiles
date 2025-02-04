@@ -5,7 +5,7 @@ return {
     system_deps = {},
     lazy = {'uros-5/jinja-lsp'},
     treesitter = {},
-    null = function(null_ls) return {} end,
+    -- null = function(null_ls) return {} end,
     lsp = function(lspconfig, capabilities)
         vim.filetype.add{
             extension = {

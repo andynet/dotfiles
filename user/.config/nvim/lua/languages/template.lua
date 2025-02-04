@@ -5,11 +5,11 @@
 -- nls -> https://github.com/nvimtools/none-ls.nvim/blob/main/doc/BUILTINS.md
 
 return {
-    tools = {},
-    system_deps = {},
-    lazy = {},
-    treesitter = {},
-    null = function(null_ls) end,
-    lsp = function(lspconfig, capabilities) end,
-    dap = function() end,
+    -- tools = {},
+    -- system_deps = {},
+    -- lazy = {},
+    -- treesitter = {},
+    -- null = function(null_ls) end,
+    -- lsp = function(lspconfig, capabilities) end,
+    -- dap = function() end,
 }
