@@ -5,6 +5,7 @@ return {
     -- low level coding
     c         = require('lang_impls.c'),
     odin      = require('lang_impls.odin'),
+    zig       = require('lang_impls.zig'),
     -- writing
     tex       = require('lang_impls.tex'),
     -- scripting
