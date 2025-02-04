@@ -5,5 +5,6 @@ return {
     languages.snakemake.lazy,
     languages.just.lazy,
     languages.tex.lazy,
-    languages.rust.lazy
+    languages.rust.lazy,
+    languages.jinja.lazy
 }

@@ -1,11 +1,16 @@
 return {
-    rust      = require('languages.rust'),
-    python    = require('languages.python'),
-    c         = require('languages.c'),
-    tex       = require('languages.tex'),
-    odin      = require('languages.odin'),
-    lua       = require('languages.lua'),
-    snakemake = require('languages.snakemake'),
-    just      = require('languages.just'),
-    shell     = require('languages.shell'),
+    -- core
+    rust      = require('lang_impls.rust'),
+    python    = require('lang_impls.python'),
+    -- low level coding
+    c         = require('lang_impls.c'),
+    odin      = require('lang_impls.odin'),
+    -- writing
+    tex       = require('lang_impls.tex'),
+    -- scripting
+    lua       = require('lang_impls.lua'),
+    snakemake = require('lang_impls.snakemake'),
+    just      = require('lang_impls.just'),
+    jinja     = require('lang_impls.jinja'),
+    shell     = require('lang_impls.shell'),
 }
