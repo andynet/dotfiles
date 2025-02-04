@@ -1,0 +1,35 @@
+-- https://github.com/mhinz/vim-startify
+-- https://stackoverflow.com/a/75444452
+--
+-- There are already
+-- https://github.com/goolord/alpha-nvim
+-- https://github.com/glepnir/dashboard-nvim
+-- https://github.com/startup-nvim/startup.nvim
+
+return {}
+-- return {
+--     'mhinz/vim-startify',
+--     init = function()
+--         function CommandToStartifyTable(command)
+--             return function()
+--                 local cmd_output = vim.fn.systemlist(command .. ' 2>/dev/null')
+--                 local files =
+--                     vim.tbl_map(
+--                         function(v)
+--                             return {line = v, path = v}
+--                         end,
+--                         cmd_output
+--                     )
+--                 return files
+--             end
+--         end
+-- 
+--         -- vim.g.startify_custom_header = "startify#pad('skhdbjcb')"
+--         -- vim.g.startify_custom_header = "startify#pad(readfile('/path/to/vim-ascii.txt'))"
+--         vim.g.startify_lists = {
+--             {type = 'dir', header = {'Most recently used ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t')}},
+--             -- {type = CommandToStartifyTable('git ls-files -m'),                    header = {'   Git modified'}},
+--             -- {type = CommandToStartifyTable('git ls-files -o --exclude-standard'), header = {'   Git untracked'}}
+--         }
+--     end
+-- }

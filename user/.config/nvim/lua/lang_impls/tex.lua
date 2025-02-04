@@ -1,8 +1,6 @@
--- ltex-ls (for grammar check) chktex (some nice linter)
-
 return {
     tools = {'texlab'},
-    system_deps = {'tectonic', 'ltex-ls-plus'},
+    system_deps = {'tectonic -V', 'ltex-ls-plus --version'},
     lsp = function(lspconfig, capabilities)
         vim.fn.system('tectonic -h > /dev/null')
         if vim.v.shell_error ~= 0 then return end

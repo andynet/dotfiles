@@ -1,7 +1,8 @@
+-- TODO: replace with https://github.com/mrcjkb/rustaceanvim???
+-- TODO: add https://github.com/facebookexperimental/MIRAI
 return {
-    -- TODO: replace with https://github.com/mrcjkb/rustaceanvim???
-    -- TODO: add https://github.com/facebookexperimental/MIRAI
     tools = {'rust-analyzer', 'codelldb'},
+    treesitter = {'rust'},
     lsp = function(lspconfig, capabilities)
         lspconfig.rust_analyzer.setup({
             capabilities = capabilities,

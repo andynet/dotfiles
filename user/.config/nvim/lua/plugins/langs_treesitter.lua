@@ -2,15 +2,23 @@ return {
     'nvim-treesitter/nvim-treesitter',
     build = ':TSUpdate',
     config = function()
+        local languages = require('languages')
+        local ensure_installed = {
+            'html', 'css', 'javascript', 'json', 'xml', 'vim', 'vimdoc', 'cpp',
+        }
+
+        for _, lang in pairs(languages) do
+            if lang.treesitter then
+                for _, parser in ipairs(lang.treesitter) do
+                    table.insert(ensure_installed, parser)
+                end
+            end
+        end
+
         require('nvim-treesitter.configs').setup({
             modules = {'highlight'},
             sync_install = false,
-            -- make this language dependent
-            ensure_installed = {
-                'rust', 'python', 'c', 'cpp', 'lua', 'odin',
-                'vimdoc', 'vim', 'json', 'xml',
-                'html', 'css', 'javascript',
-            },
+            ensure_installed = ensure_installed,
             ignore_install = {},
             auto_install = false,
 

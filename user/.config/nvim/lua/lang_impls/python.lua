@@ -1,6 +1,6 @@
 return {
-    -- tools = {'python-lsp-server', 'debugpy'},
-    system_deps = {'mypy', 'pylint', 'python-lsp-server'},
+    system_deps = {'mypy -V', 'pylint -h', 'pylsp -V'},
+    treesitter = {'python'},
     lsp = function(lspconfig, capabilities)
         lspconfig.pylsp.setup({capabilities = capabilities})
     end,
