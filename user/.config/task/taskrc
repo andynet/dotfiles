@@ -3,7 +3,7 @@
 
 data.location=~/.local/share/task
 hooks.location=~/.config/task/hooks
-news.version=3.1.0
+news.version=3.3.0
 
 # Color theme (uncomment one to use)
 # include ./gruvbox.theme
@@ -12,9 +12,10 @@ news.version=3.1.0
 include ./dark-256.theme
 # include /usr/share/doc/task/rc/bubblegum-256.theme
 
+context.normal.read=-back_burner -weekend -BLOCKED
 context.back_burner.read=+back_burner
-context.back_burner.write=+back_burner
-context.normal.read=-back_burner -BLOCKED
+context.weekend.read=-back_burner -BLOCKED
+context.weekend.write=+weekend
 
 uda.relativeRecurDue.type=duration
 uda.relativeRecurDue.label=Rel. Rec. Due
@@ -27,6 +28,9 @@ uda.relativeRecurWait.label=Rel. Rec. Wait
 urgency.age.coefficient=0
 urgency.annotations.coefficient=0
 urgency.blocking.coefficient=0
+urgency.tags.coefficient=1.25
+# The urgency caused by tags and annotations is further modified by
+# the factor of 0.8 for one, 0.9 for two and 1.0 for more.
 
 report.next.sort=urgency-,entry-
 # report.next.filter=status:pending -WAITING limit:page

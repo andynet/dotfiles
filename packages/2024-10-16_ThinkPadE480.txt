@@ -1,0 +1,114 @@
+borg
+cronie
+cups system-config-printer
+fish
+gimp
+gparted
+graphviz
+xournalpp
+tectonic
+htop
+libreoffice-fresh
+lsof
+man-db man-pages
+npm
+okular krop pandoc-cli
+p7zip
+retroarch retroarch-assets-ozone libretro-beetle-psx libretro-mgba
+stow
+strace
+task
+unzip
+virt-manager qemu-desktop swtpm
+vlc
+
+wget
+yt-dlp
+firefox
+
+# sound
+pulseaudio
+pacutils
+pavucontrol
+# printers
+cups
+system-config-printer
+epson-inkjet-printer-202101w # AUR
+simple-scan
+# files
+thunar
+thunar-volman
+gvfs
+gvfs-mtp
+ntfs-3g
+# TUI
+alacritty
+man-pages
+man-db
+htop
+stow
+unzip
+perl-rename
+bash-completion ?
+# multimedia
+libreoffice-fresh
+okular
+vlc
+eog
+
+# booting
+x grub
++ efibootmgr
+x amd-ucode
++ intel-ucode
+
+# system
++ linux
++ linux-firmware
++ base
++ base-devel
+
+# network
++ network-manager-applet
++ networkmanager
++ networkmanager-openvpn
++ openvpn
++ openssh
++ sshfs
++ nmap
++ nethogs
++ iwd
++ ike
++ strongswan
+
+# development
+neovim
+git
+git-lfs
+clang
+gdb
+valgrind
+
+# GUI
+xorg-server
+xorg-xinit
+xclip
+xorg-xwininfo
+acpilight
+arandr
+autorandr
+dex
+dmenu
+i3-wm i3blocks i3lock
+pavucontrol
+scrot
+sxiv
+nitrogen
+terminus-font
+ttf-roboto-mono-nerd
+unclutter
+wezterm
+xss-lock
+yazi nnn thunar thunar-volman
+
+

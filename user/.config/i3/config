@@ -17,7 +17,7 @@ bindsym XF86AudioMicMute     exec --no-startup-id pactl set-source-mute @DEFAULT
 bindsym XF86MonBrightnessUp   exec --no-startup-id xbacklight +10 && $refresh_i3bar
 bindsym XF86MonBrightnessDown exec --no-startup-id xbacklight -10 && $refresh_i3bar
 
-bindsym Print exec scrot ~/%Y-%m-%d-%T-scrot.png
+bindsym Print exec scrot ~/downloads/%Y-%m-%d-%T-scrot.png
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -95,7 +95,11 @@ bindsym $mod+f fullscreen toggle
 
 for_window [class="org-broad-igv-ui-Main"] floating enable
 for_window [class="org-broad-igv-ui-Main" title="IGV"] floating disable
+
 for_window [title="MyApp"] floating enable
+for_window [title="Dante"] floating enable
+for_window [title="Open File"] floating enable
+for_window [title="Open Folder"] floating enable
 
 bindsym $mod+r mode "resize"
 mode "resize" {

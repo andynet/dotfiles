@@ -1,0 +1,101 @@
+# system
+acpilight
+arandr
+autorandr
+base
+base-devel
+efibootmgr
+cups
+linux
+linux-firmware
+xorg-server
+xorg-xinit
+network-manager-applet
+networkmanager
+intel-ucode
+pavucontrol
+cronie
+dmenu
+dex
+nitrogen
+system-config-printer
+
+# networking
+ike
+iwd
+nethogs
+nmap
+openssh
+openvpn
+sshfs
+strongswan
+
+# development
+clang
+gdb
+git
+git-lfs
+neovim
+valgrind
+strace
+
+# virtualization
+qemu-desktop
+swtpm
+
+# gaming
+libretro-beetle-psx
+libretro-mgba
+retroarch
+retroarch-assets-ozone
+retroarch-assets-xmb
+virt-manager
+
+# user interface
+i3-wm
+i3blocks
+i3lock
+fish
+wezterm
+yazi
+terminus-font
+ttf-roboto-mono-nerd
+task
+man-db
+man-pages
+
+# tools
+borg
+firefox
+gimp
+krop
+libreoffice-fresh
+okular
+sxiv
+vlc
+xournalpp
+yt-dlp
+thunar
+thunar-volman
+tectonic
+
+# other
+gparted
+graphviz
+htop
+less
+lsof
+p7zip
+pandoc-cli
+scrot
+stow
+unclutter
+unzip
+wget
+xclip
+xorg-xwininfo
+xss-lock
+
+# deprecated
+nnn
+npm

@@ -2,7 +2,7 @@
 set -euo
 
 option=$(
-    printf "Lock\nReload\nExit\nShutdown\nReboot"                               \
+    printf "Lock\nReload\nExit\nDisable autolock\nShutdown\nReboot"                               \
     | dmenu -i -l 6 -fn "Roboto Mono Nerd Font-14"                              \
         -nf "#fbf1c7" -sf "#fbf1c7" -nb "#1d2021" -sb "#98971a"
 )
@@ -12,6 +12,7 @@ case $option in
     "Reload")   i3 restart;;
     "Exit")     i3-msg exit;;
     # "Sleep")    systemctl hibernate;;
+    "Disable autolock") xset s off -dpms;;
     "Shutdown") shutdown now;;
     "Reboot")   reboot;;
     *)          i3-nagbar -m "Unknown option." -f "pango:Roboto Mono Nerd Font 14";;
