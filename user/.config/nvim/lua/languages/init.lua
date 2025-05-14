@@ -8,6 +8,7 @@ return {
     zig       = require('lang_impls.zig'),
     -- writing
     tex       = require('lang_impls.tex'),
+    typst     = require('lang_impls.typst'),
     -- scripting
     lua       = require('lang_impls.lua'),
     snakemake = require('lang_impls.snakemake'),

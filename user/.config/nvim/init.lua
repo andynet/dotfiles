@@ -13,6 +13,7 @@ vim.g.maplocalleader = ';' -- defines <LocalLeader>
 vim.g.c_syntax_for_h = 1
 
 vim.opt.number = true
+vim.opt.relativenumber = true
 vim.opt.mouse = ''
 vim.opt.clipboard:append('unnamedplus')
 vim.opt.listchars = 'tab:> ,trail:.'
@@ -42,8 +43,8 @@ vim.keymap.set('i', '<Up>'   , '<C-o>gk'    , {desc = 'Go up'})
 vim.keymap.set('n', 'x'      , '"_x'        , {desc = 'Delete'})
 vim.keymap.set('n', '<C-CR>' , '<C-]>'      , {desc = 'Follow link'})
 
-vim.keymap.set('n', '<F5>', ':match Search /<C-R><C-W>/<CR>' , {desc = 'Match under cursor'})
-vim.keymap.set('n', '<F4>', ':match None<CR>'                , {desc = 'Unmatch'})
+vim.keymap.set('n', '<F7>', ':match Search /<C-R><C-W>/<CR>' , {desc = 'Match under cursor'})
+vim.keymap.set('n', '<F8>', ':match None<CR>'                , {desc = 'Unmatch'})
 
 vim.keymap.set('n', '<leader>ab',
     ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
@@ -52,7 +53,7 @@ vim.keymap.set('n', '<leader>ab',
 vim.keymap.set('n', '<leader>fxml', ':%!xmllint --format -', {desc = 'Format XML'})
 -- vim.keymap.set('n', '<F6>', ':set wrap<CR>:set columns=117<CR>', {desc = 'Start writting mode'})
 -- 117 = 80(text) + 30(neotree) + 1(NTsep) + 2(&signcolumn) + 4(&numberwidth)
-vim.keymap.set('n', '<F6>', ':set wrap<CR>:vert 86 split<CR><C-w>l:enew<CR><C-w>h', {desc = 'Start writting mode'})
+vim.keymap.set('n', '<F9>', ':set wrap<CR>:vert 86 split<CR><C-w>l:enew<CR><C-w>h', {desc = 'Start writting mode'})
 -- 86 = 80 + 2 + 4
 
 vim.api.nvim_create_autocmd('TextYankPost', {

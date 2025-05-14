@@ -13,7 +13,6 @@ return {
                 -- null_ls.builtins.diagnostics.pylint.with({timeout = 30000}),
             }
         else
-            vim.notify('mypy not installed: pip install mypy')
             return {}
         end
     end,
