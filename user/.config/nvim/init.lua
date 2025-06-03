@@ -50,6 +50,12 @@ vim.keymap.set('n', '<leader>ab',
     ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
     {desc = 'Align bibtex'}
 )
+
+vim.keymap.set('n', '<leader>t', function()
+    local date = vim.fn.system('date +"%F"'):gsub("\n", "") -- get date without newline
+    vim.api.nvim_put({date}, 'c', true, false)
+end, { desc = 'Insert date' })
+
 vim.keymap.set('n', '<leader>fxml', ':%!xmllint --format -', {desc = 'Format XML'})
 -- vim.keymap.set('n', '<F6>', ':set wrap<CR>:set columns=117<CR>', {desc = 'Start writting mode'})
 -- 117 = 80(text) + 30(neotree) + 1(NTsep) + 2(&signcolumn) + 4(&numberwidth)
