@@ -100,6 +100,8 @@ for_window [title="MyApp"] floating enable
 for_window [title="Dante"] floating enable
 for_window [title="Open File"] floating enable
 for_window [title="Open Folder"] floating enable
+for_window [title="Save As"] floating enable
+for_window [title="Figure"] floating enable
 
 bindsym $mod+r mode "resize"
 mode "resize" {

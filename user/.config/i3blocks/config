@@ -6,6 +6,10 @@ _count=1
 command=printf '{"full_text":"%s", "_count":%d}\n' $_count $((_count + 1))
 format=json
 
+[donelist]
+command="./scripts/donelist.sh"
+interval=5
+
 [taskwarrior]
 command="scripts/taskwarrior.sh"
 interval=5
