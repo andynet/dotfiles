@@ -1,5 +1,6 @@
 return {
     tools = {'shellcheck'},
+    treesitter = {'fish'},
     null = function(_)
         return {
             require('null-ls.builtins.diagnostics.fish'),

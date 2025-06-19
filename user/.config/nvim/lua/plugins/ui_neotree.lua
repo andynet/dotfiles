@@ -17,10 +17,11 @@ return {
                 }
             },
             window = {
-                width = 30,
+                width = 40,
+                position = 'right',
             }
         })
 
-        vim.keymap.set('n', '\\'       , ':Neotree toggle<CR>', {desc = 'Toggle neotree'})
+        vim.keymap.set('n', '\\', ':Neotree toggle<CR>', {desc = 'Toggle neotree'})
     end
 }
