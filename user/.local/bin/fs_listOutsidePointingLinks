@@ -1,0 +1,19 @@
+#!/bin/bash
+
+directory=$1    # this cannot end with /
+
+# the output are all file paths that are either absolute or use too many ../
+while read -r file target; do
+    if [[ "$target" = /* ]]; then  # is absolute path?
+        target2=$target
+        echo "$file $target"
+        continue
+    else
+        newpath=$(dirname "$file")/$target
+        target2=$(python3 -c "import os; print(os.path.normpath('$newpath'))")
+    fi
+    # echo -e "$file\n$target\n$target2\n"
+    if [[ ! "$target2" = "$directory"/* ]]; then
+        echo "$file $target"
+    fi
+done < <(find "$directory" -type l -exec ls -l {} \; | awk '{print $9, $11}')

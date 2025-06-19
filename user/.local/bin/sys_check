@@ -1,0 +1,82 @@
+#!/bin/bash
+
+function print_dir_sizes() {
+    # 573G    /home/balaz
+    # 233G    /home/balaz/data/
+    # 190G    /home/balaz/lfs/
+    # 152G    other dirs in /home/balaz
+
+    # home_size=$(du -sh "$HOME")
+    du -sh "$HOME"
+    du -sh "$HOME/data/" "$HOME/lfs/" "$HOME"
+}
+
+function check_home_dir_content() {
+    allowed_names=(
+        "data" "downloads" "lfs" "mounts" "projects" "scratch" "tools" "virtualization"
+        ".cache" ".config" ".local" ".dotfiles"
+        ".profile"
+        # remove these when it becomes possible
+        ".ssh" ".mozilla" ".ollama"
+        ".bashrc" "done.tsv"
+    )
+    # shellcheck disable=SC2207
+    found_names=($(ls -A))
+    # echo "${allowed_names[@]}"
+    # echo "${found_names[@]}"
+
+    out=$(
+        for fn in "${found_names[@]}"; do
+            allowed=false
+            for an in "${allowed_names[@]}"; do
+                if [[ "$fn" == "$an" ]]; then
+                    allowed=true
+                fi
+            done
+            if ! $allowed; then echo -n "$fn "; fi
+        done
+        echo ""
+    )
+
+    if [[ "$out" == "" ]];
+    then echo -e "No disallowed items in home.";
+    else echo -e "Disallowed items in home:\n$out";
+    fi
+}
+
+function check_links() {
+    # links_file=links.txt
+    # find "$HOME" -type l -exec ls -l {} \; | awk '{print $9, $11}' > $links_file
+
+    # everything in lfs folder is pointed to
+    # echo "Orphaned lfs data:"
+
+    # list links in data which point outside of data except lfs
+    while read -r file target; do
+        echo "File $file"
+        echo "points outside to $target"
+        echo ""
+    done < <(fs_listOutsidePointingLinks "$HOME/data" \
+        | awk '{print $2, $1}' | grep -v "^$HOME/lfs" | awk '{print $2, $1}')
+
+    # done < <(grep "^/home/balaz/data/" $links_file)
+    # echo "Broken links in ~/data are:"
+    # find "$HOME/data" -type l -exec test ! -e {} \; -print
+
+    # All ~/projects are symbolic links to dirs in ~/data/projects
+
+    # rm $links_file
+}
+
+check_home_dir_content
+check_links
+
+# downloads folder is empty
+
+# trash is empty
+# https://specifications.freedesktop.org/trash-spec/latest/
+# /home/balaz/.local/share/Trash
+
+# There are no duplicates in the lfs folder
+
+# print_dir_sizes
