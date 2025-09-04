@@ -5,8 +5,10 @@ set $mod Mod4
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock -c 000000 -f -n
 exec --no-startup-id nitrogen --random --set-zoom-fill ~/data/pictures/backgrounds/ &
 exec --no-startup-id nm-applet
-exec --no-startup-id setxkbmap -model pc105 -layout us,sk -variant ,qwerty -option grp:win_space_toggle
+# exec --no-startup-id setxkbmap -model pc105 -layout us,sk -variant ,qwerty -option grp:win_space_toggle
 exec --no-startup-id unclutter -b
+exec --no-startup-id fcitx5
+# exec --no-startup-id ibus-daemon -rxRd
 
 set $refresh_i3bar pkill -SIGRTMIN+10 i3blocks
 bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3bar
