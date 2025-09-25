@@ -9,6 +9,7 @@ return {
     -- writing
     tex       = require('lang_impls.tex'),
     typst     = require('lang_impls.typst'),
+    md        = require('lang_impls.md'),
     -- scripting
     lua       = require('lang_impls.lua'),
     snakemake = require('lang_impls.snakemake'),
