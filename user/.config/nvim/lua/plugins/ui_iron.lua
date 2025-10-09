@@ -96,7 +96,9 @@ return {
                         block_dividers = {'# %%'},
                     },
                     sh = {
-                        command = {'bash'},
+                        -- command = {'bash'},
+                        -- env PS1='> ' bash -i
+                        command = {'env', 'PS1=> ', 'bash', '-i'},
                         format = format_python_lines,
                         block_dividers = {'# %%'}
                     },

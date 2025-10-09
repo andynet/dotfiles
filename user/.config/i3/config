@@ -30,9 +30,11 @@ floating_modifier $mod
 
 # start a terminal
 bindsym $mod+Return exec wezterm
+bindsym $mod+Shift+t exec wezterm
 bindsym $mod+Shift+Return exec firefox
+bindsym $mod+Shift+w exec firefox
+bindsym $mod+Shift+b exec "HOME=$XDG_CONFIG_HOME qutebrowser"
 bindsym $mod+Shift+q kill
-bindsym $mod+Shift+w exec "HOME=$XDG_CONFIG_HOME qutebrowser"
 
 bindsym $mod+d          exec --no-startup-id ~/.local/bin/dmenu_apps.sh
 bindsym $mod+Escape     exec --no-startup-id ~/.local/bin/dmenu_login.sh
