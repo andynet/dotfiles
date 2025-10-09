@@ -1,0 +1,58 @@
+#!/bin/bash
+
+# if in doubt, use:
+# pacman -Ql <pkg> | grep -v '/$' | less
+used_commands=(
+    # used and wanted
+    "fish" "nvim" "git" "task" "nnn" "less" "zless"
+
+    "libreoffice" "tectonic"
+    "okular" "xournalpp"
+    "ssh" "sshfs" "scp" "openvpn"
+    "retroarch" "gimp" "vlc" "osdlyrics" "sxiv"
+    "startx" "xss-lock" "dmenu" "i3" "i3lock" "i3blocks"
+
+    "unclutter" "ls" "sudo" "stow" "jless"
+    "yt-dlp" "nmcli" "curl" "unzip" "ollama" "hexdump" "dex"
+    "valgrind" "gunzip" "spyder"
+    "nitrogen" "nm-applet" "setxkbmap"
+    "pkill" "7z"
+    "pactl" "xbacklight" "scrot" "wezterm" "firefox" "borg"
+    "arandr" "autorandr"
+    "ebook-convert"
+    "clang" "odin" "gdb"
+    "xcolor" "xwininfo" "xclip" "screenkey" "perl-rename" "xsettingsd"
+    "pavucontrol"
+    "nethogs"
+    "thunar"
+    "swanctl"
+    # not really used, but I would like to
+    "aur"
+    "aichat"
+    "zeditor"
+    "timew"
+    "yazi"
+    "rofi"
+    "pass" "qtpass"
+    # used, not wanted
+    # not used, not wanted
+)
+explicitly_used=()
+for uc in "${used_commands[@]}"; do
+    full_path=$(which "$uc")
+    if [[ $? ]]; then
+        pkg=$(pacman -Qo "$full_path" | cut -f 5 -d " ")
+        explicitly_used+=("$pkg")
+    fi
+done
+# shellcheck disable=SC2207
+explicitly_used_sorted=($(printf "%s\n" "${explicitly_used[@]}" | sort | uniq))
+
+# shellcheck disable=SC2207
+explicitly_installed=($(pacman -Qqe))
+
+for ei in "${explicitly_installed[@]}"; do
+    # echo "$ei"
+    :
+done
+diff -y --suppress-common-lines <(printf "%s\n" "${explicitly_installed[@]}") <(printf "%s\n" "${explicitly_used_sorted[@]}")
