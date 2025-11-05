@@ -2,6 +2,7 @@ local languages = require('languages')
 
 return {{
     'neovim/nvim-lspconfig',
+    branch = 'v2.4.0',  -- since v2.5 require('lspconfig') is deprecated
     dependencies = {'hrsh7th/cmp-nvim-lsp', 'folke/neodev.nvim'},
     config = function()
         local lspconfig = require('lspconfig')
