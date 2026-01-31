@@ -1,5 +1,6 @@
 return {
-    tools = {'shellcheck'},
+    system_deps = {'shellcheck --version'},
+    -- tools = {'shellcheck'},
     treesitter = {'fish'},
     null = function(_)
         return {

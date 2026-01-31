@@ -5,6 +5,8 @@ return {
     treesitter = {},
     -- null = function(null_ls) return {} end,
     lsp = function(lspconfig, capabilities)
+        -- maybe consider this:
+        -- https://www.curlylint.org/docs/template-languages
         vim.api.nvim_create_autocmd({'BufRead', 'BufNewFile'}, {
             pattern = {'*.html'},
             callback = function()
@@ -18,7 +20,8 @@ return {
             settings = {
                 html = {
                     format = {
-                        unformatted = 'pre,code,textarea,script'
+                        contentUnformatted = 'pre,code,textarea',  -- I don't know why script does not work here
+                        unformatted = 'wbr,script'
                     }
                 }
             }
@@ -26,7 +29,13 @@ return {
         lspconfig.jinja_lsp.setup({
             capabilities = capabilities,
             filetypes = {'html'},
-            settings = {}
+            -- /home/balaz/.local/share/nvim/mason/share/mason-schemas/lsp/jinja-lsp.json
+            -- settings = {
+            --     ['jinja-lsp'] = {
+            --         hide_undefined = true,
+            --         template_extension = {}
+            --     }
+            -- }
         })
     end,
     dap = function() end,
