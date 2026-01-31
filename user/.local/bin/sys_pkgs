@@ -1,43 +1,59 @@
 #!/bin/bash
 
-# if in doubt, use:
-# pacman -Ql <pkg> | grep -v '/$' | less
 used_commands=(
-    # used and wanted
-    "fish" "nvim" "git" "task" "nnn" "less" "zless"
-
-    "libreoffice" "tectonic"
-    "okular" "xournalpp"
-    "ssh" "sshfs" "scp" "openvpn"
-    "retroarch" "gimp" "vlc" "osdlyrics" "sxiv"
-    "startx" "xss-lock" "dmenu" "i3" "i3lock" "i3blocks"
-
-    "unclutter" "ls" "sudo" "stow" "jless"
-    "yt-dlp" "nmcli" "curl" "unzip" "ollama" "hexdump" "dex"
-    "valgrind" "gunzip" "spyder"
-    "nitrogen" "nm-applet" "setxkbmap"
-    "pkill" "7z"
-    "pactl" "xbacklight" "scrot" "wezterm" "firefox" "borg"
-    "arandr" "autorandr"
-    "ebook-convert"
-    "clang" "odin" "gdb"
-    "xcolor" "xwininfo" "xclip" "screenkey" "perl-rename" "xsettingsd"
-    "pavucontrol"
-    "nethogs"
-    "thunar"
-    "swanctl"
-    # not really used, but I would like to
-    "aur"
-    "aichat"
-    "zeditor"
-    "timew"
-    "yazi"
-    "rofi"
-    "pass" "qtpass"
+    # used, wanted
+    "fish" "nvim" "git" "task" "nnn" "less" "zless" "zk" "git-lfs" "htop" "bear"
+    "lazygit" "fzf" "ssh" "sshfs" "scp" "openvpn" "libreoffice" "tectonic"
+    "okular" "xournalpp" "retroarch" "gimp" "vlc" "osdlyrics" "sxiv" "startx"
+    "xss-lock" "dmenu" "i3" "i3lock" "i3blocks" "shellcheck" "unclutter" "ls"
+    "sudo" "stow" "jless" "yt-dlp" "curl" "wget" "nmcli" "unzip" "ollama"
+    "hexdump" "dex" "valgrind" "gunzip" "nitrogen" "nm-applet" "setxkbmap"
+    "pkill" "7z" "pactl" "xbacklight" "scrot" "wezterm" "firefox" "borg"
+    "arandr" "autorandr" "ebook-convert" "clang" "odin" "gdb" "xcolor"
+    "xwininfo" "xclip" "screenkey" "perl-rename" "xsettingsd" "pavucontrol"
+    "nethogs" "thunar" "swanctl" "wireshark" "nmap" "convert"
     # used, not wanted
+    "zenity"
+    # not used, wanted
+    "aur" "aichat" "zeditor" "timew" "yazi" "rofi" "pass" "qtpass"
     # not used, not wanted
 )
-explicitly_used=()
+
+# to change install reason
+# pacman -D --asdeps <pkg>
+# pacman -D --asexplicit <pkg>
+# if in doubt, use:
+# pacman -Ql <pkg> | grep -v '/$' | less
+explicitly_used=( 
+    "base" "base-devel" "linux" "linux-firmware" "man-db" "man-pages"
+    "efibootmgr" "intel-ucode"
+    "xorg-server"
+    # gaming
+    "libretro-beetle-psx" "libretro-mgba" "libretro-pcsx2" "libretro-play"
+    "pcsx2-git" "pcsx2-git-debug" 
+    # fonts
+    "ttf-roboto-mono-nerd" "adobe-source-han-sans-cn-fonts" 
+    "otf-font-awesome" "woff2-font-awesome" "terminus-font" "font-manager"
+    # programming tooling
+    "cmake" "mingw-w64-gcc" "openmp" "strace"
+    "lua-language-server" "inferno"
+    # chinese input method
+    "fcitx5" "fcitx5-configtool" "fcitx5-gtk" "fcitx5-qt" "fcitx5-rime"
+    "ibus" "ibus-libpinyin" "ibus-rime"
+    # virtualization
+    "swtpm" "virt-manager" "virt-viewer" "qemu-desktop" "qemu-full"
+    # printing
+    "cups" "system-config-printer"
+    # some vlc goodies
+    "vlc" "vlc-plugin-ffmpeg" "vlc-plugin-matroska" "vlc-plugin-x264"
+    # other tools
+    "cronie" "earlyoom" "fastfetch" "gnuplot" "gparted" "graphviz" "lsof"
+    "minisign" "nix"
+    "thunar-volman" "guestfs-tools" "gvfs-google"
+    # maybe use in the future? "pandoc-cli"
+)
+
+# %%
 for uc in "${used_commands[@]}"; do
     full_path=$(which "$uc")
     if [[ $? ]]; then
@@ -45,14 +61,20 @@ for uc in "${used_commands[@]}"; do
         explicitly_used+=("$pkg")
     fi
 done
-# shellcheck disable=SC2207
-explicitly_used_sorted=($(printf "%s\n" "${explicitly_used[@]}" | sort | uniq))
 
 # shellcheck disable=SC2207
+explicitly_used_sorted=($(printf "%s\n" "${explicitly_used[@]}" | sort | uniq))
+# shellcheck disable=SC2207
 explicitly_installed=($(pacman -Qqe))
+
+# %%
+# shellcheck disable=SC2207
+# explicitly_installed=($(pacman -Qqet))
 
 for ei in "${explicitly_installed[@]}"; do
     # echo "$ei"
     :
 done
+
 diff -y --suppress-common-lines <(printf "%s\n" "${explicitly_installed[@]}") <(printf "%s\n" "${explicitly_used_sorted[@]}")
+
