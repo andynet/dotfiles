@@ -49,6 +49,6 @@ command="scripts/weather.py"
 interval=once
 
 [time]
-command=date '+%Y-%m-%d %H:%M'
+command=date '+W%V %Y-%m-%d %H:%M'
 interval=5
 
