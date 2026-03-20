@@ -17,8 +17,8 @@ function check_home_dir_content() {
         ".cache" ".config" ".local" ".dotfiles"
         ".profile"
         # remove these when it becomes possible
-        ".ssh" ".mozilla" ".ollama"
-        ".bashrc" "done.tsv"
+        ".ssh" ".ollama" ".bashrc" "done.tsv"
+        # ".mozilla"
     )
     # shellcheck disable=SC2207
     found_names=($(ls -A))
