@@ -34,6 +34,7 @@ return {
                     {path = '~/data/zettelkasten',    index = '00000000', ext = '.md', syntax = 'markdown'},
                     {path = '~/data/knowledge_vault', index = 'index',    ext = '.md', syntax = 'markdown'}
                 }
+                -- uses https://github.github.com/gfm/
                 -- TODO: :h vimwiki
                 -- :VimwikiFollowLink   -- this is mapped to <Enter> Thanks god!
                 -- :VimwikiGoBackLink   -- this is mapped to <Backspace>
@@ -42,7 +43,28 @@ return {
                 -- :VimwikiDeleteFile   -- this should never be used
                 -- :VimwikiAll2HTML[!]  -- not supported for md :-(
             end
-        }
+        },
+        -- peek is outdated
+        -- https://github.com/selimacerbas/markdown-preview.nvim might be better
+        {
+            'toppair/peek.nvim',
+            event = {'VeryLazy'},
+            build = 'deno task --quiet build:fast',
+            config = function()
+                require('peek').setup({
+                    auto_load = true,
+                    close_on_bdelete = true,
+                    syntax = true,
+                    theme = 'dark',
+                    update_on_change = true,
+                    app = {'boxxy', 'firefox', '--new-window'},
+                    filetype = {'markdown', 'vimwiki'},
+                })
+                vim.api.nvim_create_user_command('PeekOpen', require('peek').open, {})
+                vim.api.nvim_create_user_command('PeekClose', require('peek').close, {})
+                vim.keymap.set('n', '<leader>zm', ':PeekOpen<CR>', {desc = 'Peek Open'})
+            end,
+        },
     },
     -- tools = {},
     -- treesitter = {},

@@ -50,6 +50,8 @@ vim.keymap.set('n', '<leader>ab',
     ':!bibtex-tidy %:p --blank-lines --duplicates --trailing-commas --no-wrap --sort-fields',
     {desc = 'Align bibtex'}
 )
+vim.keymap.set('n', '<leader>csv', ':CsvViewToggle<CR>', {desc = 'CsvView Toggle'})
+vim.keymap.set('n', '<leader>csi', ':CsvViewInfo<CR>', {desc = 'CsvView Info'})
 
 vim.keymap.set('n', '<leader>t', function()
     local date = vim.fn.system('date +"%F"'):gsub("\n", "") -- get date without newline
